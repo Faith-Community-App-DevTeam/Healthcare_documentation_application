@@ -1,0 +1,42 @@
+[
+    {
+        "user_id": "1",
+        "username": "john.smith@example.com",
+        "password": "password123"
+    },
+    {
+        "user_id": "2",
+        "username": "sarah.johnson@example.com",
+        "password": "securepass456"
+    },
+    {
+        "user_id": "3",
+        "username": "michael.brown@example.com",
+        "password": "secretword789"
+    },
+    {
+        "user_id": "4",
+        "username": "emily.davis@example.com",
+        "password": "password4567"
+    },
+    {
+        "user_id": "5",
+        "username": "david.miller@example.com",
+        "password": "mypass1234"
+    },
+    {
+        "user_id": "6",
+        "username": "olivia.garcia@example.com",
+        "password": "password567"
+    },
+    {
+        "user_id": "7",
+        "username": "william.martinez@example.com",
+        "password": "mysecure123"
+    },
+    {
+        "user_id": "8",
+        "username": "sophia.lee@example.com",
+        "password": "mypassword789"
+    }
+]
