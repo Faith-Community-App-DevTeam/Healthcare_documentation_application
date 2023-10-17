@@ -6,7 +6,7 @@ from aws_configs import CLIENT_BUCKET, USER_BUCKET, REGION_NAME
 
 #setup for finding one user
 FILE_MAPPING = {
-    "user": 'users.json',
+    "user": 'user_list.json',
     'client': 'client_list.json'
 }
 
@@ -35,7 +35,9 @@ def create_user(payload):
     #checking if user exist
     try:
         response = s3.Object(USER_BUCKET, FILE_MAPPING['user']).get()
+        print("response:", response)
         user_list = json.loads(response['Body'].read())
+        
     except botocore.exceptions.ClientError as error:
         if error.response['Error']['Code'] != '404':
             #if something else happened for now
@@ -47,7 +49,7 @@ def create_user(payload):
         
         #dumping user setting into s3 bucket
         try:
-            s3.Bucket(USER_BUCKET).put_object(Body = json.dumps(payload), KEY = FILE_MAPPING['user'], ContentType = 'json')
+            s3.Bucket(USER_BUCKET).put_object(Body = json.dumps(payload), Key = FILE_MAPPING['user'], ContentType = 'json')
             
             return {
                 "success":True,

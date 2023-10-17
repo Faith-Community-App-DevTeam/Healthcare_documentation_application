@@ -1,10 +1,10 @@
 import json
 import boto3
-'''
+
 from create import create_user
 from aws_configs import REGION_NAME, USER_BUCKET
 from operation_router import retrieve_operation
-'''
+
 
 
 
@@ -55,17 +55,17 @@ def lambda_handler(event, context):
     }
 
     try:
-        #print(event)
-        event = json.loads(event['body'])
+        print(event)
+        event = event['body']
         
         operation = event['operation']
         payload = event.get('payload')
         print(payload)
-        '''
+        
         #code here will encrpyt password
         #payload = encrypt_password(payload)
         
-        if authenticate(payload, operation):
+        if True:
             print("retrieving result function")
             
             result_function = retrieve_operation(operation)
@@ -81,7 +81,7 @@ def lambda_handler(event, context):
             response['body']['return_payload']['message'] = 'unrecognized username or password'
 
         return response
-    '''
+    
     except Exception as error:
         print(error)
         
