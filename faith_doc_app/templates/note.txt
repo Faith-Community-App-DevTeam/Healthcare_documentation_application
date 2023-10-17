@@ -1,1 +1,0 @@
-Please ignore as some tutorials used templates to make the webpage, were i think we will be using django to gather and push data to AWS

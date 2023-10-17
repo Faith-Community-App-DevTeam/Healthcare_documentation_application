@@ -1,8 +1,10 @@
 import json
 import boto3
+'''
 from create import create_user
 from aws_configs import REGION_NAME, USER_BUCKET
 from operation_router import retrieve_operation
+'''
 
 
 
@@ -53,13 +55,52 @@ def lambda_handler(event, context):
     }
 
     try:
-
+        #print(event)
+        event = json.loads(event['body'])
+        
+        operation = event['operation']
+        payload = event.get('payload')
+        print(payload)
+        '''
+        #code here will encrpyt password
+        #payload = encrypt_password(payload)
+        
+        if authenticate(payload, operation):
+            print("retrieving result function")
+            
+            result_function = retrieve_operation(operation)
+            response['statusCode'] = 200
+            
+            response['body'] = result_function(payload)
+            
+            if not response['body']['success']:
+                #unrecognized api operation
+                response['statusCode'] = 400
+        else:
+            response['statusCode'] = 404
+            response['body']['return_payload']['message'] = 'unrecognized username or password'
 
         return response
-
+    '''
     except Exception as error:
+        print(error)
+        
+        response = {"body": {
+            "success": False,
+            "return_payload": {
+                "message": "unexplained server error"
+            }
+        }, 'statusCode': 500,
+            'headers': {
+                # "Access-Control-Allow-Origin": "*"
+            }
+        }
+
+        response['body']['return_payload'][
+            'message'] = f"received the following error during operations: \n {str(error)}"
+
+        return response        
+    
 
 
-
-
-        return response
+        

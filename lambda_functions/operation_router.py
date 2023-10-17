@@ -1,4 +1,5 @@
 from create import create_user
+from lambda_function import
 
 
 def retrieve_operation(operation: str):
@@ -18,6 +19,5 @@ def retrieve_operation(operation: str):
     if operation == "create_user":
         return lambda payload: create_user(payload)
     
-
     else:
         return unrecognized_payload
