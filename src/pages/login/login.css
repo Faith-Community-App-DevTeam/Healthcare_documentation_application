@@ -1,0 +1,44 @@
+welcome {
+    text-align: center;
+    width: 50%;
+    margin: auto;
+}
+
+.login-box {
+    float: center;
+    width: 500px;
+    background-color: var(--soft-color);
+    margin: 0 auto;
+    border: 1px solid #333;
+    box-shadow: 4px 4px 2.5px rgb(59, 54, 70);
+    padding: 2em;
+    border-radius: 4px;
+
+}
+
+#username,
+#password {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    box-sizing: border-box;
+    border-radius: var(--border-radius);
+    border: 1px solid #dddddd;
+    outline: none;
+    background: #eeeeee;
+    transition: background 0.2s, border-color 0.2s;
+    margin: 0.5rem 0;
+}
+
+.login-button {
+    width: 100%;
+    padding: 1rem 2rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #ffffff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: var(--secondary-color);
+    margin: 0.75rem 0;
+}

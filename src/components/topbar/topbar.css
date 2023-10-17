@@ -1,0 +1,32 @@
+/* header */
+.topbar-sticky {
+    position: sticky;
+    top: 0;
+}
+
+.topbar {
+    display: flex;
+    width: 100%;
+    height: 3rem;
+    background-color: var(--primary-color);
+    justify-content: space-between;
+}
+
+.logo {
+    flex: 1;
+    display: flex;
+    width: 20rem;
+    text-align: center;
+    color: white;
+    align-items: center;
+}
+
+
+.topbar-loginlink {
+    display: flex;
+    font-size: var(--big-font-size);
+    color: white;
+    margin-right: 5%;
+    align-items: center;
+
+}
