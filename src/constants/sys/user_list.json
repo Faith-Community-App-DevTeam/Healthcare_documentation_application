@@ -1,0 +1,37 @@
+[   
+    {
+        "user_id": "1",
+        "username": "lpalfaro",
+        "password": "password",
+        "first_name": "liam",
+        "last_name": "alfaro",
+        "address": "",
+        "phone_number": "",
+        "license_state": "",
+        "license_number": "",
+        "include_in": {
+            "doc_sys_comm": "", "#comment": "all values in this dict must be yes or no",
+            "net_comm": "",
+            "group_comm": ""
+        },
+        "network": {
+            "id": "",
+            "name": "",
+            "address": "",
+            "phone": "",
+            "email": ""
+        },
+        "auto_reporting": "", "#comment": "must be yes or no",
+        "auto_network_reporting": "", "#comment": "must be yes or no",
+        "enroll_health_minister": "", "#comment": "must be yes or no",
+        "health_minister": {
+            "name": "",
+            "address": "",
+            "phone_number": "",
+            "email": ""
+        },
+        "printer_set_up": "", "#comment": "i have no idea what this is",
+        
+        "role": "", "#comment": "can only be nurse or health minister"
+    }
+]
