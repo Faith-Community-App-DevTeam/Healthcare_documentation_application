@@ -55,17 +55,17 @@ def lambda_handler(event, context):
     }
 
     try:
-        print(event)
+        #print(event)
         event = event['body']
         
         operation = event['operation']
         payload = event.get('payload')
-        print(payload)
+        #print(payload)
         
         #code here will encrpyt password
         #payload = encrypt_password(payload)
         
-        if True:
+        if authenticate(payload, operation):
             print("retrieving result function")
             
             result_function = retrieve_operation(operation)

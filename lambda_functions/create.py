@@ -37,19 +37,42 @@ def create_user(payload):
         response = s3.Object(USER_BUCKET, FILE_MAPPING['user']).get()
         print("response:", response)
         user_list = json.loads(response['Body'].read())
-        
+        #print("list", user_list)
+       
+            
+      
     except botocore.exceptions.ClientError as error:
         if error.response['Error']['Code'] != '404':
             #if something else happened for now
             print(error)
             raise Exception(str(error))
     finally:
+        
         print("creating new user")
         print(payload['first_name'] + ' ' + payload['last_name'])
+        print(user_list)
+        
+        #checking if username exists (not sure if most efficient but it works)
+        
+        for user in user_list:
+            if user['username'] == payload['username']:
+                return {
+                    "success":False,
+                    "return_payload": {
+                    "message": "User Creation Failed: Username already exists"
+                    }
+                }
+        
         
         #dumping user setting into s3 bucket
         try:
-            s3.Bucket(USER_BUCKET).put_object(Body = json.dumps(payload), Key = FILE_MAPPING['user'], ContentType = 'json')
+            #print("new", type(new_list))
+            print(payload, type(payload))
+            print(user_list, type(user_list))
+            user_list.append(payload)
+            print("newnew", user_list)
+            
+            s3.Bucket(USER_BUCKET).put_object(Body = json.dumps(user_list), Key = FILE_MAPPING['user'], ContentType = 'json')
             
             return {
                 "success":True,
