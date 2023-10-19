@@ -1,6 +1,6 @@
 import json
 import boto3
-from aws_config import USER_BUCKET, REGION_NAME
+from aws_configs import USER_BUCKET, REGION_NAME
 
 
 def get_all_users_as_list() -> list:

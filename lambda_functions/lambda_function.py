@@ -1,9 +1,12 @@
 import json
 import boto3
+import hashlib
 
 from create import create_user
 from aws_configs import REGION_NAME, USER_BUCKET
 from operation_router import retrieve_operation
+from retrieve import get_all_users_as_list
+
 
 
 
@@ -29,6 +32,7 @@ def authenticate(payload: dict, operation) -> bool:
 def verify_credentials(username: str, password) -> bool:
     # separate function to connect to S3, pull the user file, and check to see if the username password combo matches
     s3 = boto3.resource("s3", region_name=REGION_NAME)
+    password = hashlib.sha256(bytes(password, 'utf-8')).hexdigest()
     print('verifying credentials')
     for user_obj in get_all_users_as_list():
         print(user_obj)

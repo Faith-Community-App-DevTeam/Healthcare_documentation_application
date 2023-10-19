@@ -3,6 +3,7 @@ import boto3
 import botocore
 import hashlib
 from aws_configs import CLIENT_BUCKET, USER_BUCKET, REGION_NAME
+from retrieve import get_all_users_as_list
 
 #setup for finding one user
 FILE_MAPPING = {
@@ -10,11 +11,31 @@ FILE_MAPPING = {
     'client': 'client_list.json'
 }
 
+BUCKET_MAPPING = {
+    "user": USER_BUCKET,
+    'client': CLIENT_BUCKET
+}
 
-"""VALIDATION_MAPPING = {
+
+VALIDATION_MAPPING = {
     "user": lambda payload: validate_new_user(payload),
-    "flashcard": lambda payload: validate_flashcard(payload)
-}"""
+    "client": lambda payload: validate_new_client(payload)
+}
+
+def validate_new_user(payload: dict) -> dict:
+
+    for user in get_all_users_as_list():
+        if payload['username'] == user['username']:
+            raise Exception("User already exists")
+    return encrypt_password(payload)
+    
+def validate_new_client(payload: dict) -> dict:
+    del payload["username"]
+    del payload["password"]
+    print(payload)
+    
+    return payload
+    
 
 
 def encrypt_password(payload: dict):
@@ -27,7 +48,7 @@ def encrypt_password(payload: dict):
     return payload
 
 
-def create_user(payload):
+def create(payload, operation):
     '''
     testing on creating new user.
     As of now it is configered for a single json file
@@ -38,82 +59,51 @@ def create_user(payload):
         first_name: str
         last_name: str
     '''
-
-    s3 = boto3.resource("s3", region_name = REGION_NAME)
     
-    user = {}
+    
+    s3 = boto3.resource("s3", region_name = REGION_NAME)
     #checking if user exist
     try:
-        response = s3.Object(USER_BUCKET, FILE_MAPPING['user']).get()
+        response = s3.Object(BUCKET_MAPPING[operation], FILE_MAPPING[operation]).get()
         print("response:", response)
-        user_list = json.loads(response['Body'].read())
-        #print("list", user_list)
-       
-            
+        obj_list = json.loads(response['Body'].read())
+        print("list", obj_list)
       
     except botocore.exceptions.ClientError as error:
         if error.response['Error']['Code'] != '404':
             #if something else happened for now
             print(error)
             raise Exception(str(error))
+            
     finally:
-        
-        print("creating new user")
-        print(payload['first_name'] + ' ' + payload['last_name'])
-        print(user_list)
-        
-        #checking if username exists (not sure if most efficient but it works)
-        
-        for user in user_list:
-            if user['username'] == payload['username']:
-                return {
-                    "success":False,
-                    "return_payload": {
-                    "message": "User Creation Failed: Username already exists"
-                    }
-                }
-        
+        payload = VALIDATION_MAPPING[operation](payload)  # validation of objects happens here
+        obj_list.append(payload)
         
         #dumping user setting into s3 bucket
         try:
-            #print("new", type(new_list))
-            print(payload, type(payload))
-            print(user_list, type(user_list))
-            payload = encrypt_password(payload)
-            user_list.append(payload)
-            print("newnew", user_list)
-            
-            s3.Bucket(USER_BUCKET).put_object(Body = json.dumps(user_list), Key = FILE_MAPPING['user'], ContentType = 'json')
+            s3.Bucket(BUCKET_MAPPING[operation]).put_object(Body = json.dumps(obj_list), Key = FILE_MAPPING[operation], ContentType = 'json')
             
             return {
                 "success":True,
                 "return_payload": {
-                    "message": "User Creation Success"
+                    "message": "Operation Success"
                 }
             }
-        except botocore.exceptions.ClientError as error:
             
+        except botocore.exceptions.ClientError as error:
             return {
                 "success":False,
                 "return_payload": {
-                    "message": "User Creation encountered an client error"
+                    "message": "Operation encountered an client error"
                 }
             }
 
+def create_user(payload: dict) -> dict:
+    return create(payload=payload, operation="user")
 
-def create_client(payload):
-    pass
-    '''
-    s3 = boto3.resource("s3", region_name = REGION_NAME)
-    try:
-        response = s3.
-    '''
+def create_client(payload: dict) -> dict:
+    return create(payload=payload, operation="client")
 
 def create_service_report(payload):
     pass
-    '''
-    s3 = boto3.resource("s3", region_name = REGION_NAME)
-    try:
-        response = s3.    
-    '''
 
