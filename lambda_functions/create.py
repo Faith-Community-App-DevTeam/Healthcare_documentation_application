@@ -17,6 +17,16 @@ FILE_MAPPING = {
 }"""
 
 
+def encrypt_password(payload: dict):
+    '''
+    This functions encrypt a user's password before storing it
+    '''
+    print("encrypting password")
+    payload["password"] = hashlib.sha256(bytes(payload["password"], 'utf-8')).hexdigest()
+    print('password encrypted')
+    return payload
+
+
 def create_user(payload):
     '''
     testing on creating new user.
@@ -69,6 +79,7 @@ def create_user(payload):
             #print("new", type(new_list))
             print(payload, type(payload))
             print(user_list, type(user_list))
+            payload = encrypt_password(payload)
             user_list.append(payload)
             print("newnew", user_list)
             
