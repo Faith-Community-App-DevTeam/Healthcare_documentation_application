@@ -12,3 +12,30 @@ def get_all_users_as_list() -> list:
     response = s3.Object(USER_BUCKET, "user_list.json").get()
     users = json.loads(response['Body'].read())
     return users
+
+
+def get_user(payload: dict):
+    '''
+    retrieves a specific user's information from the database
+    function takes a payload with a user's username
+    returns a responce with a new key value user: user info
+    '''
+    user_list = get_all_users_as_list
+
+    print("getting user info")
+    for user in user_list:
+        if user["username"] == payload["username"]:
+            print("found user data")
+            return {
+                "success": True,
+                "return_payload": {
+                    "message": "successfully retrieved the user's data",
+                    "user": user
+                }
+            }
+    return {
+        "success": False,
+        "return_payload": {
+            'message': "failed to find user"
+        }
+    }
