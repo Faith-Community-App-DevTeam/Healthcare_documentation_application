@@ -1,6 +1,6 @@
 import json
 import boto3
-from aws_configs import USER_BUCKET, REGION_NAME
+from aws_configs import USER_BUCKET, REGION_NAME, CLIENT_BUCKET
 
 
 def get_all_users_as_list() -> list:
@@ -47,5 +47,22 @@ def get_user(payload: dict):
         "success": False,
         "return_payload": {
             'message': "failed to find user"
+        }
+    }
+
+def get_clients_by_network(payload: dict):
+    s3 = boto3.resource("s3", region_name=REGION_NAME)
+    response = s3.Object(CLIENT_BUCKET, "client_list.json").get()
+    clients = json.loads(response['Body'].read())
+
+    for client in clients:
+        if client["network"] != payload["network"]:
+            del client
+
+    return {
+        "success": True,
+        "return_payload": {
+            "message": "successfully retrieved clients by network",
+            "clients": clients
         }
     }
