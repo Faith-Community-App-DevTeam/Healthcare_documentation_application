@@ -13,6 +13,16 @@ def get_all_users_as_list() -> list:
     users = json.loads(response['Body'].read())
     return users
 
+def get_all_networks_as_list() -> list:
+    """
+    connect to s3 and get the big list of json that contains all the user objects
+    :return: big list of user objects as json
+    """
+    s3 = boto3.resource("s3", region_name=REGION_NAME)
+    response = s3.Object(USER_BUCKET, "network_list.json").get()
+    networks = json.loads(response['Body'].read())
+    return networks
+
 
 def get_user(payload: dict):
     '''

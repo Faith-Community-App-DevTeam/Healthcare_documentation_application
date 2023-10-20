@@ -10,7 +10,7 @@
         "license_state": "",
         "license_number": "",
         "include_in": {
-            "doc_sys_comm": "", "#comment": "all values in this dict must be yes or no",
+            "doc_comm": "", "#comment": "all values in this dict must be yes or no",
             "net_comm": "",
             "group_comm": ""
         },
@@ -21,17 +21,27 @@
             "phone": "",
             "email": ""
         },
-        "auto_reporting": "", "#comment": "must be yes or no",
-        "auto_network_reporting": "", "#comment": "must be yes or no",
-        "enroll_health_minister": "", "#comment": "must be yes or no",
+        "automate": {
+            "reporting": "", "#comment": "must be yes or no",
+            "net_reporting": "", "#comment": "must be yes or no"
+        },
         "health_minister": {
+            "id": "",
             "name": "",
             "address": "",
             "phone_number": "",
             "email": ""
         },
+        "clients": [], "#comment": "list of strings",
         "printer_set_up": "", "#comment": "i have no idea what this is",
-        
-        "role": "", "#comment": "can only be nurse or health minister"
+        "role": "", "#comment": "can only be nurse or health minister",
+        "permissions": {
+            "create": {
+                "network": "", "#comment": "must be yes or no",
+                "nurse": "", "#comment": "must be yes or no",
+                "health_minister": "", "#comment": "must be yes or no",
+                "comm": "", "#comment": "must be yes or no",
+            }
+        }
     }
 ]

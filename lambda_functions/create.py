@@ -3,23 +3,26 @@ import boto3
 import botocore
 import hashlib
 from aws_configs import CLIENT_BUCKET, USER_BUCKET, REGION_NAME
-from retrieve import get_all_users_as_list
+from retrieve import get_all_users_as_list, get_all_networks_as_list
 
 #setup for finding one user
 FILE_MAPPING = {
     "user": 'user_list.json',
-    'client': 'client_list.json'
+    'client': 'client_list.json',
+    "network": "network_list.json"
 }
 
 BUCKET_MAPPING = {
     "user": USER_BUCKET,
-    'client': CLIENT_BUCKET
+    'client': CLIENT_BUCKET,
+    "network": USER_BUCKET
 }
 
 
 VALIDATION_MAPPING = {
     "user": lambda payload: validate_new_user(payload),
-    "client": lambda payload: validate_new_client(payload)
+    "client": lambda payload: validate_new_client(payload),
+    "network": lambda payload: validate_new_network(payload)
 }
 
 def validate_new_user(payload: dict) -> dict:
@@ -34,6 +37,14 @@ def validate_new_client(payload: dict) -> dict:
     del payload["password"]
     print(payload)
     
+    return payload
+
+def validate_new_network(payload: dict) -> dict:
+    del payload["username"]
+    del payload["password"]
+    for network in get_all_networks_as_list():
+        if payload['name'] == network['name']:
+            raise Exception("Network already exists already exists")
     return payload
     
 
@@ -103,6 +114,9 @@ def create_user(payload: dict) -> dict:
 
 def create_client(payload: dict) -> dict:
     return create(payload=payload, operation="client")
+
+def create_network(payload: dict) -> dict:
+    return create(payload=payload, operation="network")
 
 def create_service_report(payload):
     pass
