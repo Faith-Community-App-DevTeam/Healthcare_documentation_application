@@ -21,7 +21,7 @@ def retrieve_operation(operation: str):
         return lambda payload: create_user(payload)
     elif operation == "create_client":
         return lambda payload: create_client(payload)
-    elif operation == "get_user":
+    elif operation == "get_user" or operation == "user_login" :
         return lambda payload: get_user(payload)
     elif operation == "create_network":
         return lambda payload: create_network(payload)
