@@ -48,9 +48,9 @@ def verify_credentials(username: str, password) -> bool:
 def lambda_handler(event, context):
 
     response = {
-    'statusCode': 500,
+    'statusCode': 200,
     'headers': {
-        # "Access-Control-Allow-Origin": "*"
+        "Access-Control-Allow-Origin": "*"
     },
     "body": {
         "success": False,
