@@ -39,7 +39,7 @@ def get_user(payload: dict):
             return {
                 "success": True,
                 "return_payload": {
-                    "message": "successfully retrieved the user's data",
+                    "message": "successfully retrieved user's data",
                     "user": user
                 }
             }
