@@ -1,4 +1,5 @@
 from create import create_user, create_client
+from retrieve import get_user
 
 
 
@@ -20,6 +21,8 @@ def retrieve_operation(operation: str):
         return lambda payload: create_user(payload)
     elif operation == "create_client":
         return lambda payload: create_client(payload)
+    elif operation == "get_user":
+        return lambda payload: get_user(payload)
     
     else:
         return unrecognized_payload
