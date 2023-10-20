@@ -59,8 +59,9 @@ def lambda_handler(event, context):
     }
 
     try:
-        #print(event)
-        event = event['body']
+        print(event)
+        
+        event = json.loads(event['body'])
         
         operation = event['operation']
         payload = event.get('payload')
