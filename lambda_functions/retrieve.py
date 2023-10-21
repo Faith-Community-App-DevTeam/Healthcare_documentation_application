@@ -30,7 +30,7 @@ def get_user(payload: dict):
     function takes a payload with a user's username
     returns a responce with a new key value user: user info
     '''
-    user_list = get_all_users_as_list
+    user_list = get_all_users_as_list()
 
     print("getting user info")
     for user in user_list:
