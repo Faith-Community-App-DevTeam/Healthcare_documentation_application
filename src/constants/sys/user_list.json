@@ -1,5 +1,6 @@
-[   
-    {
+
+{
+    "username": {
         "user_id": "1",
         "username": "lpalfaro",
         "password": "password",
@@ -40,8 +41,8 @@
                 "network": "", "#comment": "must be yes or no",
                 "nurse": "", "#comment": "must be yes or no",
                 "health_minister": "", "#comment": "must be yes or no",
-                "comm": "", "#comment": "must be yes or no",
+                "comm": "", "#comment": "must be yes or no"
             }
         }
     }
-]
+}

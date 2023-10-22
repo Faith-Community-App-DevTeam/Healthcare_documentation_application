@@ -33,16 +33,15 @@ def verify_credentials(username: str, password) -> bool:
     # separate function to connect to S3, pull the user file, and check to see if the username password combo matches
     s3 = boto3.resource("s3", region_name=REGION_NAME)
     password = hashlib.sha256(bytes(password, 'utf-8')).hexdigest()
+    print(password)
     print('verifying credentials')
-    for user_obj in get_all_users_as_list():
-        print(user_obj)
-        stored_username = user_obj['username']
-        stored_password = user_obj['password']
-
-        if username == stored_username:
-            if password == stored_password:
-                return True
-
+    user_list = get_all_users_as_list()
+    print(user_list)
+    if username in user_list.keys():
+        stored_password = user_list[username]["password"]
+        print(stored_password)
+        if password == stored_password:
+            return True
     return False
 
 def lambda_handler(event, context):
