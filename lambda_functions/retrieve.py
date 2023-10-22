@@ -31,18 +31,24 @@ def get_user(payload: dict):
     returns a responce with a new key value user: user info
     '''
     user_list = get_all_users_as_list()
-
+    #a list of info to include in the response payload
+    include_list = [ 
+        "first_name",
+        "last_name",
+        "address",
+        "phone_number",
+        "license_state",
+        "license_number"
+    ]
     print("getting user info")
-    for user in user_list:
-        if user["username"] == payload["username"]:
-            print("found user data")
-            return {
-                "success": True,
-                "return_payload": {
-                    "message": "successfully retrieved user's data",
-                    "user": user
-                }
-            }
+    if payload["username"] in user_list.keys():
+        print("found user data")
+        user = user_list[payload["username"]]
+        user = {key:value for key,value in user.items() if key in include_list}
+        return {
+            "success": True,
+            "return_payload": user
+        }
     return {
         "success": False,
         "return_payload": {

@@ -26,10 +26,13 @@ VALIDATION_MAPPING = {
 }
 
 def validate_new_user(payload: dict) -> dict:
-
-    for user in get_all_users_as_list():
-        if payload['username'] == user['username']:
-            raise Exception("User already exists")
+    '''
+        function makes sure this user does not already exist by username
+    '''
+    print("validate the new user")
+    user_list = get_all_users_as_list()
+    if payload["username"] in user_list.keys():
+        raise Exception("User already exists")
     return encrypt_password(payload)
     
 def validate_new_client(payload: dict) -> dict:
@@ -88,7 +91,7 @@ def create(payload, operation):
             
     finally:
         payload = VALIDATION_MAPPING[operation](payload)  # validation of objects happens here
-        obj_list.append(payload)
+        obj_list[payload["username"]] = {key:value for key,value in payload.items() if key != "username"}
         
         #dumping user setting into s3 bucket
         try:
