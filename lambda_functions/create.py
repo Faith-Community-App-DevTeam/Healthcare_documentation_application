@@ -31,6 +31,7 @@ def validate_new_user(payload: dict) -> dict:
     '''
     print("validate the new user")
     user_list = get_all_users_as_list()
+    print("Ayooo")
     if payload["username"] in user_list.keys():
         raise Exception("User already exists")
     return encrypt_password(payload)
