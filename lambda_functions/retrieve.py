@@ -50,19 +50,59 @@ def get_user(payload: dict):
         }
     }
 
-def get_clients_by_network(payload: dict):
+def get_clients_by_network(payload: dict) -> list:
+    """
+    function to return list of clients by network_id
+    """
     s3 = boto3.resource("s3", region_name=REGION_NAME)
     response = s3.Object(CLIENT_BUCKET, "client_list.json").get()
-    clients = json.loads(response['Body'].read())
+    client_list = json.loads(response['Body'].read())
+    print(type(client_list))
+    print(type(payload))
+    network_id = payload["network_id"]
+    print(network_id)
 
-    for client in clients:
-        if client["network"] != payload["network"]:
-            del client
-
+    client_list = client_list[network_id]
     return {
         "success": True,
         "return_payload": {
             "message": "successfully retrieved clients by network",
-            "clients": clients
+            "clients": client_list
+        }
+    }
+        
+
+def get_client(payload: dict) -> dict:
+    """
+    function to return a single client
+    payload must have last name, dob, network_id
+    """
+    s3 = boto3.resource("s3", region_name=REGION_NAME)
+    response = s3.Object(CLIENT_BUCKET, "client_list.json").get()
+    client_list = json.loads(response['Body'].read())
+    
+    print(type(payload))
+    network_id = payload["network_id"]
+    last_name = payload["last_name"]
+    dob = payload["dob"]
+    client_list = client_list[network_id]
+    
+    for client in client_list:
+        stored_last_name = client["last_name"]
+        stored_dob = client["dob"]
+
+        if stored_last_name == last_name:
+            if stored_dob == dob:
+                return {
+                    "success": True,
+                    "return_payload": {
+                        "message": "successfully retrieved client",
+                        "clients": client
+                    }
+                }
+    return {
+        "success": False,
+        "return_payload": {
+            'message': "failed to find client"
         }
     }
