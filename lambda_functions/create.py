@@ -79,6 +79,7 @@ def create(payload, operation):
     s3 = boto3.resource("s3", region_name = REGION_NAME)
     #checking if user exist
     try:
+        print("hm")
         response = s3.Object(BUCKET_MAPPING[operation], FILE_MAPPING[operation]).get()
         print("response:", response)
         obj_list = json.loads(response['Body'].read())
@@ -92,7 +93,19 @@ def create(payload, operation):
             
     finally:
         payload = VALIDATION_MAPPING[operation](payload)  # validation of objects happens here
-        obj_list[payload["username"]] = {key:value for key,value in payload.items() if key != "username"}
+        if operation == "user":
+            keyword = "username"
+        elif operation == "client":
+            keyword = "network_id"
+            
+        if payload[keyword] in obj_list:
+            print("testing", obj_list[payload[keyword]])
+            obj_list[payload[keyword]].append(payload)
+        else:
+            if operation == "user":
+                obj_list[payload[keyword]] = {key:value for key,value in payload.items() if key != keyword}
+            elif operation == "client":
+                obj_list[payload[keyword]] = [{key:value for key,value in payload.items() if key != keyword}]
         
         #dumping user setting into s3 bucket
         try:
