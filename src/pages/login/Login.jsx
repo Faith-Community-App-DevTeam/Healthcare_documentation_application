@@ -1,9 +1,11 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import Topbar from '../../components/topbar/Topbar';
+import { useNavigate } from 'react-router-dom';
 //import './login.css'
 
 export default function Login({ hasAccount }) {
     const urlEndPoint = "https://fvdwdl1hmg.execute-api.us-east-1.amazonaws.com/beta/FCNA_Handler"
+    const navigate = useNavigate()
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -118,6 +120,10 @@ export default function Login({ hasAccount }) {
         }).then(data => {
 
             console.log(data)
+            if (data['body']['success'] === true) {
+                console.log("success")
+                navigate('/home')
+            }
         })
 
 
