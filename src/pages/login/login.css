@@ -1,12 +1,24 @@
-welcome {
+.welcome {
     text-align: center;
     width: 50%;
     margin: auto;
 }
 
+.login {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    margin: 0 30px;
+}
+
+.login-left-side {
+    width: 50vw;
+    color: white;
+}
+
 .login-box {
-    float: center;
-    width: 500px;
+    float: right;
+    width: 50vw;
     background-color: var(--soft-color);
     margin: 0 auto;
     border: 1px solid #333;
@@ -16,18 +28,25 @@ welcome {
 
 }
 
+.inputs {
+    width: 90%;
+    align-items: center;
+    margin: 20px 20px 0;
+    display: block;
+}
+
 #username,
 #password {
-    display: block;
+
     width: 100%;
-    padding: 0.75rem;
+    padding: 3vh;
     box-sizing: border-box;
-    border-radius: var(--border-radius);
-    border: 1px solid #dddddd;
+    border-radius: 10px;
+    border: 1px solid grey;
     outline: none;
     background: #eeeeee;
-    transition: background 0.2s, border-color 0.2s;
-    margin: 0.5rem 0;
+    margin: 10px 0;
+
 }
 
 .login-button {
@@ -41,4 +60,8 @@ welcome {
     cursor: pointer;
     background: var(--secondary-color);
     margin: 0.75rem 0;
+}
+
+.login-title {
+    text-align: center;
 }
