@@ -5,7 +5,6 @@ import Topbar from '../../components/topbar/Topbar';
 export default function Login({ hasAccount }) {
     const urlEndPoint = "https://fvdwdl1hmg.execute-api.us-east-1.amazonaws.com/beta/FCNA_Handler"
 
-    console.log(hasAccount)
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -70,7 +69,7 @@ export default function Login({ hasAccount }) {
                                     <input type="password" className="form-control form-control-lg" value={password} onChange={(e) => setPassword(e.target.value)} id="password" name="password" placeholder='Password' />
                                     <label htmlFor="floatingInput">Password</label>
                                 </div>
-                                <button type="submit" className="btn btn-primary btn-lg w-50" >Sign in</button>
+                                <button type="submit" className="btn btn-primary btn-lg w-50" >Sign Up</button>
                             </form>
                         </div>
                     </div>
@@ -80,7 +79,7 @@ export default function Login({ hasAccount }) {
     }
     const handleSubmit = (e) => {
         e.preventDefault(); //prevents redirect
-        const data = ''
+        let data = ''
         if (hasAccount) {
             data = {
                 operation: "user_login",
@@ -129,7 +128,8 @@ export default function Login({ hasAccount }) {
             <div className="bg-primary" style={{ height: "100vh" }}>
                 <section className="text-center">
                     <div className="p-5 bg-primary" style={{ height: 200 }}></div>
-                    {hasAccount ? <SignIn /> : <SignUp />}
+                    <div> {hasAccount ? SignIn() : SignUp()}  </div>
+
                 </section>
             </div>
         </>
