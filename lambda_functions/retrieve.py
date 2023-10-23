@@ -43,9 +43,9 @@ def get_user(payload: dict):
         "license_number"
     ]
     print("getting user info")
-    if payload["username_to_find"] in user_list.keys():
+    if payload["username"] in user_list.keys():
         print("found user data")
-        user = user_list[payload["username_to_find"]]
+        user = user_list[payload["username"]]
         user = {key:value for key,value in user.items() if key in include_list}
         return {
             "success": True,
