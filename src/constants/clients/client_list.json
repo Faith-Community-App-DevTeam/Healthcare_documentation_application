@@ -1,33 +1,35 @@
 {
-    "network_id": [
-        {
-            "client_id": "str",
-            "picture": "", "#comment": "not sure what to put here",
-            "first_name": "str",
-            "last_name": "",
-            "dob": "", "#comment": "limited choices",
-            "age": "", "#comment": "somehow make automatic with dob?",
-            "gender": "", "#comment": "limited choices",
-            "address": "",
-            "phone_number": "",
-            "email": "",
-            "emergency_contact": "",
-            "emergency_phone_number":"",
-            "occupation": "",
-            "ethnicity": "", "#comment": "limited choices",
-            "race": "", "#comment": "limited choices",
-            "weight": "",
-            "height": "",
-            "bmi": "", 
-            "a1c": "",
-            "primary_physician_name": "",
-            "primary_physician_number": "",
-            "insurance": "",
-            "medications": [], "#comment": "list of strings",
-            "comments": "",
-            "referral": "", "#comment": "limited choices",
-            "enrolled_by": "",
-            "private": true
-        }
-    ]
+    "none": {
+            "none": [
+                {
+                    "client_id": "str",
+                    "picture": "", "#comment": "not sure what to put here",
+                    "first_name": "str",
+                    "last_name": "",
+                    "dob": "", "#comment": "limited choices",
+                    "age": "", "#comment": "somehow make automatic with dob?",
+                    "gender": "", "#comment": "limited choices",
+                    "address": "",
+                    "phone_number": "",
+                    "email": "",
+                    "emergency_contact": "",
+                    "emergency_phone_number":"",
+                    "occupation": "",
+                    "ethnicity": "", "#comment": "limited choices",
+                    "race": "", "#comment": "limited choices",
+                    "weight": "",
+                    "height": "",
+                    "bmi": "", 
+                    "a1c": "",
+                    "primary_physician_name": "",
+                    "primary_physician_number": "",
+                    "insurance": "",
+                    "medications": [], "#comment": "list of strings",
+                    "comments": "",
+                    "referral": "", "#comment": "limited choices",
+                    "enrolled_by": "",
+                    "private": true
+                }
+            ]
+    }
 }
