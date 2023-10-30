@@ -2,12 +2,14 @@
 .topbar-sticky {
     position: sticky;
     top: 0;
+    box-shadow: 0 1px 2px 0px black;
+    margin: 5px 0;
 }
 
 .topbar {
     display: flex;
     width: 100%;
-    height: 3rem;
+    height: 64px;
     background-color: var(--primary-color);
     justify-content: space-between;
 }
