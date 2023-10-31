@@ -23,9 +23,11 @@ def authenticate(payload: dict, operation) -> bool:
     # we can always create a new user, go ahead and allow the script to work from there
     if operation == "create_user":
         return True
-    else:
-        # if you're doing anything else, verify credentials before continuing
+    elif operation == "user_login":
         return verify_credentials(username, password)
+    else:
+        #if anything else check if user is authenticated
+        return payload['is_authenticate']
     
 
 
