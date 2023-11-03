@@ -1,0 +1,26 @@
+{
+    "year": {
+        "month": [
+            {
+                "date": "",
+                "given_socks": false,
+                "name": "",
+                "cares_delivered": "", "#comment": "hygeine, nail clipping, callous debride, referral, etc",
+                "allergies": [], "#comment": "list of strings",
+                "diabetic_hx": false, "#comment": "diabetic histroy, t/f",
+                "concerns": "",
+                "taking_blood_thinning_medication": false,
+                "smoker": false,
+                "fitting_shoes": false,
+                "pulses": {
+                    "LDP": false,
+                    "LPT": false,
+                    "RDP": false,
+                    "RPT": false
+                },
+                "lower_muscle_weakness": false,
+                "foot_malformations": [], "#comment": "any of the following: callous, redness, ulcer, dryness, maceration, tinea, unhealthy nails, bunion, hammer toe"
+            }
+        ]
+    }
+}

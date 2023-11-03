@@ -1,0 +1,13 @@
+{
+    "year": {
+        "month": [
+            {
+                "date": "",
+                "client": "",
+                "comments": "",
+                "type": "", "#comment": "must be: phone, 1:1, screening, email",
+                "nurse": "", "#comment": "the nurse that worked with the client"
+            }
+        ]
+    }
+}
