@@ -1,0 +1,13 @@
+{
+    "year": {
+        "month": [
+            {
+                "date": "",
+                "service_type": "", "#comment": "must be church class/program, 1:1, professional development",
+                "number_of_people": "",
+                "service_time": "",
+                "comments": ""
+            }
+        ]
+    }
+}
