@@ -47,9 +47,9 @@ def validate_new_client(payload: dict, client_list: dict) -> dict:
     client_list = client_list[network_id][church_id]
     
     #FIXME
-    #kinda stuck on this. we can make a uniqe client id for checks like this, or use a for loop 
+    #kinda stuck on this. we can make a unique client id for checks like this, or use a for loop 
     #for checking if it is a new client
-    #as of now i will just return the payload as pass
+    #as of now i will just return the payload as a "pass"
     
     return payload
 
@@ -147,11 +147,6 @@ def create_client(payload: dict) -> dict:
             network_id: str or 'none'
             church_id: str or 'none'
             client info: dict of client info
-        
-        Note:    
-        keep in mind that getting the network info and church info can change
-        as it might be best to use a function to retrieve the user's info and get the
-        keys there.
     '''
     #Setting up s3 buckets
     s3 = boto3.resource("s3", region_name = REGION_NAME)
@@ -180,6 +175,7 @@ def create_client(payload: dict) -> dict:
         payload = validate_new_client(payload, client_list)
         
         #unloading payload
+        #planning on just calling retrieve user func to get theses details
         network_id = payload["network_id"]
         church_id = payload["church_id"]
         client_info = payload.get('client_info')
