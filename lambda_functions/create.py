@@ -43,14 +43,13 @@ def validate_new_client(payload: dict, client_list: dict) -> dict:
     print("Validating new client")
     network_id = payload["network_id"]
     church_id = payload["church_id"]
+    client_lastname = payload['last_name']
+    client_dob = payload['dob']
     
     client_list = client_list[network_id][church_id]
-    
-    #FIXME
-    #kinda stuck on this. we can make a unique client id for checks like this, or use a for loop 
-    #for checking if it is a new client
-    #as of now i will just return the payload as a "pass"
-    
+    for client in client_list:
+        if client_lastname == client['last_name'] and client_dob == client['dob']:
+            raise Exception("Client already exists")
     return payload
 
 def validate_new_network(payload: dict) -> dict:
