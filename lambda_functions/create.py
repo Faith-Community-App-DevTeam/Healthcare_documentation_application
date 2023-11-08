@@ -38,7 +38,7 @@ def validate_new_user(payload: dict) -> dict:
     
 def validate_new_client(payload: dict, client_list: dict) -> dict:
     '''
-        Checks if the client does not exist in the client list
+        Checks if the client does not exist in the client list 
     '''
     print("Validating new client")
     network_id = payload["network_id"]
