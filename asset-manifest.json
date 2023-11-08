@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Healthcare_documentation_application/static/css/main.6cddaece.css",
-    "main.js": "/Healthcare_documentation_application/static/js/main.db4e6d28.js",
+    "main.js": "/Healthcare_documentation_application/static/js/main.181bb8f2.js",
     "static/media/homepage-photo.jpg": "/Healthcare_documentation_application/static/media/homepage-photo.8198ae88e731473c1bca.jpg",
     "static/media/LogoRed(1).png": "/Healthcare_documentation_application/static/media/LogoRed(1).41058077b561b53d689c.png",
     "index.html": "/Healthcare_documentation_application/index.html",
     "main.6cddaece.css.map": "/Healthcare_documentation_application/static/css/main.6cddaece.css.map",
-    "main.db4e6d28.js.map": "/Healthcare_documentation_application/static/js/main.db4e6d28.js.map"
+    "main.181bb8f2.js.map": "/Healthcare_documentation_application/static/js/main.181bb8f2.js.map"
   },
   "entrypoints": [
     "static/css/main.6cddaece.css",
-    "static/js/main.db4e6d28.js"
+    "static/js/main.181bb8f2.js"
   ]
 }
