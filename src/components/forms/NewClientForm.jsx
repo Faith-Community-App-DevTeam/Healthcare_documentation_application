@@ -49,7 +49,7 @@ export default function NewClientForm() {
 
         const data = {
             operation: "create_client",
-            payload: { ...user, ...client }
+            payload: { ...user, client_info: client }
         }
 
         const res = await fetchData("POST", data)
