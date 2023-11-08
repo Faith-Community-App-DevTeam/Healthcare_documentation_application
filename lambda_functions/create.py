@@ -102,19 +102,13 @@ def create(payload, operation):
             
     finally:
         payload = VALIDATION_MAPPING[operation](payload)  # validation of objects happens here
-        if operation == "user":
-            keyword = "username"
-        elif operation == "client":
-            keyword = "network_id"
+        keyword = "username"
             
         if payload[keyword] in obj_list:
             print("testing", obj_list[payload[keyword]])
             obj_list[payload[keyword]].append(payload)
         else:
-            if operation == "user":
-                obj_list[payload[keyword]] = {key:value for key,value in payload.items() if key != keyword}
-            elif operation == "client":
-                obj_list[payload[keyword]] = [{key:value for key,value in payload.items() if key != keyword}]
+            obj_list[payload[keyword]] = {key:value for key,value in payload.items() if key != keyword}
         
         #dumping user setting into s3 bucket
         try:
