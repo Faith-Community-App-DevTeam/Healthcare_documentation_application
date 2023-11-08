@@ -1,5 +1,5 @@
 from create import create_user, create_client, create_network
-from retrieve import get_user, get_clients_by_network, get_client
+from retrieve import get_user, get_clients_by_network, get_client, get_user_client_list
 
 
 
@@ -29,6 +29,8 @@ def retrieve_operation(operation: str):
         return lambda payload: get_clients_by_network(payload)
     elif operation == "get_client":
         return lambda payload: get_client(payload)
+    elif operation == "get_user_client_list":
+        return lambda payload: get_user_client_list(payload)
     
     else:
         return unrecognized_payload
