@@ -1,18 +1,18 @@
 /*------------------------------------
 - COLOR primary
 ------------------------------------*/
-$primary: #0152ac;
-$primary_t1: #0152ac;
-$primary_t2: #003979;
-$primary_t3: #4da0fd;
-$primary_t4: #66aefe;
-$primary_t5: #001732;
-$primary_t6: #00326a;
-$primary_t7: #004188;
-$primary_t8: #000000;
-$primary_t9: #7ab9fe;
+$primary: #c00000;
+$primary_t1: #c00000;
+$primary_t2: #8d0000;
+$primary_t3: #ff5f5f;
+$primary_t4: #ff7878;
+$primary_t5: #450000;
+$primary_t6: #7d0000;
+$primary_t7: #9c0000;
+$primary_t8: #120000;
+$primary_t9: #ff8d8d;
 
-$primary_shadow: rgba(1, 82, 172, 0.5);
+$primary_shadow: rgba(192, 0, 0, 0.5);
 $primary_text_color_dark_bright: #fff;
 
 
@@ -171,6 +171,9 @@ a.text-primary:hover,
 a.text-primary:focus {
     color: $primary_t2 !important;
 }
+
+
+
 
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
