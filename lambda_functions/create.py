@@ -43,8 +43,8 @@ def validate_new_client(payload: dict, client_list: dict) -> dict:
     print("Validating new client")
     network_id = payload["network_id"]
     church_id = payload["church_id"]
-    client_lastname = payload['last_name']
-    client_dob = payload['dob']
+    client_lastname = payload["client_info"]['last_name']
+    client_dob = payload["client_info"]['dob']
     
     client_list = client_list[network_id][church_id]
     for client in client_list:
