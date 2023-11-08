@@ -3,16 +3,6 @@ import boto3
 import botocore
 from aws_configs import USER_BUCKET, REGION_NAME, CLIENT_BUCKET
 
-def get_all_networks_as_list() -> list:
-    """
-    connect to s3 and get the big list of json that contains all the user objects
-    :return: big list of user objects as json
-    """
-    s3 = boto3.resource("s3", region_name=REGION_NAME)
-    response = s3.Object(USER_BUCKET, "network_list.json").get()
-    networks = json.loads(response['Body'].read())
-    return networks
-
 def get_all_users_as_list() -> list:
     """
     connect to s3 and get the big list of json that contains all the user objects
@@ -57,29 +47,7 @@ def get_user(payload: dict):
         "return_payload": {
             'message': "failed to find user"
         }
-    }
-
-def get_clients_by_network(payload: dict) -> list:
-    """
-    function to return list of clients by network_id
-    """
-    s3 = boto3.resource("s3", region_name=REGION_NAME)
-    response = s3.Object(CLIENT_BUCKET, "client_list.json").get()
-    client_list = json.loads(response['Body'].read())
-    print(type(client_list))
-    print(type(payload))
-    network_id = payload["network_id"]
-    print(network_id)
-
-    client_list = client_list[network_id]
-    return {
-        "success": True,
-        "return_payload": {
-            "message": "successfully retrieved clients by network",
-            "clients": client_list
-        }
-    }
-        
+    }     
 
 def get_client(payload: dict) -> dict:
     """
