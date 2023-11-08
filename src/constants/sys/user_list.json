@@ -2,7 +2,7 @@
 {
     "username": {
         "user_id": "1",
-        "username": "lpalfaro",
+        "username": "billybob",
         "password": "password",
         "first_name": "liam",
         "last_name": "alfaro",
@@ -15,13 +15,8 @@
             "net_comm": "",
             "group_comm": ""
         },
-        "network": {
-            "id": "",
-            "name": "",
-            "address": "",
-            "phone": "",
-            "email": ""
-        },
+        "network_id": "none",
+        "church_id": "none",
         "automate": {
             "reporting": "", "#comment": "must be yes or no",
             "net_reporting": "", "#comment": "must be yes or no"

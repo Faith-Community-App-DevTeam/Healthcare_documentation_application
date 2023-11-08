@@ -136,7 +136,12 @@ def get_user_client_list(payload: dict) -> dict:
     network_id = payload["network_id"]
     church_id = payload["church_id"]
         
-    return client_list[network_id][church_id]
-        
+    return {
+            "success": True,
+            "return_payload": {
+                "message": "successfully retrieved client",
+                "client_list": client_list[network_id][church_id]
+            }
+        }
 
     
