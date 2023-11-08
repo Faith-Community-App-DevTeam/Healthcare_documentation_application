@@ -110,15 +110,16 @@ export default function Login({ hasAccount }) {
 
         const res = await fetchData("POST", data)
         console.log(res)
+
         if (res['body']['success']) {
-            console.log("success")
+            console.log("success");
             setUser({
                 ...user,
                 username: username,
                 password: password,
                 is_authenticate: true
-            })
-            //navigate("/dashboard")
+            });
+            navigate("/dashboard");
         }
 
 
