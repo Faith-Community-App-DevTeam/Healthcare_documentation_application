@@ -9,6 +9,7 @@ import UserContext from './components/userContext/userContext';
 import { createContext, useState } from 'react';
 import PatientCard from './components/patientCard/PatientCard';
 import NewClientForm from './components/forms/NewClientForm';
+import Client from './pages/client/Client';
 
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
           <Route path="/login" element={<Login hasAccount={true} />} />
           <Route path="/register" element={<Login hasAccount={false} />} />
           <Route path="/dashboard/" element={<Dashboard />} />
-          <Route path="/test" element={<NewClientForm />} />
+          <Route path="/client" element={<Client />} />
         </Routes>
       </div>
     </UserContext.Provider>

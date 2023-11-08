@@ -5,50 +5,65 @@ import { useContext } from "react";
 import UserContext from "../../components/userContext/userContext";
 import PatientCard from "../../components/patientCard/PatientCard";
 import NewClientForm from "../../components/forms/NewClientForm";
+import fetchData from "../../components/functions/apiRequest";
 
 
 const Dashboard = () => {
+    const user = useContext(UserContext).user
 
-    const getHeadings = () => {
-        return Object.keys(data[0])
+    const arr = []
+
+    //request basic client info from backend
+    async function getClients() {
+        let data = {
+            operation: 'get_clients_by_network',
+            payload: {
+                ...user
+            }
+        }
+
+        const res = await fetchData('POST', data)
+        if (res['body']['success']) {
+
+            const clientList = res['body']['clients']
+            for (let i = 0; i < Object.keys(clientList).length; i++) {
+                arr.push(<PatientCard client={clientList[i]} />)
+            }
+        }
+
     }
 
-    const getClients = () => {
-        const arr = []
+    // TO BE DELETED WHEN BACKEND WORKS
+    function getData() {
         for (let i = 0; i < Object.keys(data).length; i++) {
             arr.push(<PatientCard client={data[i]} />)
         }
         return arr
     }
 
-
-
-    // to do -> want to bring up the new client form
-    const handleNewClient = () => {
-
-    }
-
     return (
         <>
-            <div className="vh-100">
+            <div className="bg-light">
                 <Topbar />
-                <div className="d-flex h-100">
+                <div className="d-flex">
                     <Sidebar />
-                    <div className="container-xl px-4" style={{ marginTop: 25 }}>
+                    <div className="container px-4" style={{ marginTop: 20 }}>
                         <div className="container-fluid">
-                            <form action="POST" className="d-flex">
-                                <input class="form-control me-2" type="search" placeholder="Search Clients" aria-label="Search" />
-                                <button class="btn btn-outline-primary" type="submit">Search</button>
+                            <div className="d-flex justify-content-between m-2">
+                                <h1 className="display-6 text-primary"> All Clients</h1>
+                                <NewClientForm />
+                            </div>
+                            <hr></hr>
+                            <form action="POST" className="container-fluid d-flex">
+                                <input class="form-control form-control-lg me-4 mb-4" type="search" placeholder="Search Clients" aria-label="Search" />
+                                <button class="btn btn-outline-primary mb-4" type="search">Search</button>
                             </form>
                         </div>
-                        <div className="d-flex justify-content-between m-2">
-                            <h1 className="display-6 text-primary"> All Clients</h1>
-                            <NewClientForm />
+                        <div class="card-body overflow-scroll table-responsive-md" style={{ maxHeight: 650 }}>
+                            {getData()}
                         </div>
-                        <hr></hr>
-                        <div class="card-body table-responsive-md" style={{ maxHeight: 600 }}>
-                            {getClients()}
-                        </div>
+
+
                     </div>
                 </div>
             </div>

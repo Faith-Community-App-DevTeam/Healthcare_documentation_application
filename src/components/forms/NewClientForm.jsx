@@ -2,6 +2,7 @@ import "bootstrap/js/dist/modal";
 import { useState } from 'react';
 import UserContext from "../userContext/userContext";
 import { useContext } from "react";
+import fetchData from "../functions/apiRequest";
 
 export default function NewClientForm() {
 
@@ -39,8 +40,7 @@ export default function NewClientForm() {
         //setClient(values => ({ ...values, [name]: value }));
 
     };
-    const handleSubmit = (e) => {
-        const urlEndPoint = "https://fvdwdl1hmg.execute-api.us-east-1.amazonaws.com/beta/FCNA_Handler"
+    async function handleSubmit(e) {
         e.preventDefault();
 
         console.log(client)
@@ -51,30 +51,19 @@ export default function NewClientForm() {
             operation: "create_client",
             payload: { ...user, ...client }
         }
-        console.log(JSON.stringify(data))
-        fetch(urlEndPoint, {
-            method: "POST",
-            mode: "cors",
-            // headers: {
-            //     'Content-Type': 'application/json',
-            // },
-            body: JSON.stringify(data)
 
-        }).then(response => {
-            const data = response.json();
-            return data;
-        }).then(data => {
+        const res = await fetchData("POST", data)
+        console.log(res)
+        if (res['body']['success']) {
+            console.log("success")
+            //navigate()
+        }
 
-            console.log(data)
-            if (data['body']['success'] === true) {
-                console.log("success");
-            }
-        })
     };
 
     return (
         <div>
-            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#form">Add New Client</button>
+            <button type="button" className="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#form">Add New Client</button>
             <div className="modal fade" id="form"
                 data-bs-backdrop="static"
                 data-bs-keyboard="false"
