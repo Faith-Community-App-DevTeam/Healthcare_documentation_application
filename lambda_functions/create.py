@@ -79,7 +79,7 @@ def create_token(payload: dict) -> dict:
     return payload
 
 
-def create(payload, operation):
+def create_user(payload, operation):
     '''
     testing on creating new user.
     As of now it is configered for a single json file
@@ -93,6 +93,7 @@ def create(payload, operation):
     
     
     s3 = boto3.resource("s3", region_name = REGION_NAME)
+    operation = "user"
     obj_list = {}
     try:
         print("Getting bucket")
@@ -201,12 +202,6 @@ def create_client(payload: dict) -> dict:
                 }
             }
         
-    
-    
-    
-
-def create_user(payload: dict) -> dict:
-    return create(payload=payload, operation="user")
 
 def create_network(payload: dict) -> dict:
     return create(payload=payload, operation="network")
