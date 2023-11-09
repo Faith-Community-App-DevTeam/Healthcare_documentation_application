@@ -1,0 +1,55 @@
+{
+    "operation": "create_user",
+    "payload": {
+        "username": "billybob",
+        "password": "password",
+        "first_name": "billy",
+        "last_name:" "bob"
+    }
+}
+
+{
+    "operation": "user_login",
+    "payload": {
+        "username": "billybob",
+        "password": "password"
+    }
+}
+
+{
+    "operation": "create_client",
+    "payload": {
+        "token": "",
+        "username": "",
+        "client_info": {
+            "first_name": "",
+            ...
+        }
+    }
+}
+
+{
+    "operation": "get_client",
+    "payload": {
+        "token": "",
+        "username": "",
+        "last_name": "",
+        "dob": ""
+    }
+}
+
+{
+    "operation": "get_user_client_list",
+    "payload": {
+        "token": "",
+        "username": ""
+    }
+}
+
+{
+    "operation": "get_user",
+    "payload": {
+        "username": "",
+        "include_list": []
+    }
+}
