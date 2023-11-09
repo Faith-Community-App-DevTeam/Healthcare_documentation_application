@@ -70,7 +70,7 @@ def encrypt_password(payload: dict):
     print("encrypting password")
     payload["password"] = hashlib.sha256(bytes(payload["password"], 'utf-8')).hexdigest()
     print('password encrypted')
-    return create_token
+    return create_token(payload)
 
 def create_token(payload: dict) -> dict:
     print("Creating token")
