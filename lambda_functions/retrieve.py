@@ -50,10 +50,13 @@ def get_client(payload: dict) -> dict:
     client_list = json.loads(response['Body'].read())
     
     print(type(payload))
-    network_id = payload["network_id"]
+    user = get_user(payload["username"],["network_id","church_id"])
+
+    network_id = user["network_id"]
+    church_id = user["church_id"]
     last_name = payload["last_name"]
     dob = payload["dob"]
-    client_list = client_list[network_id]
+    client_list = client_list[network_id][church_id]
     
     for client in client_list:
         stored_last_name = client["last_name"]
