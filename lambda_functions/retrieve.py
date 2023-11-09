@@ -67,7 +67,7 @@ def get_client(payload: dict) -> dict:
                     "success": True,
                     "return_payload": {
                         "message": "successfully retrieved client",
-                        "clients": client
+                        "client": client
                     }
                 }
     return {
