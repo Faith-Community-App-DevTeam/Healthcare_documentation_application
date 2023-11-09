@@ -17,22 +17,13 @@ def get_all_users_as_list() -> list:
     #print(users)
     return users
 
-def get_user(payload: dict):
+def get_user(payload: dict, include_list: list) -> dict:
     '''
-    retrieves a specific user's information from the database
-    function takes a payload with a user's username
-    returns a responce with a new key value user: user info
+    Returns users based on a given list of wanted info
     '''
     user_list = get_all_users_as_list()
     #a list of info to include in the response payload
-    include_list = [ 
-        "first_name",
-        "last_name",
-        "address",
-        "phone_number",
-        "license_state",
-        "license_number"
-    ]
+
     print("getting user info")
     if payload["username"] in user_list.keys():
         print("found user data")
@@ -57,12 +48,14 @@ def get_client(payload: dict) -> dict:
     s3 = boto3.resource("s3", region_name=REGION_NAME)
     response = s3.Object(CLIENT_BUCKET, "client_list.json").get()
     client_list = json.loads(response['Body'].read())
-    
-    print(type(payload))
-    network_id = payload["network_id"]
+    response = s3.Object(USER_BUCKET, "user_list.json").get()
+    user = json.loads(response['Body'].read())[payload["username"]]
+
+    network_id = user["network_id"]
+    church_id = user["church_id"]
     last_name = payload["last_name"]
     dob = payload["dob"]
-    client_list = client_list[network_id]
+    client_list = client_list[network_id][church_id]
     
     for client in client_list:
         stored_last_name = client["last_name"]
@@ -74,7 +67,7 @@ def get_client(payload: dict) -> dict:
                     "success": True,
                     "return_payload": {
                         "message": "successfully retrieved client",
-                        "clients": client
+                        "client": client
                     }
                 }
     return {
@@ -85,7 +78,12 @@ def get_client(payload: dict) -> dict:
     }
     
 def get_user_client_list(payload: dict) -> dict:
-    
+    include_list = [ 
+        "first_name",
+        "last_name",
+        "dob",
+        "gender",
+    ]
     client_list = {}
     try:
         s3 = boto3.resource("s3", region_name=REGION_NAME)
@@ -112,4 +110,14 @@ def get_user_client_list(payload: dict) -> dict:
             }
         }
 
-    
+def user_login(payload: dict) -> dict:
+    include_list = [ 
+        "first_name",
+        "last_name",
+        "address",
+        "phone_number",
+        "license_state",
+        "license_number",
+        "token"
+    ]
+    return get_user(payload, include_list)

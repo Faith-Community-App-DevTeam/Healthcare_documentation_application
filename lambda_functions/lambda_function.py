@@ -17,17 +17,16 @@ def authenticate(payload: dict, operation) -> bool:
     authenticate the payload and return true or false if the username and password match
     """
     username = payload['username']
-    password = payload['password']
     operation = operation
 
     # we can always create a new user, go ahead and allow the script to work from there
     if operation == "create_user":
         return True
     elif operation == "user_login":
-        return verify_credentials(username, password)
+        return verify_credentials(username, payload['password'])
     else:
         #if anything else check if user is authenticated
-        return payload['is_authenticate']
+        return verify_token(username, payload['token'])
     
 
 
@@ -44,6 +43,20 @@ def verify_credentials(username: str, password) -> bool:
         print(stored_password)
         if password == stored_password:
             return True
+    return False
+
+def verify_token(username, token):
+    # separate function to connect to S3, pull the user file, and check to see if the token matches
+    s3 = boto3.resource("s3", region_name=REGION_NAME)
+    print("verifying token")
+    user_list = get_all_users_as_list()
+    print(user_list)
+    if username in user_list.keys():
+        stored_token = user_list[username]["token"]
+        if token == stored_token:
+            print("token verified")
+            return True
+    print("wrong token")
     return False
 
 def lambda_handler(event, context):
