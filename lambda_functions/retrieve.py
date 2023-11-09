@@ -48,9 +48,8 @@ def get_client(payload: dict) -> dict:
     s3 = boto3.resource("s3", region_name=REGION_NAME)
     response = s3.Object(CLIENT_BUCKET, "client_list.json").get()
     client_list = json.loads(response['Body'].read())
-    
-    print(type(payload))
-    user = get_user(payload["username"],["network_id","church_id"])
+    response = s3.Object(USER_BUCKET, "user_list.json").get()
+    user = json.loads(response['Body'].read())[payload["username"]]
 
     network_id = user["network_id"]
     church_id = user["church_id"]
