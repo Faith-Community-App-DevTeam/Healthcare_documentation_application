@@ -86,9 +86,8 @@ def create(payload, operation):
     
     
     s3 = boto3.resource("s3", region_name = REGION_NAME)
-    #checking if user exist
     try:
-        print("hm")
+        print("Getting bucket")
         response = s3.Object(BUCKET_MAPPING[operation], FILE_MAPPING[operation]).get()
         print("response:", response)
         obj_list = json.loads(response['Body'].read())
