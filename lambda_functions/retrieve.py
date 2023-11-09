@@ -115,6 +115,7 @@ def user_login(payload: dict) -> dict:
         "address",
         "phone_number",
         "license_state",
-        "license_number"
+        "license_number",
+        "token"
     ]
     return get_user(payload, include_list)

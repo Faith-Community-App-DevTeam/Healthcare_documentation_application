@@ -2,8 +2,9 @@ import json
 import boto3
 import botocore
 import hashlib
+import random
 from aws_configs import CLIENT_BUCKET, USER_BUCKET, REGION_NAME
-from retrieve import get_all_users_as_list, get_all_networks_as_list
+from retrieve import get_all_users_as_list
 
 #setup for finding one user
 FILE_MAPPING = {
@@ -69,6 +70,12 @@ def encrypt_password(payload: dict):
     print("encrypting password")
     payload["password"] = hashlib.sha256(bytes(payload["password"], 'utf-8')).hexdigest()
     print('password encrypted')
+    return create_token
+
+def create_token(payload: dict) -> dict:
+    print("Creating token")
+    token = payload["username"] + payload["password"] + str(random.random())
+    payload["token"] = hashlib.sha256(bytes(token, 'utf-8')).hexdigest()
     return payload
 
 
@@ -86,6 +93,7 @@ def create(payload, operation):
     
     
     s3 = boto3.resource("s3", region_name = REGION_NAME)
+    obj_list = {}
     try:
         print("Getting bucket")
         response = s3.Object(BUCKET_MAPPING[operation], FILE_MAPPING[operation]).get()
@@ -98,16 +106,14 @@ def create(payload, operation):
             #if something else happened for now
             print(error)
             raise Exception(str(error))
+        else:
+            raise Exception(str(error))
             
     finally:
         payload = VALIDATION_MAPPING[operation](payload)  # validation of objects happens here
         keyword = "username"
             
-        if payload[keyword] in obj_list:
-            print("testing", obj_list[payload[keyword]])
-            obj_list[payload[keyword]].append(payload)
-        else:
-            obj_list[payload[keyword]] = {key:value for key,value in payload.items() if key != keyword}
+        obj_list[payload[keyword]] = {key:value for key,value in payload.items() if key != keyword}
         
         #dumping user setting into s3 bucket
         try:
@@ -116,7 +122,8 @@ def create(payload, operation):
             return {
                 "success":True,
                 "return_payload": {
-                    "message": "Operation Success"
+                    "message": "Operation Success",
+                    "token": payload["token"]
                 }
             }
             
