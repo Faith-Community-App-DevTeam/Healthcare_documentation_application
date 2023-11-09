@@ -1,9 +1,10 @@
 
 {
-    "billybob": {
+    "username": {
         "user_id": "1",
         "username": "billybob",
         "password": "password",
+        "token": "",
         "first_name": "liam",
         "last_name": "alfaro",
         "address": "",
