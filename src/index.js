@@ -7,6 +7,7 @@ import Login from './pages/login/Login';
 import "./custom.scss"
 import Home from './pages/home/Home';
 
+
 const router = createHashRouter([
   { path: "/*", element: <App />, }
 ])

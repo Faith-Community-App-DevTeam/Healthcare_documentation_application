@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Topbar from '../../components/topbar/Topbar';
 import { useNavigate } from 'react-router-dom';
+import UserContext from '../../components/userContext/userContext';
 //import './login.css'
+import fetchData from '../../components/functions/apiRequest'
 
 export default function Login({ hasAccount }) {
-    const urlEndPoint = "https://fvdwdl1hmg.execute-api.us-east-1.amazonaws.com/beta/FCNA_Handler"
+
     const navigate = useNavigate()
 
+    const { user, setUser } = useContext(UserContext)
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -79,7 +82,7 @@ export default function Login({ hasAccount }) {
             </div>
         )
     }
-    const handleSubmit = (e) => {
+    async function handleSubmit(e) {
         e.preventDefault(); //prevents redirect
         let data = ''
         if (hasAccount) {
@@ -105,33 +108,28 @@ export default function Login({ hasAccount }) {
             }
         }
 
-        console.log(JSON.stringify(data))
-        fetch(urlEndPoint, {
-            method: "POST",
-            mode: "cors",
-            // headers: {
-            //     'Content-Type': 'application/json',
-            // },
-            body: JSON.stringify(data)
+        const res = await fetchData("POST", data)
+        console.log(res)
 
-        }).then(response => {
-            const data = response.json()
-            return data
-        }).then(data => {
+        if (res['body']['success']) {
+            console.log("success");
+            setUser({
+                ...user,
+                username: username,
+                password: password,
+                is_authenticate: true
+            });
+            navigate("/dashboard");
+        }
 
-            console.log(data)
-            if (data['body']['success'] === true) {
-                console.log("success")
-                navigate('/home')
-            }
-        })
+
 
 
     }
     return (
         <>
             <Topbar />
-            <div className="bg-primary" style={{ height: "100vh" }}>
+            <div className="bg-primary vh-100">
                 <section className="text-center">
                     <div className="p-5 bg-primary" style={{ height: 200 }}></div>
                     <div> {hasAccount ? SignIn() : SignUp()}  </div>

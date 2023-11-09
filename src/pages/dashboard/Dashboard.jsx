@@ -1,51 +1,69 @@
 import Sidebar from "../../components/sidebar/Sidebar";
 import Topbar from "../../components/topbar/Topbar";
 import data from "./data.json";
+import { useContext } from "react";
+import UserContext from "../../components/userContext/userContext";
+import PatientCard from "../../components/patientCard/PatientCard";
+import NewClientForm from "../../components/forms/NewClientForm";
+import fetchData from "../../components/functions/apiRequest";
 
 
 const Dashboard = () => {
+    const user = useContext(UserContext).user
 
-    const getHeadings = () => {
-        return Object.keys(data[0])
+    const arr = []
+
+    //request basic client info from backend
+    async function getClients() {
+        let data = {
+            operation: 'get_clients_by_network',
+            payload: {
+                ...user
+            }
+        }
+
+        const res = await fetchData('POST', data)
+        if (res['body']['success']) {
+
+            const clientList = res['body']['clients']
+            for (let i = 0; i < Object.keys(clientList).length; i++) {
+                arr.push(<PatientCard client={clientList[i]} />)
+            }
+        }
+
     }
 
+    // TO BE DELETED WHEN BACKEND WORKS
+    function getData() {
+        for (let i = 0; i < Object.keys(data).length; i++) {
+            arr.push(<PatientCard client={data[i]} />)
+        }
+        return arr
+    }
 
     return (
         <>
-            <div style={{ height: "100vh" }}>
+            <div className="bg-light">
                 <Topbar />
                 <div className="d-flex">
-                    <Sidebar user="Jaaliyah A" />
-                    <div className="container-md px-4" style={{ marginTop: 25 }}>
+                    <Sidebar />
+                    <div className="container px-4" style={{ marginTop: 20 }}>
                         <div className="container-fluid">
-                            <form action="POST" className="d-flex">
-                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                <button class="btn btn-outline-success" type="submit">Search</button>
-
+                            <div className="d-flex justify-content-between m-2">
+                                <h1 className="display-6 text-primary"> All Clients</h1>
+                                <NewClientForm />
+                            </div>
+                            <hr></hr>
+                            <form action="POST" className="container-fluid d-flex">
+                                <input class="form-control form-control-lg me-4 mb-4" type="search" placeholder="Search Clients" aria-label="Search" />
+                                <button class="btn btn-outline-primary mb-4" type="search">Search</button>
                             </form>
                         </div>
-                        <h1 className="display-6 text-primary"> All Clients</h1>
-                        <hr></hr>
-                        <div class="card-body table-responsive-md" style={{ maxHeight: 600 }}>
-                            <table className="table" style={{ border: "0.2px solid black" }}>
-                                <thead>
-                                    <tr>
-                                        {getHeadings().map(heading => {
-                                            return <th key={heading}>{heading}</th>
-                                        })}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {data.map((row, index) => {
-                                        return <tr key={index}>
-                                            {getHeadings().map((key, index) => {
-                                                return <td key={row[key]}>{row[key]}</td>
-                                            })}
-                                        </tr>;
-                                    })}
-                                </tbody>
-                            </table>
+                        <div class="card-body overflow-scroll table-responsive-md" style={{ maxHeight: 650 }}>
+                            {getData()}
                         </div>
+
+
                     </div>
                 </div>
             </div>

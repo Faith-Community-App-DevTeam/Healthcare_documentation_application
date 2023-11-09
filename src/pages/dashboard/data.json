@@ -58,5 +58,136 @@
         "date_of_birth": "1978-12-12",
         "occupation": "Engineer",
         "medications": []
+    },
+    {
+        "client_id": 1,
+        "first_name": "Alice",
+        "last_name": "Johnson",
+        "age": 28,
+        "gender": "Female",
+        "date_of_birth": "1995-08-10",
+        "occupation": "Nurse",
+        "medications": [
+            "Aspirin",
+            "Lisinopril"
+        ]
+    },
+    {
+        "client_id": 2,
+        "first_name": "Robert",
+        "last_name": "Smith",
+        "age": 45,
+        "gender": "Male",
+        "date_of_birth": "1978-03-22",
+        "occupation": "Teacher",
+        "medications": [
+            "Metformin",
+            "Simvastatin"
+        ]
+    },
+    {
+        "client_id": 3,
+        "first_name": "Sophia",
+        "last_name": "Williams",
+        "age": 35,
+        "gender": "Female",
+        "date_of_birth": "1987-12-05",
+        "occupation": "Engineer",
+        "medications": [
+            "Amoxicillin",
+            "Atorvastatin"
+        ]
+    },
+    {
+        "client_id": 4,
+        "first_name": "Daniel",
+        "last_name": "Brown",
+        "age": 50,
+        "gender": "Male",
+        "date_of_birth": "1973-05-18",
+        "occupation": "Accountant",
+        "medications": [
+            "Losartan",
+            "Warfarin"
+        ]
+    },
+    {
+        "client_id": 5,
+        "first_name": "Olivia",
+        "last_name": "Davis",
+        "age": 32,
+        "gender": "Female",
+        "date_of_birth": "1991-09-30",
+        "occupation": "Dentist",
+        "medications": [
+            "Metoprolol",
+            "Omeprazole"
+        ]
+    },
+    {
+        "client_id": 6,
+        "first_name": "Ethan",
+        "last_name": "Garcia",
+        "age": 40,
+        "gender": "Male",
+        "date_of_birth": "1983-11-14",
+        "occupation": "Software Developer",
+        "medications": [
+            "Hydrochlorothiazide",
+            "Prednisone"
+        ]
+    },
+    {
+        "client_id": 7,
+        "first_name": "Ava",
+        "last_name": "Martinez",
+        "age": 26,
+        "gender": "Female",
+        "date_of_birth": "1997-04-25",
+        "occupation": "Graphic Designer",
+        "medications": [
+            "Ibuprofen",
+            "Levothyroxine"
+        ]
+    },
+    {
+        "client_id": 8,
+        "first_name": "Liam",
+        "last_name": "Rodriguez",
+        "age": 38,
+        "gender": "Male",
+        "date_of_birth": "1985-08-08",
+        "occupation": "Marketing Manager",
+        "medications": [
+            "Acetaminophen",
+            "Fluticasone"
+        ]
+    },
+    {
+        "client_id": 9,
+        "first_name": "Mia",
+        "last_name": "Lopez",
+        "age": 31,
+        "gender": "Female",
+        "date_of_birth": "1992-11-07",
+        "occupation": "Physical Therapist",
+        "medications": [
+            "Citalopram",
+            "Metformin"
+        ]
+    },
+    {
+        "client_id": 10,
+        "picture": "https://i.pinimg.com/736x/66/2f/74/662f7402fc45aeb404001cec62023286.jpg",
+        "first_name": "Noah",
+        "last_name": "Perez",
+        "age": 48,
+        "gender": "Male",
+        "date_of_birth": "1975-02-19",
+        "occupation": "Architect",
+        "medications": [
+            "Escitalopram",
+            "Rosuvastatin"
+        ]
     }
 ]
