@@ -3,7 +3,7 @@ import boto3
 import botocore
 import hashlib
 import random
-from aws_configs import CLIENT_BUCKET, USER_BUCKET, REGION_NAME
+from aws_configs import CLIENT_BUCKET, USER_BUCKET, REGION_NAME, CLIENT_DATA, USER_DATA
 from retrieve import get_all_users_as_list
 
 #setup for finding one user
@@ -23,6 +23,11 @@ VALIDATION_MAPPING = {
     "client": lambda payload: validate_new_client(payload)
 }
 
+FORMAT_MAPPING = {
+    "user": lambda payload: format_user_data(payload, USER_DATA),
+    "client": lambda payload: format_client_data(payload, CLIENT_DATA)
+}
+
 def validate_new_user(payload: dict) -> dict:
     '''
         function makes sure this user does not already exist by username
@@ -34,13 +39,11 @@ def validate_new_user(payload: dict) -> dict:
         raise Exception("User already exists")
     return encrypt_password(payload)
     
-def validate_new_client(payload: dict, client_list: dict) -> dict:
+def validate_new_client(payload: dict, client_list: dict, network_id, church_id) -> dict:
     '''
         Checks if the client does not exist in the client list 
     '''
     print("Validating new client")
-    network_id = payload["network_id"]
-    church_id = payload["church_id"]
     client_lastname = payload["client_info"]['last_name']
     client_dob = payload["client_info"]['dob']
     
@@ -65,8 +68,19 @@ def create_token(payload: dict) -> dict:
     payload["token"] = hashlib.sha256(bytes(token, 'utf-8')).hexdigest()
     return payload
 
+def format_user_data(payload: dict, default_data) -> dict:
+    new_payload = default_data
+    new_payload.update(payload)
+    return new_payload
 
-def create_user(payload, operation):
+def format_client_data(payload: dict, default_data) -> dict:
+    new_payload = default_data
+    client_info = payload["client_info"]
+    new_payload.update(client_info)
+    return new_payload
+    
+
+def create_user(payload):
     '''
     testing on creating new user.
     As of now it is configered for a single json file
@@ -99,6 +113,7 @@ def create_user(payload, operation):
             
     finally:
         payload = VALIDATION_MAPPING[operation](payload)  # validation of objects happens here
+        payload = FORMAT_MAPPING[operation](payload)
         keyword = "username"
             
         obj_list[payload[keyword]] = {key:value for key,value in payload.items() if key != keyword}
@@ -159,13 +174,14 @@ def create_client(payload: dict) -> dict:
             raise Exception(str(error))
     else:
         print("creating new client")
-        payload = validate_new_client(payload, client_list)
         
-        #unloading payload
-        #planning on just calling retrieve user func to get theses details
-        network_id = payload["network_id"]
-        church_id = payload["church_id"]
-        client_info = payload.get('client_info')
+        response = s3.Object(USER_BUCKET, "user_list.json").get()
+        user = json.loads(response['Body'].read())[payload["username"]]
+    
+        network_id = user["network_id"]
+        church_id = user["church_id"]
+        payload = validate_new_client(payload, client_list, network_id, church_id)
+        client_info = FORMAT_MAPPING[operation](payload)
         
         client_list[network_id][church_id].append(client_info)
         
