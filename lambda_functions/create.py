@@ -120,7 +120,7 @@ def create_user(payload):
         
         #dumping user setting into s3 bucket
         try:
-            s3.Bucket(BUCKET_MAPPING[operation]).put_object(Body = json.dumps(obj_list), Key = FILE_MAPPING[operation], ContentType = 'json')
+            s3.Bucket(BUCKET_MAPPING[operation]).put_object(Body = json.dumps(obj_list, indent=2), Key = FILE_MAPPING[operation], ContentType = 'json')
             
             return {
                 "success":True,
@@ -188,7 +188,7 @@ def create_client(payload: dict) -> dict:
         #Attempting to upload newly created client 
         try:
             print("uploading client file")
-            s3.Bucket(BUCKET_MAPPING[operation]).put_object(Body = json.dumps(client_list), Key = FILE_MAPPING[operation], ContentType = 'json')
+            s3.Bucket(BUCKET_MAPPING[operation]).put_object(Body = json.dumps(client_list, indent=2), Key = FILE_MAPPING[operation], ContentType = 'json')
             print("upload success")
             return {
                 "success":True,
@@ -254,7 +254,7 @@ def create_document(payload: dict) -> dict:
                 month: [document_info]
             }
         
-        s3.Bucket(BUCKET_MAPPING[operation]).put_object(Body = json.dumps(document_list), Key = json_name, ContentType = 'json')
+        s3.Bucket(BUCKET_MAPPING[operation]).put_object(Body = json.dumps(document_list, indent=2), Key = json_name, ContentType = 'json')
         print("document")
         
         return {
@@ -277,7 +277,7 @@ def create_document(payload: dict) -> dict:
             }
             
             s3 = boto3.resource("s3", region_name = REGION_NAME)
-            s3.Bucket(BUCKET_MAPPING[operation]).put_object(Body = json.dumps(document_info), Key = json_name, ContentType = 'json')
+            s3.Bucket(BUCKET_MAPPING[operation]).put_object(Body = json.dumps(document_info, indent=2), Key = json_name, ContentType = 'json')
             print("document created")
             
             return {
