@@ -9,21 +9,18 @@ from retrieve import get_all_users_as_list
 #setup for finding one user
 FILE_MAPPING = {
     "user": 'user_list.json',
-    'client': 'client_list.json',
-    "network": "network_list.json"
+    'client': 'client_list.json'
 }
 
 BUCKET_MAPPING = {
     "user": USER_BUCKET,
     'client': CLIENT_BUCKET,
-    "network": USER_BUCKET
+    "document": CLIENT_BUCKET
 }
-
 
 VALIDATION_MAPPING = {
     "user": lambda payload: validate_new_user(payload),
-    "client": lambda payload: validate_new_client(payload),
-    "network": lambda payload: validate_new_network(payload)
+    "client": lambda payload: validate_new_client(payload)
 }
 
 def validate_new_user(payload: dict) -> dict:
@@ -52,16 +49,6 @@ def validate_new_client(payload: dict, client_list: dict) -> dict:
         if client_lastname == client['last_name'] and client_dob == client['dob']:
             raise Exception("Client already exists")
     return payload
-
-def validate_new_network(payload: dict) -> dict:
-    del payload["username"]
-    del payload["password"]
-    for network in get_all_networks_as_list():
-        if payload['name'] == network['name']:
-            raise Exception("Network already exists already exists")
-    return payload
-    
-
 
 def encrypt_password(payload: dict):
     '''
@@ -203,9 +190,89 @@ def create_client(payload: dict) -> dict:
             }
         
 
-def create_network(payload: dict) -> dict:
-    return create(payload=payload, operation="network")
+def create_document(payload: dict) -> dict:
+    """
+        A function that creates a json (if not already created) by year.
+        appends documents to corresponding list by client_id > month > list_of_documents
 
-def create_service_report(payload):
-    pass
+        payload:
+            username: str
+            token: str
+            document_info: {
+                client_id:
+                date:
+                document_type:
+                ...
+            }
+    """
+    s3 = boto3.client("s3", region_name  = REGION_NAME)
+    operation = "document" 
+
+    date = payload["document_info"]["date"] #yyyy-mm-dd
+    year = date[0:4]
+    month = date[5:7]
+    #print(payload["document_info"]["date"])
+    json_name = year + ".json"
+    #print("json_name", json_name)
+    client_id = payload["document_info"]["client_id"]
+    document_info = payload.get("document_info")
+
+    #attempting to retrieve document list
+    try:
+        print("checking if ", json_name, " exists")
+        s3.head_object(Bucket = BUCKET_MAPPING[operation], Key = json_name)
+        
+        print("Object exists, Gathering document list")
+        s3 = boto3.resource("s3", region_name = REGION_NAME)
+        response = s3.Object(BUCKET_MAPPING[operation], json_name).get()
+        document_list = json.loads(response['Body'].read())
+        print("Retrieved document list: ", document_list)
+        
+        if client_id in document_list: #if client id and month exist, append
+            if month in document_list[client_id]: 
+                document_list[client_id][month].append(document_info)
+            else: 
+                document_list[client_id][month] = [document_info]
+        else: #if client_id key dne add it
+            document_list[client_id] = {
+                month: [document_info]
+            }
+        
+        s3.Bucket(BUCKET_MAPPING[operation]).put_object(Body = json.dumps(document_list), Key = json_name, ContentType = 'json')
+        print("document")
+        
+        return {
+            "success":True,
+            "return_payload": {
+                "message": "Operation Success"
+            }
+        }
+        
+    #if year.json does not exist, create it
+    except botocore.exceptions.ClientError as error:
+        if error.response['Error']['Code'] == '403':
+            print("document does not exist. creating document.")
+            document_info = {
+                client_id: {
+                    month: [
+                        document_info
+                        ]
+                }
+            }
+            
+            s3 = boto3.resource("s3", region_name = REGION_NAME)
+            s3.Bucket(BUCKET_MAPPING[operation]).put_object(Body = json.dumps(document_info), Key = json_name, ContentType = 'json')
+            print("document created")
+            
+            return {
+            "success":True,
+            "return_payload": {
+                "message": "Operation Success."
+                }
+            }
+            
+        else:
+            #if anything else happenes
+            print(error)
+            raise Exception(str(error))
 
