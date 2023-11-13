@@ -34,13 +34,13 @@ def verify_credentials(username: str, password) -> bool:
     # separate function to connect to S3, pull the user file, and check to see if the username password combo matches
     s3 = boto3.resource("s3", region_name=REGION_NAME)
     password = hashlib.sha256(bytes(password, 'utf-8')).hexdigest()
-    print(password)
+    #print(password)
     print('verifying credentials')
     user_list = get_all_users_as_list()
-    print(user_list)
+    #print(user_list)
     if username in user_list.keys():
         stored_password = user_list[username]["password"]
-        print(stored_password)
+        #print(stored_password)
         if password == stored_password:
             return True
     return False
@@ -50,7 +50,7 @@ def verify_token(username, token):
     s3 = boto3.resource("s3", region_name=REGION_NAME)
     print("verifying token")
     user_list = get_all_users_as_list()
-    print(user_list)
+    #print(user_list)
     if username in user_list.keys():
         stored_token = user_list[username]["token"]
         if token == stored_token:

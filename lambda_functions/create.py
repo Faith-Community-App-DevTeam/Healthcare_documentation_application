@@ -34,7 +34,7 @@ def validate_new_user(payload: dict) -> dict:
     '''
     print("validate the new user")
     user_list = get_all_users_as_list()
-    print("Ayooo")
+    #print("Ayooo")
     if payload["username"] in user_list.keys():
         raise Exception("User already exists")
     return encrypt_password(payload)
@@ -71,7 +71,7 @@ def create_token(payload: dict) -> dict:
 def create_client_id(payload: dict, client_id_counter: str) -> dict:
     new_client_id = int(client_id_counter) + 1
     payload["client_info"]["client_id"] = str(new_client_id)
-    print("payload", payload)
+    #print("payload", payload)
     new_client_id_counter = str(new_client_id)
     return payload, new_client_id_counter
     
@@ -109,9 +109,9 @@ def create_user(payload):
     try:
         print("Getting bucket")
         response = s3.Object(BUCKET_MAPPING[operation], FILE_MAPPING[operation]).get()
-        print("response:", response)
+        #print("response:", response)
         obj_list = json.loads(response['Body'].read())
-        print("list", obj_list)
+        #print("list", obj_list)
       
     except botocore.exceptions.ClientError as error:
         if error.response['Error']['Code'] != '404':
@@ -169,9 +169,9 @@ def create_client(payload: dict) -> dict:
     try:
         print("Gathering client list")
         response = s3.Object(BUCKET_MAPPING[operation], FILE_MAPPING[operation]).get()
-        print("response:", response)
+        #print("response:", response)
         client_list = json.loads(response['Body'].read())
-        print("Retrieved client list")
+        #print("Retrieved client list")
         client_id_counter = client_list["id_counter"]
       
     except botocore.exceptions.ClientError as error:
@@ -268,7 +268,7 @@ def create_document(payload: dict) -> dict:
             }
         
         s3.Bucket(BUCKET_MAPPING[operation]).put_object(Body = json.dumps(document_list, indent=2), Key = json_name, ContentType = 'json')
-        print("document")
+        #print("document")
         
         return {
             "success":True,
