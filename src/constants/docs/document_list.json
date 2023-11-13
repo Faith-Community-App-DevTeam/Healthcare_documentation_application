@@ -1,0 +1,67 @@
+{
+    "client_id": {
+        "month": [
+            {
+                "created_by": "",
+                "document_type": "blood_pressure_report",
+                "client_id": "",
+                "faith_community": "",
+                "date": "",
+                "clients": [
+                    {
+                        "initials": "",
+                        "first_time": false, "#comment": "is this the clients first time at church, y/n",
+                        "last_time": "", "#comment": "if not, when was their last blood screening",
+                        "follow_up": "", "#comment": "is this a follow up, y/n",
+                        "diabetic_hx": false, "#comment": "diabetic/pre-diabetic history, y/n",
+                        "category": "", "#comment": "normal, elevated, htn1, htn2, hypertensive crisis",
+                        "education": "", "#comment": "bp info, diabetes, nutrition, exercise, stress mgt, smoking, weight, other",
+                        "new_meds": false, "#comment": "y/n",
+                        "medication_education": "", "#comment": "action, side effects, precautions, med card provided",
+                        "referral": "", "#comment": "to health care provider, assistance to find provider, community resource/agency, 911/urgent care"
+                    }
+                ]
+        
+            },
+            {
+                "created_by": "",
+                "document_type": "client_care_note",
+                "client_id": "12345678",
+                "first_name": "Emma",
+                "last_name": "Johnson",
+                "date": "str",
+                "chief_concern": "str",
+                "data": "str",
+                "diagnosis": [], "#comment": "list of strings, limited choices",
+                "actions": [], "#comment": "list of strings, limited choices",
+                "response": "str",
+                "outcomes": [], "#comment": "list of strings, limited choices",
+                "final_signature": "str",
+                "outcome_date": ""
+            },
+            {
+                "created_by": "",
+                "document_type": "foot_clinic_note",
+                "client_id": "",
+                "date": "",
+                "given_socks": false,
+                "name": "",
+                "cares_delivered": "", "#comment": "hygeine, nail clipping, callous debride, referral, etc",
+                "allergies": [], "#comment": "list of strings",
+                "diabetic_hx": false, "#comment": "diabetic histroy, t/f",
+                "concerns": "",
+                "taking_blood_thinning_medication": false,
+                "smoker": false,
+                "fitting_shoes": false,
+                "pulses": {
+                    "LDP": false,
+                    "LPT": false,
+                    "RDP": false,
+                    "RPT": false
+                },
+                "lower_muscle_weakness": false,
+                "foot_malformations": [], "#comment": "any of the following: callous, redness, ulcer, dryness, maceration, tinea, unhealthy nails, bunion, hammer toe"
+            }
+        ]
+    }
+}

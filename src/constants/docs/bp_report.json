@@ -1,8 +1,9 @@
 {
-    "year": {
+    "client_id": {
         "month": [
             {
-                "user": "",
+                "created_by": "",
+                "document_type": "blood_pressure_report",
                 "faith_community": "",
                 "date": "",
                 "clients": [

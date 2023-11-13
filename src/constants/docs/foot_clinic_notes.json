@@ -1,7 +1,9 @@
 {
-    "year": {
+    "client_id": {
         "month": [
             {
+                "created_by": "",
+                "document_type": "foot_clinic_note",
                 "date": "",
                 "given_socks": false,
                 "name": "",

@@ -17,17 +17,31 @@ def get_all_users_as_list() -> list:
     #print(users)
     return users
 
-def get_user(payload: dict, include_list: list) -> dict:
+def get_user(payload: dict) -> dict:
     '''
     Returns users based on a given list of wanted info
     '''
     user_list = get_all_users_as_list()
+    include_list = []
+    if "include_list" not in payload.keys():
+        include_list = [ 
+            "first_name",
+            "last_name",
+            "address",
+            "phone_number",
+            "license_state",
+            "license_number",
+            "token"
+        ]
+    else:
+        include_list = payload["include_list"]
+    
     #a list of info to include in the response payload
 
     print("getting user info")
-    if payload["username"] in user_list.keys():
+    if payload["user_to_find"] in user_list.keys():
         print("found user data")
-        user = user_list[payload["username"]]
+        user = user_list[payload["user_to_find"]]
         user = {key:value for key,value in user.items() if key in include_list}
         return {
             "success": True,
@@ -99,8 +113,11 @@ def get_user_client_list(payload: dict) -> dict:
     
     #Want to get user info from calling a function instead of relying on the front end to get that info for us
     #For now it is setup like this
-    network_id = payload["network_id"]
-    church_id = payload["church_id"]
+    response = s3.Object(USER_BUCKET, "user_list.json").get()
+    user = json.loads(response['Body'].read())[payload["username"]]
+    
+    network_id = user["network_id"]
+    church_id = user["church_id"]
         
     return {
             "success": True,
@@ -111,13 +128,5 @@ def get_user_client_list(payload: dict) -> dict:
         }
 
 def user_login(payload: dict) -> dict:
-    include_list = [ 
-        "first_name",
-        "last_name",
-        "address",
-        "phone_number",
-        "license_state",
-        "license_number",
-        "token"
-    ]
-    return get_user(payload, include_list)
+    payload["user_to_find"] = payload["username"]
+    return get_user(payload)

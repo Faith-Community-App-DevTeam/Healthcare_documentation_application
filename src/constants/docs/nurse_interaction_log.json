@@ -1,7 +1,9 @@
 {
-    "year": {
+    "client_id": {
         "month": [
             {
+                "created_by": "",
+                "document_type": "nurse_interaction_log",
                 "date": "",
                 "client": "",
                 "comments": "",

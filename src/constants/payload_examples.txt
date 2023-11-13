@@ -1,55 +1,69 @@
 {
-    "operation": "create_user",
-    "payload": {
-        "username": "billybob",
-        "password": "password",
-        "first_name": "billy",
-        "last_name:" "bob"
-    }
+  "operation": "create_user",
+  "payload": {
+    "username": "billybob",
+    "password": "password"
+  }
 }
 
 {
-    "operation": "user_login",
-    "payload": {
-        "username": "billybob",
-        "password": "password"
-    }
+  "operation": "user_login",
+  "payload": {
+    "username": "billybob",
+    "password": "password"
+  }
 }
 
 {
-    "operation": "create_client",
-    "payload": {
-        "token": "",
-        "username": "",
-        "client_info": {
-            "first_name": "",
-            ...
-        }
-    }
+  "operation": "get_client",
+  "payload": {
+    "username": "billybob",
+    "token": "3cd13254c34553c2a078ed30da5073c16355a15790dac2a0f34ce75c4e686482",
+    "last_name": "alfaro",
+    "dob": "1999-09-19"
+  }
 }
 
 {
-    "operation": "get_client",
-    "payload": {
-        "token": "",
-        "username": "",
-        "last_name": "",
-        "dob": ""
+  "operation": "create_client",
+  "payload": {
+    "username": "billybob",
+    "token": "3cd13254c34553c2a078ed30da5073c16355a15790dac2a0f34ce75c4e686482",
+    "client_info": {
+        "first_name": "Noah",
+        "last_name": "Perez",
+        "dob": "2000-02-06"
     }
+  }
 }
 
 {
-    "operation": "get_user_client_list",
-    "payload": {
-        "token": "",
-        "username": ""
-    }
+  "operation": "get_user_client_list",
+  "payload": {
+    "username": "billybob",
+    "token": "3cd13254c34553c2a078ed30da5073c16355a15790dac2a0f34ce75c4e686482"
+  }
 }
 
 {
-    "operation": "get_user",
-    "payload": {
-        "username": "",
-        "include_list": []
+  "operation": "get_user",
+  "payload": {
+    "username": "billybob",
+    "token": "3cd13254c34553c2a078ed30da5073c16355a15790dac2a0f34ce75c4e686482",
+    "user_to_find": "lpalfaro",
+    "include_list": [], "#comment": "list of strings, optional"
+  }
+}
+
+{
+  "operation": "create_document",
+  "payload": {
+    "username": "billybob",
+    "token": "3cd13254c34553c2a078ed30da5073c16355a15790dac2a0f34ce75c4e686482",
+    "document_info": {
+        "client_id": "000000",
+        "date": "2023-09-19",
+        "document_type": "blood_pressure_screening"
     }
+  }
 }

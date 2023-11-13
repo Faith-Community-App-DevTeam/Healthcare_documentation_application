@@ -67,6 +67,14 @@ def create_token(payload: dict) -> dict:
     token = payload["username"] + payload["password"] + str(random.random())
     payload["token"] = hashlib.sha256(bytes(token, 'utf-8')).hexdigest()
     return payload
+    
+def create_client_id(payload: dict, client_id_counter: str) -> dict:
+    new_client_id = int(client_id_counter) + 1
+    payload["client_info"]["client_id"] = str(new_client_id)
+    print("payload", payload)
+    new_client_id_counter = str(new_client_id)
+    return payload, new_client_id_counter
+    
 
 def format_user_data(payload: dict, default_data) -> dict:
     new_payload = default_data
@@ -75,8 +83,10 @@ def format_user_data(payload: dict, default_data) -> dict:
 
 def format_client_data(payload: dict, default_data) -> dict:
     new_payload = default_data
+    enrolled_by = payload["username"]
     client_info = payload["client_info"]
     new_payload.update(client_info)
+    new_payload["enrolled_by"] = enrolled_by
     return new_payload
     
 
@@ -162,6 +172,7 @@ def create_client(payload: dict) -> dict:
         print("response:", response)
         client_list = json.loads(response['Body'].read())
         print("Retrieved client list")
+        client_id_counter = client_list["id_counter"]
       
     except botocore.exceptions.ClientError as error:
         if error.response['Error']['Code'] != '404':
@@ -181,8 +192,10 @@ def create_client(payload: dict) -> dict:
         network_id = user["network_id"]
         church_id = user["church_id"]
         payload = validate_new_client(payload, client_list, network_id, church_id)
+        client_info, new_client_id_counter = create_client_id(payload, client_id_counter)
         client_info = FORMAT_MAPPING[operation](payload)
         
+        client_list["id_counter"] = new_client_id_counter
         client_list[network_id][church_id].append(client_info)
         
         #Attempting to upload newly created client 
