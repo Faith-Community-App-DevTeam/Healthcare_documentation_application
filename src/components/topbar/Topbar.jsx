@@ -20,7 +20,7 @@ const Topbar = () => {
         <nav className="navbar sticky-top bg-primary bg-opacity-75">
             <div className="container-fluid">
                 <span className="navbar-brand text-white">Faith Community Nursing EHR</span>
-                {user.username != null && user.is_authenticate ? viewUserName : viewLogin}
+                {user.username != null && user.isLoggedIn ? viewUserName : viewLogin}
             </div>
 
 

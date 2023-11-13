@@ -4,14 +4,15 @@ import { useContext, useState } from "react";
 import UserContext from "../../components/userContext/userContext";
 import fetchData from "../../components/functions/apiRequest";
 import OneToOneIntForm from "./OneToOneIntForm";
-import { useNavigate } from "react-router-dom"
+
 
 export default function NewEncouter() {
     const { state } = useLocation();
-    const { client } = state.client || {};
+    const { client } = state || {};
     const user = useContext(UserContext).user
+
     const initform = {
-        client_id: client.id,
+        client_id: client.client_id,
         document_type: "client_care_notes"
     }
 
@@ -43,6 +44,7 @@ export default function NewEncouter() {
 
         if (res['body']['success']) {
             userInfo = res['body']['user']
+            console.log(userInfo)
 
         }
 
@@ -50,6 +52,7 @@ export default function NewEncouter() {
 
     return (
         <>
+            {() => console.log(client.id)}
             {getUserData}
             <div className="containter bg-light vh-100">
                 <Topbar />

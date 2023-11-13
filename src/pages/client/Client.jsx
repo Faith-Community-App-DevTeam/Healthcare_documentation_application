@@ -14,7 +14,7 @@ export default function Client(c) {
     }
 
     const handleNewEncounter = () => {
-        nav("/new-encounter", client)
+        nav("/new-encounter", { state: { client } })
     }
     return (
 

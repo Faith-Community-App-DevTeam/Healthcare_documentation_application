@@ -1,7 +1,7 @@
 import Sidebar from "../../components/sidebar/Sidebar";
 import Topbar from "../../components/topbar/Topbar";
 import data from "./data.json";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserContext from "../../components/userContext/userContext";
 import PatientCard from "../../components/patientCard/PatientCard";
 import NewClientForm from "../../components/forms/NewClientForm";
@@ -10,37 +10,46 @@ import fetchData from "../../components/functions/apiRequest";
 
 const Dashboard = () => {
     const user = useContext(UserContext).user
-
+    const [clients, setClient] = useState()
     const arr = []
 
+
+    useEffect(() => {
+        async function getData() {
+            let data = {
+                operation: 'get_user_client_list',
+                payload: {
+                    username: user.username,
+                    token: user.token,
+                }
+            }
+            const res = await fetchData('POST', data)
+
+            if (!ignore && res['body']['success']) {
+                setClient(res['body']["return_payload"]['client_list'])
+                console.log(res)
+            }
+        }
+
+        let ignore = false;
+        getData()
+        return () => {
+            ignore = true;
+        }
+    }, [clients]);
+
+
+
     //request basic client info from backend
-    async function getClients() {
-        let data = {
-            operation: 'get_client_list',
-            payload: {
-                username: user.username,
-                token: user.token,
-            }
-        }
+    function getClients() {
 
-        const res = await fetchData('POST', data)
-        console.log(res)
-        if (res['body']['success']) {
-            const clientList = res['body']['clients']
-            for (let i = 0; i < Object.keys(clientList).length; i++) {
-                arr.push(<PatientCard client={clientList[i]} />)
-            }
+        console.log("clients" + clients)
+        for (let i = 0; i < Object.keys(clients).length; i++) {
+            arr.push(<PatientCard client={clients[i]} />)
         }
-
+        return (arr)
     }
 
-    // TO BE DELETED WHEN BACKEND WORKS
-    function getData() {
-        for (let i = 0; i < Object.keys(data).length; i++) {
-            arr.push(<PatientCard client={data[i]} />)
-        }
-        return arr
-    }
 
     return (
         <>
@@ -74,10 +83,10 @@ const Dashboard = () => {
                                 <div className="p-2 col">DOB</div>
                             </div>
                         </div>
-                        <div class="card-body overflow-scroll" style={{ maxHeight: "70vh" }}>
+                        {!!clients && (<div class="card-body overflow-scroll" style={{ maxHeight: "70vh" }}>
+                            {getClients()}
+                        </div>)}
 
-                            {getData()}
-                        </div>
 
                     </div>
                 </div>

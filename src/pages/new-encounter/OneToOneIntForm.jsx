@@ -1,8 +1,10 @@
-import { useState } from "react";
-export default function OneToOneIntForm() {
-
+import { useContext, useState } from "react";
+import UserContext from "../../components/userContext/userContext";
+import fetchData from "../../components/functions/apiRequest";
+export default function OneToOneIntForm(initform) {
+    const user = useContext(UserContext).user
     const [form, setForm] = useState({});
-
+    const init = initform.initform
 
     const date = (theDate) => {
         const d = new Date(theDate)
@@ -19,8 +21,30 @@ export default function OneToOneIntForm() {
     };
 
     async function handleSubmit(e) {
-        e.prventDefault();
+        e.preventDefault();
 
+        setForm({ ...init, ...form })
+        console.log(init)
+        console.log(form)
+        console.log(init.client_id)
+
+
+
+        const data = {
+            operation: "create_document",
+            payload: {
+                username: user.username,
+                token: user.token,
+                document_info: form
+            }
+        }
+        console.log(data)
+        const res = await fetchData("POST", data)
+        console.log(res)
+        if (res['body']['success']) {
+            console.log("success")
+            //navigate()
+        }
     }
 
 
