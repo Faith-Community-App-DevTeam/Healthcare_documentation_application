@@ -83,8 +83,10 @@ def format_user_data(payload: dict, default_data) -> dict:
 
 def format_client_data(payload: dict, default_data) -> dict:
     new_payload = default_data
+    enrolled_by = payload["username"]
     client_info = payload["client_info"]
     new_payload.update(client_info)
+    new_payload["enrolled_by"] = enrolled_by
     return new_payload
     
 
