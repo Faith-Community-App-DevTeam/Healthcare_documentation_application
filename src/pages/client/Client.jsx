@@ -1,15 +1,20 @@
 import Sidebar from "../../components/sidebar/Sidebar";
 import Topbar from "../../components/topbar/Topbar";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 export default function Client(c) {
     const { state } = useLocation();
     const { client } = state.client || {};
+    const nav = useNavigate()
 
     const date = (theDate) => {
         const d = new Date(theDate)
         return d.toLocaleDateString();
+    }
+
+    const handleNewEncounter = () => {
+        nav("/new-encounter", client)
     }
     return (
 
@@ -20,7 +25,7 @@ export default function Client(c) {
                     <div className="container-fluid mb-4 text-center d-flex justify-content-between">
                         <button className="btn btn-outline-primary">Back to All Clients</button>
                         <h1 className="display-6 text-primary">Client Profile</h1>
-                        <button className="btn btn-primary">New Encounter</button>
+                        <button className="btn btn-primary" onClick={handleNewEncounter}>New Encounter</button>
                     </div>
                     <div className="row">
 

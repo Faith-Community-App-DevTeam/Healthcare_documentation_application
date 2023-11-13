@@ -16,15 +16,16 @@ const Dashboard = () => {
     //request basic client info from backend
     async function getClients() {
         let data = {
-            operation: 'get_clients_list',
+            operation: 'get_client_list',
             payload: {
-                ...user
+                username: user.username,
+                token: user.token,
             }
         }
 
         const res = await fetchData('POST', data)
+        console.log(res)
         if (res['body']['success']) {
-
             const clientList = res['body']['clients']
             for (let i = 0; i < Object.keys(clientList).length; i++) {
                 arr.push(<PatientCard client={clientList[i]} />)
