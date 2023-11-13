@@ -3,11 +3,13 @@ import { useState } from 'react';
 import UserContext from "../userContext/userContext";
 import { useContext } from "react";
 import fetchData from "../functions/apiRequest";
+import { useNavigate } from "react-router-dom";
 
 export default function NewClientForm() {
 
     const [client, setClient] = useState({});
     const [age, setAge] = useState('')
+    const nav = useNavigate()
     let races = [];
     const user = useContext(UserContext).user
 
@@ -50,7 +52,7 @@ export default function NewClientForm() {
         const data = {
             operation: "create_client",
             payload: {
-                user: user.username,
+                username: user.username,
                 token: user.token,
                 client_info: client
             }
@@ -60,7 +62,7 @@ export default function NewClientForm() {
         console.log(res)
         if (res['body']['success']) {
             console.log("success")
-            //navigate()
+            nav("/client", { state: { client } })
         }
 
     };

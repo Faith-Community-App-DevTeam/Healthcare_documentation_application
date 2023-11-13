@@ -12,7 +12,8 @@ export default function LogoutButton() {
         setUser({
             ...user,
             username: null,
-            token: null
+            token: null,
+            isLoggedIn: false
         });
         navigate("/");
     }

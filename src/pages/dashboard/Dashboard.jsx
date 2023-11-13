@@ -24,10 +24,10 @@ const Dashboard = () => {
                 }
             }
             const res = await fetchData('POST', data)
+            console.log(res)
 
             if (!ignore && res['body']['success']) {
                 setClient(res['body']["return_payload"]['client_list'])
-                console.log(res)
             }
         }
 
@@ -36,14 +36,12 @@ const Dashboard = () => {
         return () => {
             ignore = true;
         }
-    }, [clients]);
+    }, []);
 
 
 
     //request basic client info from backend
     function getClients() {
-
-        console.log("clients" + clients)
         for (let i = 0; i < Object.keys(clients).length; i++) {
             arr.push(<PatientCard client={clients[i]} />)
         }
@@ -63,7 +61,7 @@ const Dashboard = () => {
                                 <h1 className="col text-primary"> All Clients</h1>
 
                                 <form action="POST" className="col d-flex">
-                                    <input class="form-control form-control-lg me-4 " type="search" placeholder="Search Clients" aria-label="Search" />
+                                    <input className="form-control form-control-lg me-4 " type="search" placeholder="Search Clients" aria-label="Search" />
 
                                 </form>
 
@@ -83,7 +81,7 @@ const Dashboard = () => {
                                 <div className="p-2 col">DOB</div>
                             </div>
                         </div>
-                        {!!clients && (<div class="card-body overflow-scroll" style={{ maxHeight: "70vh" }}>
+                        {!!clients && (<div className="card-body overflow-scroll" style={{ maxHeight: "70vh" }}>
                             {getClients()}
                         </div>)}
 

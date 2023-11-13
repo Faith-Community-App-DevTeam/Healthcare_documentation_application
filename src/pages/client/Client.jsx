@@ -5,8 +5,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Client(c) {
     const { state } = useLocation();
-    const { client } = state.client || {};
+    const { client } = state;
     const nav = useNavigate()
+
 
     const date = (theDate) => {
         const d = new Date(theDate)
@@ -14,7 +15,7 @@ export default function Client(c) {
     }
 
     const handleNewEncounter = () => {
-        nav("/new-encounter", { state: { client } })
+        nav("/new-encounter", { state: { client: client } })
     }
     return (
 
@@ -23,7 +24,7 @@ export default function Client(c) {
             <div className="d-flex">
                 <div className="container-fluid mt-4 px-4">
                     <div className="container-fluid mb-4 text-center d-flex justify-content-between">
-                        <button className="btn btn-outline-primary">Back to All Clients</button>
+                        <button className="btn btn-outline-primary" onClick={() => { nav("/dashboard") }}>Back to All Clients</button>
                         <h1 className="display-6 text-primary">Client Profile</h1>
                         <button className="btn btn-primary" onClick={handleNewEncounter}>New Encounter</button>
                     </div>
@@ -33,11 +34,11 @@ export default function Client(c) {
                             <div className="card text-center bg-white">
                                 <h5 className="card-title">Demographics</h5>
                                 <div className="card-body text-wrap">
-                                    <img src={client.picture} alt="client" className="m-2 rounded-5 border" height={125} width={125} />
+                                    <img src={client.client.picture} alt="client" className="m-2 rounded-5 border" height={125} width={125} />
                                     <div className="flex-column m-4">
-                                        <h2 className="" ><span>{client.first_name + " " + client.last_name}</span></h2>
-                                        <span className="">{client.age + ' year old ' + client.gender + " • "}</span>
-                                        <span className="">{date(client.date_of_birth)}</span>
+                                        <h2 className="" ><span>{client.client.first_name + " " + client.client.last_name}</span></h2>
+                                        <span className="">{client.client.age + ' year old ' + client.client.gender + " • "}</span>
+                                        <span className="">{date(client.client.date_of_birth)}</span>
                                     </div>
                                 </div>
                             </div>

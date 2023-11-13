@@ -20,18 +20,22 @@ export default function PatientCard(client) {
 
         const response = await fetchData('POST', data)
         if (response['body']['success']) {
-            nav("/client", { state: { client } })
+            nav("/client", { state: { client: client } })
         }
     }
 
     function testClientFunc() {
-        nav("/client", { state: { client } })
+        nav("/client", {
+            state: {
+                last_name: client.client.last_name,
+                dob: client.client.dob
+            }
+        })
     }
 
     return (
 
         <>
-            {() => { console.log("sljfd") }}
             <div className="container-md">
                 <div className="list-group">
                     <button onClick={getAllClientData} className="list-group-item list-group-item-action d-flex  mb-1 shadow-sm">

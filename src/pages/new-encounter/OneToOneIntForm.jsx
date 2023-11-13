@@ -144,7 +144,7 @@ export default function OneToOneIntForm(initform) {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="concerns" className="form-label">Client Health/Wellness Concerns</label>
-                    <textarea className="form-control"></textarea>
+                    <textarea className="form-control" value={form.concerns} name="concerns" onChange={handleChange}></textarea>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="nursing_intervention" className="form-label">Nursing Intervention Classification</label>
@@ -196,17 +196,17 @@ export default function OneToOneIntForm(initform) {
                 </div>
 
                 <div className="mb-3">
-                    <label htmlFor="ref_to" className="form-label">Outcomes</label>
+                    <label htmlFor="outcomes" className="form-label">Outcomes</label>
                     <select className="form-select"
                         value={form.outcomes}
                         onChange={handleChange}
-                        id="ref_to"
-                        name="ref_to" >
+                        id="outcomes"
+                        name="outcomes" >
                         <option selected disabled>Please Select</option>
                         <option>Impoved health status</option>
                         <option>Access to care/ resources</option>
                         <option>Enhanced independent living</option>
-                        <option>injury prevention</option>
+                        <option>Injury prevention</option>
                         <option>knowledge Increase</option>
                     </select>
                 </div>
@@ -224,7 +224,7 @@ export default function OneToOneIntForm(initform) {
                         <option>911/Urgent Care</option>
                     </select>
                 </div>
-                <div className="row">
+                <div className="row mb-3">
                     <div className="col">
                         <label htmlFor="good_catch" className="form-label">Good Catch?</label>
                         <select className="form-select"
@@ -253,8 +253,8 @@ export default function OneToOneIntForm(initform) {
                     </div>
 
                 </div>
-                <div className="text-center">
-                    <button type="submit" className="btn btn-primary" >Submit</button>
+                <div className="text-center mb-3">
+                    <button type="submit" className="btn btn-primary btn-lg" >Save and Submit</button>
                 </div>
 
             </form>
