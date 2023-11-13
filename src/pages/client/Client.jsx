@@ -2,33 +2,67 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Topbar from "../../components/topbar/Topbar";
 import { useLocation } from "react-router-dom";
 
+
 export default function Client(c) {
     const { state } = useLocation();
-    const { client } = state || {};
+    const { client } = state.client || {};
 
     const date = (theDate) => {
         const d = new Date(theDate)
         return d.toLocaleDateString();
     }
-
     return (
 
         <div className="containter bg-light vh-100">
             <Topbar />
             <div className="d-flex">
-                <Sidebar />
-                <div className="container">
-                    <div className="container p-4 d-flex ">
-                        <div>
-                            <img src={client.client.picture} alt="image of the client" className="rounded-5 border" height={150} width={150} />
-                        </div>
-                        <div className="ms-4">
-                            <h2 className="display-4"><span>{client.client.first_name + " " + client.client.last_name}</span></h2>
-                            <h4><span>{client.client.age}</span></h4>
-                            <h4><span>{date(client.client.date_of_birth)}</span></h4>
-                        </div>
+                <div className="container-fluid mt-4 px-4">
+                    <div className="container-fluid mb-4 text-center d-flex justify-content-between">
+                        <button className="btn btn-outline-primary">Back to All Clients</button>
+                        <h1 className="display-6 text-primary">Client Profile</h1>
+                        <button className="btn btn-primary">New Encounter</button>
                     </div>
-                    <hr />
+                    <div className="row">
+
+                        <div className="col-lg-3">
+                            <div className="card text-center bg-white">
+                                <h5 className="card-title">Demographics</h5>
+                                <div className="card-body text-wrap">
+                                    <img src={client.picture} alt="client" className="m-2 rounded-5 border" height={125} width={125} />
+                                    <div className="flex-column m-4">
+                                        <h2 className="" ><span>{client.first_name + " " + client.last_name}</span></h2>
+                                        <span className="">{client.age + ' year old ' + client.gender + " • "}</span>
+                                        <span className="">{date(client.date_of_birth)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-lg-6">
+                            <div className="card bg-white text-center">
+                                <h5 className="card-title">Medical History</h5>
+                                <div className="card-body">
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div className="col-lg-3">
+                            <div className="card bg-white text-center">
+                                <h5 className="card-title">Recent Encounters</h5>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
                 </div>
 
             </div>

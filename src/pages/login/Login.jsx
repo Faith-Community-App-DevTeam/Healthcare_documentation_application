@@ -10,6 +10,7 @@ export default function Login({ hasAccount }) {
     const navigate = useNavigate()
 
     const { user, setUser } = useContext(UserContext)
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -101,9 +102,6 @@ export default function Login({ hasAccount }) {
                     password: password,
                     first_name: firstName,
                     last_name: lastName,
-                    lincensing_state: "Alaska",
-                    license_number: "AK12345",
-                    faith_network_id: "FN1001"
                 }
             }
         }
@@ -112,14 +110,17 @@ export default function Login({ hasAccount }) {
         console.log(res)
 
         if (res['body']['success']) {
-            console.log("success");
+            console.log(res['body']['return_payload']['token']);
             setUser({
-                ...user,
                 username: username,
-                password: password,
-                is_authenticate: true
+                token: res['body']['return_payload']['token'],
+                isLoggedIn: true
             });
+            //console.log(u)
+            //sessionStorage.setItem("auth", JSON.stringify(u))
             navigate("/dashboard");
+            //console.log(u)
+            //sessionStorage.setItem("auth", JSON.stringify(u))
         }
 
 
