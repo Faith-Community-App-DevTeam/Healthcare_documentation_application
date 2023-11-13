@@ -70,9 +70,10 @@ def create_token(payload: dict) -> dict:
     
 def create_client_id(payload: dict, client_id_counter: str) -> dict:
     new_client_id = int(client_id_counter) + 1
-    payload["client_info"]["client_id"] = str(new_client_id)
     #print("payload", payload)
     new_client_id_counter = str(new_client_id)
+    new_client_id = str(new_client_id).zfill(6)
+    payload["client_info"]["client_id"] = new_client_id
     return payload, new_client_id_counter
     
 
