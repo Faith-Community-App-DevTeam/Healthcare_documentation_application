@@ -128,4 +128,5 @@ def get_user_client_list(payload: dict) -> dict:
         }
 
 def user_login(payload: dict) -> dict:
+    payload["user_to_find"] = payload["username"]
     return get_user(payload)
