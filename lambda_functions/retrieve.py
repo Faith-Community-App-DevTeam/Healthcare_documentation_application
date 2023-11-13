@@ -99,8 +99,11 @@ def get_user_client_list(payload: dict) -> dict:
     
     #Want to get user info from calling a function instead of relying on the front end to get that info for us
     #For now it is setup like this
-    network_id = payload["network_id"]
-    church_id = payload["church_id"]
+    response = s3.Object(USER_BUCKET, "user_list.json").get()
+    user = json.loads(response['Body'].read())[payload["username"]]
+    
+    network_id = user["network_id"]
+    church_id = user["church_id"]
         
     return {
             "success": True,
