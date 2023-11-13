@@ -16,15 +16,16 @@ const Dashboard = () => {
     //request basic client info from backend
     async function getClients() {
         let data = {
-            operation: 'get_clients_by_network',
+            operation: 'get_client_list',
             payload: {
-                ...user
+                username: user.username,
+                token: user.token,
             }
         }
 
         const res = await fetchData('POST', data)
+        console.log(res)
         if (res['body']['success']) {
-
             const clientList = res['body']['clients']
             for (let i = 0; i < Object.keys(clientList).length; i++) {
                 arr.push(<PatientCard client={clientList[i]} />)
@@ -47,25 +48,40 @@ const Dashboard = () => {
                 <Topbar />
                 <div className="d-flex">
                     <Sidebar />
-                    <div className="container px-4" style={{ marginTop: 20 }}>
+                    <div className="container-fluid px-4" style={{ marginTop: 20 }}>
                         <div className="container-fluid">
-                            <div className="d-flex justify-content-between m-2">
-                                <h1 className="display-6 text-primary"> All Clients</h1>
-                                <NewClientForm />
+                            <div className="row align-items-center">
+                                <h1 className="col text-primary"> All Clients</h1>
+
+                                <form action="POST" className="col d-flex">
+                                    <input class="form-control form-control-lg me-4 " type="search" placeholder="Search Clients" aria-label="Search" />
+
+                                </form>
+
+                                <div className="col text-end">
+                                    <NewClientForm />
+                                </div>
                             </div>
                             <hr></hr>
-                            <form action="POST" className="container-fluid d-flex">
-                                <input class="form-control form-control-lg me-4 mb-4" type="search" placeholder="Search Clients" aria-label="Search" />
-                                <button class="btn btn-outline-primary mb-4" type="search">Search</button>
-                            </form>
                         </div>
-                        <div class="card-body overflow-scroll table-responsive-md" style={{ maxHeight: 650 }}>
+                        <p className="fst-italic">Comprehensive list of all clients within the network. </p>
+                        <div className="container list-group mb-1 card-body">
+                            <div className="list-group-item d-flex  mb-1 shadow-sm">
+                                <div className="p-2 col-1 text-center">ID</div>
+                                <div className="p-2 col-4"> Name</div>
+                                <div className="p-2 col-1 text-end"> Age</div>
+                                <div className="p-2 col text-start">Gender</div>
+                                <div className="p-2 col">DOB</div>
+                            </div>
+                        </div>
+                        <div class="card-body overflow-scroll" style={{ maxHeight: "70vh" }}>
+
                             {getData()}
                         </div>
 
-
                     </div>
                 </div>
+
             </div>
         </>
     )

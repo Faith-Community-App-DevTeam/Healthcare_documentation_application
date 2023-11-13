@@ -10,16 +10,14 @@ import { createContext, useState } from 'react';
 import PatientCard from './components/patientCard/PatientCard';
 import NewClientForm from './components/forms/NewClientForm';
 import Client from './pages/client/Client';
+import NewEncouter from './pages/new-encounter/NewEncounter';
 
 
 function App() {
   const [user, setUser] = useState({
     username: null,
-    password: null,
-    is_authenticate: false,
-    church_id: "none",
-    network_id: "none"
-
+    token: null,
+    isLoggedIn: false
   })
 
   return (
@@ -31,6 +29,7 @@ function App() {
           <Route path="/register" element={<Login hasAccount={false} />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/client" element={<Client />} />
+          <Route path="/new-encounter" element={<NewEncouter />} />
         </Routes>
       </div>
     </UserContext.Provider>
