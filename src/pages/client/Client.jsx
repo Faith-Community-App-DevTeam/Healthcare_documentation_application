@@ -38,7 +38,7 @@ export default function Client(c) {
                                     <div className="flex-column m-4">
                                         <h2 className="" ><span>{client.client.first_name + " " + client.client.last_name}</span></h2>
                                         <span className="">{client.client.age + ' year old ' + client.client.gender + " • "}</span>
-                                        <span className="">{date(client.client.date_of_birth)}</span>
+                                        <span className="">{date(client.client.dob)}</span>
                                     </div>
                                 </div>
                             </div>

@@ -14,7 +14,7 @@ export default function NewEncouter() {
     const nav = useNavigate()
 
     const initform = {
-        client_id: client.client_id,
+        client_id: client.client.client_id,
         document_type: "client_care_notes"
     }
 

@@ -35,7 +35,7 @@ export default function OneToOneIntForm(initform) {
             payload: {
                 username: user.username,
                 token: user.token,
-                document_info: form
+                document_info: { ...init, ...form }
             }
         }
         console.log(data)
