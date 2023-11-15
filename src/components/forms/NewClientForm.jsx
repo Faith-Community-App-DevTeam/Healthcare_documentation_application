@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 export default function NewClientForm() {
 
     const [client, setClient] = useState({});
-    const [age, setAge] = useState('')
-    const nav = useNavigate()
+    const [age, setAge] = useState('');
+    const nav = useNavigate();
     let races = [];
     const user = useContext(UserContext).user
 
@@ -18,8 +18,6 @@ export default function NewClientForm() {
         const thisYear = new Date().getFullYear();
         const dob = new Date(e.target.value)
         setAge(thisYear - dob.getFullYear())
-
-
     }
 
     const handlerace = (e) => {
@@ -47,8 +45,6 @@ export default function NewClientForm() {
 
         console.log(client)
 
-
-
         const data = {
             operation: "create_client",
             payload: {
@@ -62,7 +58,7 @@ export default function NewClientForm() {
         console.log(res)
         if (res['body']['success']) {
             console.log("success")
-            nav("/client", { state: { client } })
+            nav("/client", { state: { client: { client } } })
         }
 
     };
@@ -71,11 +67,7 @@ export default function NewClientForm() {
         <div>
             <button type="button" className="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#form">Add New Client</button>
             <div className="modal fade" id="form"
-                data-bs-backdrop="static"
-                data-bs-keyboard="false"
-                tabIndex="-1"
-                aria-labelledby="staticBackdropLabel"
-                aria-hidden="true">
+                tabIndex="-1">
                 <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-centered-scrollable">
                     <div className="modal-content">
                         <div className="modal-header">
