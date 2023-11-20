@@ -51,9 +51,9 @@ export default function OneToOneIntForm(initform) {
     return (
 
         <div className="container card bg-white">
+            <h3 class="text-center mt-3 mb-0" id="formTitle">Interaction</h3>
             <hr></hr>
-            <h3>Interaction</h3>
-            <form action="POST" onSubmit={handleSubmit}>
+            <form action="POST" onSubmit={handleSubmit} class="encForm">
 
                 <div className="row mb-3">
                     <div className="col">

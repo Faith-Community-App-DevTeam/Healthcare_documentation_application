@@ -1,34 +1,36 @@
-/* header */
-.topbar-sticky {
-    position: sticky;
-    top: 0;
-    box-shadow: 0 1px 2px 0px black;
-    margin: 5px 0;
-}
-
 .topbar {
-    display: flex;
-    width: 100%;
-    height: 64px;
+    max-width: 100vw;
+}
+
+.topbar span {
+    font-family: var(--mono-text) !important;
+    font-weight: 200;
+}
+
+#topbar-home {
+    background-color: var(--color5);
+}
+
+#topbar-home span {
+    color: var(--color2);
+}
+
+#topbar-login {
     background-color: var(--primary-color);
-    justify-content: space-between;
 }
 
-.logo {
-    flex: 1;
-    display: flex;
-    width: 20rem;
-    text-align: center;
-    color: white;
-    align-items: center;
+#topbar-login span {
+    color: var(--color2);
+
 }
 
+#topbar-dashboard,
+#topbar-client {
+    /* width: 85vw; */
+    background-color: var(--secondary-color);
+}
 
-.topbar-loginlink {
-    display: flex;
-    font-size: var(--big-font-size);
-    color: white;
-    margin-right: 5%;
-    align-items: center;
-
+#topbar-dashboard,
+#topbar-client span {
+    color: var(--color2);
 }

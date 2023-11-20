@@ -1,58 +1,63 @@
 import Topbar from '../../components/topbar/Topbar';
+import Footer from '../../components/footer/Footer';
 import './home.css';
 import photo from "../../assets/homepage-photo.jpg";
+import photo2 from "../../assets/photo2.jpg"
 import { NavLink } from 'react-router-dom';
 
 const Home = () => {
     return (
         <>
-            <Topbar />
+            <Topbar page="home" />
             {/* Header */}
-            <header className="text-white bg-primary bg-opacity-50">
-                <div className="container px-4 px-lg-5 text-center">
-                    <div className="row gx-4 gx-lg-5 align-items-center">
-                        <div className="col-lg-7"><img src={photo} alt='blood pressure check' className="img-fluid border border-primary rounded my-4" /></div>
-                        <div className="col-lg-5"><h1 class="display-3">Empowering Care through Seemless Documentation</h1>
-                            <NavLink to="register" className="btn btn-light mb-4">Get Started Today!</NavLink>
+            <div className="home">
+                <header className="home-top">
+                    <div className=" text-center">
+                        <div className="row align-items-center">
+                            <div className="col-xl-8"><img src={photo2} alt='blood pressure check' className="img-fluid border border-primary rounded-end-pill" /></div>
+                            <div className="col col-xl-4"><h1 class="header-text-dark display-2">Empowering Care through Seamless Documentation</h1>
+                                <NavLink to="register" className="btn btn-primary btn-lg m-4">Request Access!</NavLink>
+                            </div>
                         </div>
                     </div>
+                </header>
+                <div className=" home-container-middle">
                 </div>
-            </header>
-            <div className=" home-container-middle">
+                {/* About Row 1 */}
+                <section className="info-reg-top">
+                    <div className="container p-4">
+                        <div className="row gx-4 justify-content-center">
+                            <div className="col-lg-9">
+                                <h2 className="header-text-light display-6">Efficient Healthcare Documentation</h2>
+                                <p className="lead fw-light lh-lg">Say goodbye to paperwork and manual data entry. Our user-friendly platform empowers you to document patient information, treatment records, and medical histories with ease. We prioritize accuracy, security, and compliance at every step.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {/* About Row 2 */}
+                <section className="info-light">
+                    <div className="container p-4">
+                        <div className="row gx-4 justify-content-center ">
+                            <div className="col-lg-9">
+                                <h2 className="header-text-dark display-6">Streamlined Workflows</h2>
+                                <p className="lead fw-light lh-lg" >Our platform is designed to save you time and reduce administrative burdens. Navigate through patient records, update information, and collaborate seamlessly with your healthcare team. We are committed to making your work more efficient.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {/* About Row 3 */}
+                <section className="info-reg-bottom">
+                    <div className="container p-4">
+                        <div className="row gx-4 justify-content-center">
+                            <div className="col-lg-9">
+                                <h2 className="header-text-light display-6">HIPAA Complient Security</h2>
+                                <p className="lead fw-light lh-lg">Protecting sensitive patient data is non-negotiable. Rest assured, our platform adheres to the highest standards of data security and privacy, ensuring the confidentiality and integrity of patient information.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
-            {/* About Row 1 */}
-            <section id="text">
-                <div className="container p-4">
-                    <div className="row gx-4 justify-content-center">
-                        <div className="col-lg-8">
-                            <h2>Efficient Healthcare Documentation</h2>
-                            <p className="lead fw-300">Say goodbye to paperwork and manual data entry. Our user-friendly platform empowers you to document patient information, treatment records, and medical histories with ease. We prioritize accuracy, security, and compliance at every step.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* About Row 2 */}
-            <section className="bg-light">
-                <div className="container p-4">
-                    <div className="row gx-4 justify-content-center">
-                        <div className="col-lg-8">
-                            <h2>Streamlined Workflows</h2>
-                            <p className="lead">Our platform is designed to save you time and reduce administrative burdens. Navigate through patient records, update information, and collaborate seamlessly with your healthcare team. We are committed to making your work more efficient.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* About Row 3 */}
-            <section id="contact">
-                <div className="container p-4">
-                    <div className="row gx-4 justify-content-center">
-                        <div className="col-lg-8">
-                            <h2>HIPAA Complient Security</h2>
-                            <p className="lead">Protecting sensitive patient data is non-negotiable. Rest assured, our platform adheres to the highest standards of data security and privacy, ensuring the confidentiality and integrity of patient information.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <Footer />
 
         </>
     )

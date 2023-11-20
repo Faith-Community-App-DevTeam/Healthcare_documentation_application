@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:ital,wght@0,100;0,200;0,400;1,400&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css");
 
 :root {
   /* font */
   --body-font: 'Poppins', sans-serif;
+  --display-font: 'Playfair Display', serif;
+  --mono-text: 'Roboto Mono', monospace;
   --biggest-font-size: 2rem;
   --bigger-font-size: 1.5rem;
   --big-font-size: 1.25rem;
@@ -15,6 +19,13 @@
 
   /* colors */
   --primary-color: #c00000;
-  --secondary-color: rgb(76, 175, 80);
-  --soft-color: rgb(204, 204, 204);
+  --secondary-color: #525252;
+  --soft-color: rgb(245, 245, 245);
+  --color2: #FBFEF9;
+  --color3: #85877C;
+  --color4: #0a090C;
+  --color5: #07393C;
+  --color6: #002642;
+
+  --body-height: calc(100vh - 60px)
 }

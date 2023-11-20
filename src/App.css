@@ -9,3 +9,7 @@ body {
     font-family: var(--body-font);
     background-color: var(--primary-color);
 } */
+
+/* body {
+    font-family: var(--body-font) !important;
+} */

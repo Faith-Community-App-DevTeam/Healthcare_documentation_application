@@ -1,67 +1,20 @@
-.welcome {
+.login-title {
     text-align: center;
-    width: 50%;
-    margin: auto;
+    font-family: var(--display-font)
 }
 
-.login {
-    display: flex;
-    height: 100vh;
-    align-items: center;
-    margin: 0 30px;
-}
-
-.login-left-side {
-    width: 50vw;
-    color: white;
+.body-background {
+    background: rgb(192, 0, 0);
+    background: linear-gradient(180deg, rgba(192, 0, 0, 1) 0%, rgba(154, 0, 0, 1) 30%, rgba(96, 0, 0, 1) 100%);
+    height: var(--body-height);
 }
 
 .login-box {
-    float: right;
-    width: 50vw;
-    background-color: var(--soft-color);
-    margin: 0 auto;
-    border: 1px solid #333;
-    box-shadow: 4px 4px 2.5px rgb(59, 54, 70);
-    padding: 2em;
-    border-radius: 4px;
-
+    margin-top: -50px;
+    background: hsla(0, 0%, 100%, 0.8);
+    backdrop-filter: blur(30px);
 }
 
-.inputs {
-    width: 90%;
-    align-items: center;
-    margin: 20px 20px 0;
-    display: block;
-}
+/* #username, #password {
 
-#username,
-#password {
-
-    width: 100%;
-    padding: 3vh;
-    box-sizing: border-box;
-    border-radius: 10px;
-    border: 1px solid grey;
-    outline: none;
-    background: #eeeeee;
-    margin: 10px 0;
-
-}
-
-.login-button {
-    width: 100%;
-    padding: 1rem 2rem;
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: #ffffff;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    background: var(--secondary-color);
-    margin: 0.75rem 0;
-}
-
-.login-title {
-    text-align: center;
-}
+} */

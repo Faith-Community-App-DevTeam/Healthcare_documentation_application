@@ -2,14 +2,15 @@ import './topbar.css';
 import { NavLink } from "react-router-dom";
 import { useContext } from "react"
 import UserContext from "../userContext/userContext"
-import LogoutButton from '../logout/LogoutButton';
+import LogoutButton from '../logout/LogoutButton'
+import logo from "../../assets/LogoRed(1).png"
 
-const Topbar = () => {
-    const viewLogin = <NavLink to="/login" className={({ isActive }) => (isActive ? 'btn text-white nav-link disabled mx-3' : 'btn navbar-text d-flex mx-3')}> Login </NavLink>
+const Topbar = (page) => {
+    const viewLogin = <NavLink to="/login" className={({ isActive }) => (isActive ? 'btn text-primary nav-link disabled mx-3' : 'btn text-light  navbar-text mx-3')}> Login </NavLink>
 
     const user = useContext(UserContext).user;
     const viewUserName = <div className=''>
-        <span className=" col-11 navbar-brand text-white">{user.username}</span>
+        <span className=" d-inline-block align-text-top text-white me-2">{user.username}</span>
         <LogoutButton />
     </div>
 
@@ -17,10 +18,17 @@ const Topbar = () => {
 
     return (
 
-        <nav className="navbar sticky-top bg-primary bg-opacity-75">
+        <nav className="navbar sticky-top topbar" id={"topbar-" + page.page}>
             <div className="container-fluid">
-                <span className="navbar-brand text-white">Faith Community Nursing EHR</span>
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSidebar"><i class="bi bi-list text-white"></i></button>
+                <div className="navbar-brand">
+                    <img src={logo} alt="Logo" width="42" height="36" className=" d-inline-block align-text-top me-2" />
+                    <span className="d-none d-md-inline-block">Faith Community Nursing EHR</span>
+                    <span className='d-inline-block d-md-none'>FCN EHR</span>
+                </div>
                 {user.username != null && user.isLoggedIn ? viewUserName : viewLogin}
+
+
             </div>
 
 

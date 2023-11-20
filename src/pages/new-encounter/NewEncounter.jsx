@@ -5,7 +5,7 @@ import UserContext from "../../components/userContext/userContext";
 import fetchData from "../../components/functions/apiRequest";
 import OneToOneIntForm from "./OneToOneIntForm";
 import { useNavigate } from "react-router-dom";
-
+import "./newEncounter.css"
 
 export default function NewEncouter() {
     const { state } = useLocation();
@@ -57,12 +57,12 @@ export default function NewEncouter() {
     return (
         <>
             <div className="containter bg-light">
-                <Topbar />
+                <Topbar page="client" />
                 <div className="d-flex">
                     <div className="container-fluid mt-4 px-4">
                         <div className="container-fluid mb-4 text-center d-flex justify-content-between">
                             <button className="btn btn-outline-primary" onClick={() => { nav("/client", { state: { client: client } }) }}>Back to Client Profile</button>
-                            <h1 className="display-6 text-primary">New Encounter</h1>
+                            <h1 className="display-6 text-primary" id="pageTitle">New Encounter</h1>
                             <button className="btn" onClick={() => alert("secret")}>secret</button>
                         </div>
                         <div className="row"><fieldset className="col-2">

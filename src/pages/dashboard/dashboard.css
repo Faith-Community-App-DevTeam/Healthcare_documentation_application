@@ -1,0 +1,8 @@
+.dash-body {
+    background-color: var(--soft-color) !important;
+    height: var(--body-height);
+}
+
+.dash-content-container {
+    margin-top: 20px;
+}
