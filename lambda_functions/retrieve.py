@@ -130,3 +130,46 @@ def get_user_client_list(payload: dict) -> dict:
 def user_login(payload: dict) -> dict:
     payload["user_to_find"] = payload["username"]
     return get_user(payload)
+
+def get_client_document_list(payload: dict) -> dict:
+    """
+        A function that retrieves any client's list of documents by year and month
+
+        payload:
+            username: str
+            token: str
+            month: str (must be mm format)
+            year: str (YYYY)
+            client_id: str (XXXXXX)
+    """
+    year = payload["year"]
+    month = payload["month"]
+    client_id = payload["client_id"]
+    json_name = year + ".json"
+    try:
+        s3 = boto3.resource("s3", region_name=REGION_NAME)
+        response = s3.Object(CLIENT_BUCKET, json_name).get()
+        document_list = json.loads(response['Body'].read())
+    except botocore.exceptions.ClientError as error:
+        return {
+        "success": False,
+        "return_payload": {
+            'message': "failed to load document list"
+        }
+    }
+
+    if document_list[client_id][month] != None:
+        return {
+                "success": True,
+                "return_payload": {
+                    "message": "successfully retrieved client's documents",
+                    "document_list": document_list[client_id][month]
+                }
+            }
+    else: 
+        return {
+                "success": False,
+                "return_payload": {
+                    "message": "No documents exist for client in selected month/year"
+                }
+            }
