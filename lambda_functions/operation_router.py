@@ -1,5 +1,5 @@
 from create import create_user, create_client, create_document
-from retrieve import get_user, user_login, get_client, get_user_client_list, get_client_document_list
+from retrieve import get_user, user_login, get_client, get_user_client_list, get_client_document_list, get_role
 from update import update_user_data, update_user_cred
 from delete import delete_user
 
@@ -41,5 +41,7 @@ def retrieve_operation(operation: str):
         return lambda payload: create_document(payload)
     elif operation == "get_client_document_list":
         return lambda payload: get_client_document_list(payload)
+    elif operation == "get_role":
+        return lambda payload: get_role(payload)
     else:
         return unrecognized_payload

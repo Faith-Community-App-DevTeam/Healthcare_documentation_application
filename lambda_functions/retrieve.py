@@ -31,7 +31,8 @@ def get_user(payload: dict) -> dict:
             "phone_number",
             "license_state",
             "license_number",
-            "token"
+            "token",
+            "role"
         ]
     else:
         include_list = payload["include_list"]
@@ -173,3 +174,21 @@ def get_client_document_list(payload: dict) -> dict:
                     "message": "No documents exist for client in selected month/year"
                 }
             }
+    
+def get_role(payload: dict) -> dict:
+    """
+        I made it take in a paylaod instead of just a username in case the front end wants to use it
+        payload: username
+    """
+    username = payload["username"]
+    payload = {"user_to_find": username}
+    role = get_user(payload)["return_payload"]["role"]
+    return {
+                "success": True,
+                "return_payload": {
+                    "message": "successfully retrieved role",
+                    "role": role
+                }
+            }
+
+
