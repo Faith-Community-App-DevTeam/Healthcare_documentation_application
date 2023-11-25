@@ -72,3 +72,29 @@ USER_DATA = {
             }
         }
 }
+
+NETWORK_DATA = {
+        "church_list": [],
+        "date": "",
+        "id": "",
+        "name": "",
+        "address": "",
+        "phone_number": "",
+        "email": "",
+        "include_in": {
+            "doc_comm": "", "#comment": "all values in this dict must be yes or no",
+            "net_comm": "",
+            "sys_comm": "",
+            "group_comm": ""
+        },
+        "automate": {
+            "net_reporting": "",
+            "sys_reporting": ""
+        },
+        "create_net_comm": "", "#comment": "not sure what this is",
+        "type": "", "#comment": "must be meeting or appointment",
+        "send_date_time": "",
+        "printer_set_up" : "",
+        "#comment": "unsure if permissions, type are necessesary"
+    
+}

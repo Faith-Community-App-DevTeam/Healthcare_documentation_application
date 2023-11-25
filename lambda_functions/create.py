@@ -3,19 +3,21 @@ import boto3
 import botocore
 import hashlib
 import random
-from aws_configs import CLIENT_BUCKET, USER_BUCKET, REGION_NAME, CLIENT_DATA, USER_DATA
-from retrieve import get_all_users_as_list
+from aws_configs import CLIENT_BUCKET, USER_BUCKET, REGION_NAME, CLIENT_DATA, USER_DATA, NETWORK_DATA
+from retrieve import get_all_users_as_list, get_role
 
 #setup for finding one user
 FILE_MAPPING = {
     "user": 'user_list.json',
-    'client': 'client_list.json'
+    'client': 'client_list.json',
+    "network": "network_list.json"
 }
 
 BUCKET_MAPPING = {
     "user": USER_BUCKET,
     'client': CLIENT_BUCKET,
-    "document": CLIENT_BUCKET
+    "document": CLIENT_BUCKET,
+    "network": USER_BUCKET
 }
 
 VALIDATION_MAPPING = {
@@ -25,7 +27,8 @@ VALIDATION_MAPPING = {
 
 FORMAT_MAPPING = {
     "user": lambda payload: format_user_data(payload, USER_DATA),
-    "client": lambda payload: format_client_data(payload, CLIENT_DATA)
+    "client": lambda payload: format_client_data(payload, CLIENT_DATA),
+    "network": lambda payload: format_network_data(payload, NETWORK_DATA),
 }
 
 def validate_new_user(payload: dict) -> dict:
@@ -89,6 +92,13 @@ def format_client_data(payload: dict, default_data) -> dict:
     new_payload.update(client_info)
     new_payload["enrolled_by"] = enrolled_by
     return new_payload
+
+def format_network_data(payload: dict, default_data) -> dict:
+    new_payload = default_data
+    network_info = payload["network_info"]
+    new_payload.update(network_info)
+    return new_payload
+
     
 
 def create_user(payload):
@@ -309,3 +319,69 @@ def create_document(payload: dict) -> dict:
             print(error)
             raise Exception(str(error))
 
+def create_network(payload: dict) -> dict:
+    """
+        payload:
+            username:
+            token:
+            network_info:
+                network_id
+
+    """
+    print("bean")
+    role = get_role(payload)
+    print(role)
+    if get_role(payload)["return_payload"]["role"] != "admin":
+        return {
+                "success":False,
+                "return_payload": {
+                    "message": "Must be an admin"
+                }
+            }
+    s3 = boto3.resource("s3", region_name = REGION_NAME)
+    operation = "network"
+    obj_list = {}
+    try:
+        print("Getting bucket")
+        response = s3.Object(BUCKET_MAPPING[operation], FILE_MAPPING[operation]).get()
+        #print("response:", response)
+        obj_list = json.loads(response['Body'].read())
+        #print("list", obj_list)
+      
+    except botocore.exceptions.ClientError as error:
+        if error.response['Error']['Code'] != '404':
+            #if something else happened for now
+            print(error)
+            raise Exception(str(error))
+        else:
+            raise Exception(str(error))
+            
+    finally:
+        #payload = VALIDATION_MAPPING[operation](payload)  not sure if validation is needed
+        payload = FORMAT_MAPPING[operation](payload)
+        keyword = payload["name"]
+        print(payload)
+        print(type(keyword))
+        print(obj_list)
+        
+        obj_list[keyword] = {key:value for key,value in payload.items() if key != keyword}
+        print(obj_list)
+        
+        #dumping user setting into s3 bucket
+        try:
+            s3.Bucket(BUCKET_MAPPING[operation]).put_object(Body = json.dumps(obj_list, indent=2), Key = FILE_MAPPING[operation], ContentType = 'json')
+            
+            return {
+                "success":True,
+                "return_payload": {
+                    "message": "Operation Success. Network created"
+                }
+            }
+            
+        except botocore.exceptions.ClientError as error:
+            return {
+                "success":False,
+                "return_payload": {
+                    "message": "Operation encountered an client error"
+                }
+            }
