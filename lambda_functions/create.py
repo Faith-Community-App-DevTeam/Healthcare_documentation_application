@@ -234,6 +234,9 @@ def create_document(payload: dict) -> dict:
                 document_type:
                 ...
             }
+
+        TODO: once we have an update client function, we need to update the clients last_seen variable
+        to be the same date as the document
     """
     s3 = boto3.client("s3", region_name  = REGION_NAME)
     operation = "document" 

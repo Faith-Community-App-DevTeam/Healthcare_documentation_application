@@ -27,6 +27,7 @@
                     "medications": [], "#comment": "list of strings",
                     "comments": "",
                     "referral": "", "#comment": "limited choices",
+                    "last_seen": "",
                     "enrolled_by": "",
                     "private": true
                 }
