@@ -66,7 +66,7 @@ def update_user_cred(payload:dict) -> dict:
     updates a user's credentials
     '''
     user_list = get_user_client_list()
-    og_user = user_list.pop(payload{"username"})
+    og_user = user_list.pop(payload["username"])
     
     if "new_username" in payload.keys():
         og_user["username"] = payload["new_username"]
