@@ -2,7 +2,7 @@ import json
 import boto3
 import botocore
 from aws_configs import CLIENT_BUCKET, USER_BUCKET, REGION_NAME
-from retrieve import get_user_client_list
+from retrieve import get_user_client_list, get_all_users_as_list
 from create import encrypt_password, create_token
 
 FILE_MAPPING = {
@@ -17,11 +17,62 @@ BUCKET_MAPPING = {
 }
 
 def update_client_data(payload: dict) -> dict:
-    '''
+    """Updates a clients information
+    
+    payload:
+        username
+        token
+        client_info: {last_name, dob}
+        client_update: info you want to update
+    """
+    
     s3 = boto3.resource("s3", region_name = REGION_NAME)
+    client_list = {}
+    user_list = get_all_users_as_list()
     try:
-        response = s3.
-    '''
+        response = s3.Object(BUCKET_MAPPING["client"], FILE_MAPPING["client"]).get()
+        client_list = json.loads(response["Body"].read())
+    except botocore.exceptions.ClientError as error:
+        print(error)
+        return {
+            "success":False,
+            "return_payload": {
+            "message": f"Operation update_client_data error: {error}"
+            }
+        }
+    user = user_list[payload["username"]]
+    network_id = user["network_id"]
+    church_id = user["church_id"]
+    
+    client_list = client_list[network_id][church_id]
+    update_info = {k: v for k, v in payload["client_update"].items() if v}
+    for i, client in enumerate(client_list):
+        if client["last_name"] == payload["client_info"]["last_name"] and client["dob"] == payload["client_info"]["dob"]:
+            client_list[i] = client.update(update_info)
+        try:
+            #upload new client info
+            s3 = boto3.resource("s3", region_name = REGION_NAME)
+            s3.Bucket(BUCKET_MAPPING["client"]).put_object(Body = json.dumps(client_list, indent=2), Key = FILE_MAPPING["client"], ContentType = 'json')  
+            return {
+                "success":True,
+                "return_payload": {
+                    "message": "Operation Success",
+                }
+            }
+            
+        except botocore.exceptions.ClientError as error:
+            return {
+                "success":False,
+                "return_payload": {
+                "message": f"Operation update_client_info encountered an error: {error}"
+                }
+            }   
+    return {
+            "success":False,
+            "return_payload": {
+            "message": f"Operation update_client_info encountered an error: client does not exist"
+            }
+        }
         
 def update_user_data(payload: dict) -> dict:
     '''
