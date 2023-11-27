@@ -1,7 +1,7 @@
 from create import create_user, create_client, create_document, create_network
 from retrieve import get_user, user_login, get_client, get_user_client_list, get_client_document_list, get_role
-from update import update_user_data, update_user_cred
-from delete import delete_user
+from update import update_user_data, update_user_cred, update_client_data
+from delete import delete_user, delete_client
 
 
 
@@ -37,6 +37,10 @@ def retrieve_operation(operation: str):
         return lambda payload: get_client(payload)
     elif operation == "get_user_client_list":
         return lambda payload: get_user_client_list(payload)
+    elif operation == 'update_client_data':
+        return lambda payload: update_client_data(payload)
+    elif operation == 'delete_client':
+        return lambda payload: delete_client(payload)
     elif operation == "create_document":
         return lambda payload: create_document(payload)
     elif operation == "get_client_document_list":

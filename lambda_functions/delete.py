@@ -50,6 +50,12 @@ def delete_client(payload:dict) -> dict:
     deletes a client
     
     deletes client, but plan to move the info to a different bucket for storage
+    
+    
+    payload:
+        username
+        token
+        client_info: {last_name, dob}
     '''
     user_list = get_all_users_as_list()
     client_list = {}
