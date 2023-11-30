@@ -27,17 +27,17 @@ def retrieve_operation(operation: str):
         return lambda payload: get_user(payload)
     elif operation == "user_login":
         return lambda payload: user_login(payload)
-    elif operation == "update_user":
+    elif operation == "update_user_info":
         return lambda payload: update_user_data(payload)
     elif operation == "update_username" or operation == "update_password":
         return lambda payload: update_user_cred(payload)
-    elif operation == "delete_user":
+    elif operation == "delete_user_info":
         return lambda payload: delete_user(payload)
     elif operation == "get_client":
         return lambda payload: get_client(payload)
     elif operation == "get_user_client_list":
         return lambda payload: get_user_client_list(payload)
-    elif operation == 'update_client':
+    elif operation == 'update_client_data':
         return lambda payload: update_client_data(payload)
     elif operation == 'delete_client':
         return lambda payload: delete_client(payload)

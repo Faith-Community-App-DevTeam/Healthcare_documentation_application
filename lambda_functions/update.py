@@ -28,7 +28,7 @@ def update_client_data(payload: dict) -> dict:
     
     s3 = boto3.resource("s3", region_name = REGION_NAME)
     client_list = {}
-    user_list = get_all_users_as_list(payload)
+    user_list = get_all_users_as_list()
     try:
         response = s3.Object(BUCKET_MAPPING["client"], FILE_MAPPING["client"]).get()
         client_list = json.loads(response["Body"].read())
