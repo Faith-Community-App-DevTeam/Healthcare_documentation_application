@@ -2,7 +2,7 @@ import json
 import boto3
 import botocore
 from aws_configs import CLIENT_BUCKET, USER_BUCKET, REGION_NAME
-from retrieve import get_all_users_as_list, get
+from retrieve import get_all_users_as_list
 
 '''
     Once structure is done, then I think we can start on how to delete users and clients
@@ -63,6 +63,7 @@ def delete_client(payload:dict) -> dict:
     user = user_list[payload["username"]]
     network_id = user["network_id"]
     church_id = user["church_id"]
+    s3 = boto3.resource("s3", region_name = REGION_NAME)
     
     try:
         response = s3.Object(BUCKET_MAPPING["client"], FILE_MAPPING["client"]).get()
