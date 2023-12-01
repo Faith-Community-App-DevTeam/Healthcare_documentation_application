@@ -395,6 +395,8 @@ def create_report(payload: dict) -> dict:
             username:
             token:
             date:
+
+        if documents in given year do not exist an error occurs. TODO catch error and include group documents
     """
     date = payload["date"] #yyyy-mm-dd
     year = date[0:4]
