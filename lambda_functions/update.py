@@ -27,11 +27,11 @@ def update_client_data(payload: dict) -> dict:
     """
     
     s3 = boto3.resource("s3", region_name = REGION_NAME)
-    client_list = {}
+    whole_client_list = {}
     user_list = get_all_users_as_list(payload)
     try:
         response = s3.Object(BUCKET_MAPPING["client"], FILE_MAPPING["client"]).get()
-        client_list = json.loads(response["Body"].read())
+        whole_client_list = json.loads(response["Body"].read())
     except botocore.exceptions.ClientError as error:
         print(error)
         return {
@@ -44,15 +44,16 @@ def update_client_data(payload: dict) -> dict:
     network_id = user["network_id"]
     church_id = user["church_id"]
     
-    client_list = client_list[network_id][church_id]
+    sub_client_list = whole_client_list[network_id][church_id]
     update_info = {k: v for k, v in payload["client_update"].items() if v}
-    for i, client in enumerate(client_list):
+    for i, client in enumerate(sub_client_list):
         if client["last_name"] == payload["client_info"]["last_name"] and client["dob"] == payload["client_info"]["dob"]:
-            client_list[i] = client.update(update_info)
+            sub_client_list[i] = client.update(update_info)
         try:
             #upload new client info
+            whole_client_list[network_id][church_id] = sub_client_list
             s3 = boto3.resource("s3", region_name = REGION_NAME)
-            s3.Bucket(BUCKET_MAPPING["client"]).put_object(Body = json.dumps(client_list, indent=2), Key = FILE_MAPPING["client"], ContentType = 'json')  
+            s3.Bucket(BUCKET_MAPPING["client"]).put_object(Body = json.dumps(whole_client_list, indent=2), Key = FILE_MAPPING["client"], ContentType = 'json')  
             return {
                 "success":True,
                 "return_payload": {
