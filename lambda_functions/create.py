@@ -3,21 +3,23 @@ import boto3
 import botocore
 import hashlib
 import random
-from aws_configs import CLIENT_BUCKET, USER_BUCKET, REGION_NAME, CLIENT_DATA, USER_DATA, NETWORK_DATA
+from aws_configs import CLIENT_BUCKET, USER_BUCKET, REGION_NAME, CLIENT_DATA, USER_DATA, NETWORK_DATA, ENTRY_DATA
 from retrieve import get_all_users_as_list, get_role
 
 #setup for finding one user
 FILE_MAPPING = {
     "user": 'user_list.json',
     'client': 'client_list.json',
-    "network": "network_list.json"
+    "network": "network_list.json",
+    "report": "monthly_report_list.json"
 }
 
 BUCKET_MAPPING = {
     "user": USER_BUCKET,
     'client': CLIENT_BUCKET,
     "document": CLIENT_BUCKET,
-    "network": USER_BUCKET
+    "network": USER_BUCKET,
+    "report": USER_BUCKET
 }
 
 VALIDATION_MAPPING = {
@@ -385,3 +387,115 @@ def create_network(payload: dict) -> dict:
                     "message": "Operation encountered an client error"
                 }
             }
+
+def create_report(payload: dict) -> dict:
+    """
+        gathers all of a users documents in a given month and year to create a document summerizing the info
+        payload: 
+            username:
+            token:
+            date:
+
+        if documents in given year do not exist an error occurs. TODO catch error and include group documents
+    """
+    date = payload["date"] #yyyy-mm-dd
+    year = date[0:4]
+    month = date[5:7]
+    username = payload["username"]
+    json_name = year + ".json"
+    operation = "report"
+    s3 = boto3.client("s3", region_name  = REGION_NAME)
+
+    try:
+        print("checking if ", json_name, " exists")
+        s3.head_object(Bucket = BUCKET_MAPPING["document"], Key = json_name)
+        
+    except botocore.exceptions.ClientError as error:
+        if error.response['Error']['Code'] == '403':
+            print("documents for year does not exist.")
+            
+            return {
+            "success":False,
+            "return_payload": {
+                "message": "Operation failes."
+                }
+            }
+            
+        else:
+            #if anything else happenes
+            print(error)
+            raise Exception(str(error))
+            
+    finally:
+        print("Object exists, Gathering document list")
+        s3 = boto3.resource("s3", region_name = REGION_NAME)
+        response = s3.Object(BUCKET_MAPPING["document"], json_name).get()
+        document_list = json.loads(response['Body'].read())
+        print("Retrieved document list: ", document_list)
+        
+        user_document_list = []
+        client_document_list = {}
+        #print(document_list)
+        
+        for client in document_list: #finding all the documents made by the user by month and year
+            client_document_list = document_list.get(client)
+            if month in client_document_list.keys():
+                client_document_list = client_document_list.get(month)
+                for document in client_document_list:
+                    if document["made_by"] == username:
+                        user_document_list.append(document)
+                    
+        #print(user_document_list)
+        #print(len(user_document_list))
+        
+        #creating monthly report
+        report = {
+            "made_by": username,
+            "date": date,
+            "entry_list": []
+        }
+        
+        i = 0
+        for document in user_document_list:
+            i = i + 1
+            #print(i)
+            entry_data = ENTRY_DATA.copy()
+            entry_data["entry_number"] = i
+            entry_data["service_type"] = "1:1"
+            entry_data["number_of_people"] = 1
+            if "direct_time" in document.keys():
+                entry_data["service_time"] = document["direct_time"]
+                #print("yuh")
+            else:
+                entry_data["service_time"] = "N/A"
+            report["entry_list"].append(entry_data)
+            
+        #print("report:", report)
+        
+        
+        response = s3.Object(BUCKET_MAPPING[operation], FILE_MAPPING[operation]).get()
+        report_list = json.loads(response['Body'].read())
+        print(report_list)
+        
+        
+        if year not in report_list.keys():
+            report_list[year] = {}
+        
+        if month not in report_list[year]:
+            report_list[year][month] = [report]
+        else:
+            report_list[year][month].append(report)
+        print(report_list)
+        
+        #uploading to s3
+        s3.Bucket(BUCKET_MAPPING[operation]).put_object(Body = json.dumps(report_list, indent=2), Key = FILE_MAPPING[operation], ContentType = 'json')
+        print(report_list)
+        
+        
+        return {
+            "success":True,
+            "return_payload": {
+                "message": "Operation Success"
+            }
+        }
+        
