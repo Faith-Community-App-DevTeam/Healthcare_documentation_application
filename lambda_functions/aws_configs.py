@@ -98,3 +98,11 @@ NETWORK_DATA = {
         "#comment": "unsure if permissions, type are necessesary"
     
 }
+
+ENTRY_DATA = {
+    "entry_number": "1",
+    "service_type": "",
+    "number_of_people": "",
+    "service_time": "",
+    "comments": ""
+}
