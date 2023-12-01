@@ -58,7 +58,7 @@ def delete_client(payload:dict) -> dict:
         client_info: {last_name, dob}
     '''
     user_list = get_all_users_as_list()
-    client_list = {}
+    whole_client_list = {}
     
     user = user_list[payload["username"]]
     network_id = user["network_id"]
@@ -67,7 +67,7 @@ def delete_client(payload:dict) -> dict:
     
     try:
         response = s3.Object(BUCKET_MAPPING["client"], FILE_MAPPING["client"]).get()
-        client_list = json.loads(response["Body"].read())
+        whole_client_list = json.loads(response["Body"].read())
     except botocore.exceptions.ClientError as error:
         print(error)
         return {
@@ -77,15 +77,16 @@ def delete_client(payload:dict) -> dict:
             }
         }
         
-    client_list = client_list[network_id][church_id]
-    for i, client in enumerate(client_list):
+    sub_client_list = client_list[network_id][church_id]
+    for i, client in enumerate(sub_client_list):
         if client["last_name"] == payload["client_info"]["last_name"] and client["dob"] == payload["client_info"]["dob"]:
-            client_list.pop(i)
+            sub_client_list.pop(i)
+            whole_client_list[network_id][church_id] = sub_client_list
     
     try:
-        #upload new user info
+        #upload client info
         s3 = boto3.resource("s3", region_name = REGION_NAME)
-        s3.Bucket(BUCKET_MAPPING["client"]).put_object(Body = json.dumps(client_list, indent=2), Key = FILE_MAPPING["client"], ContentType = 'json')  
+        s3.Bucket(BUCKET_MAPPING["client"]).put_object(Body = json.dumps(whole_client_list, indent=2), Key = FILE_MAPPING["client"], ContentType = 'json')  
         return {
             "success":True,
             "return_payload": {
