@@ -261,6 +261,7 @@ def create_document(payload: dict) -> dict:
     #print("json_name", json_name)
     client_id = payload["document_info"]["client_id"]
     document_info = payload.get("document_info")
+    document_info["made_by"] = payload["username"]
 
     #attempting to retrieve document list
     try:
