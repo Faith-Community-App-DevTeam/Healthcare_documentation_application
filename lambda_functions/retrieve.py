@@ -17,6 +17,34 @@ def get_all_users_as_list() -> list:
     #print(users)
     return users
 
+def get_user_list(payload: dict) -> dict:
+    """
+    connect to s3 and get the big list of json that contains all the user objects
+    :return: big list of user objects as json
+
+    payload:
+        operation:
+        username:
+        token:
+    """
+    print("getting users")
+    role = get_role(payload)["return_payload"]["role"]
+    s3 = boto3.resource("s3", region_name=REGION_NAME)
+    response = s3.Object(USER_BUCKET, "user_list.json").get()
+    user_list = json.loads(response["Body"].read())
+    if role == "admin":
+        return {
+            "success": True,
+            "return_payload": user_list
+        }
+    else:
+        return {
+            "success": False,
+            "return_payload": {
+                "message": "Must be an admin."
+            }
+        }
+
 def get_user(payload: dict) -> dict:
     '''
     Returns users based on a given list of wanted info
