@@ -127,7 +127,7 @@ def update_user_cred(payload:dict) -> dict:
     '''
     updates a user's credentials
     '''
-    user_list = get_user_client_list()
+    user_list = get_all_users_as_list()
     og_user = user_list.pop(payload["username"])
     
     if "new_username" in payload.keys():
