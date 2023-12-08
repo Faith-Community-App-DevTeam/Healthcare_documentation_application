@@ -1,7 +1,7 @@
 {
   "operation": "create_user",
   "payload": {
-    "username": "billybob",
+    "username": "test_admin",
     "password": "password"
   }
 }
@@ -9,7 +9,7 @@
 {
   "operation": "user_login",
   "payload": {
-    "username": "billybob",
+    "username": "test_admin",
     "password": "password"
   }
 }
@@ -17,8 +17,8 @@
 {
   "operation": "get_client",
   "payload": {
-    "username": "billybob",
-    "token": "3cd13254c34553c2a078ed30da5073c16355a15790dac2a0f34ce75c4e686482",
+    "username": "test_admin",
+    "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241",
     "last_name": "alfaro",
     "dob": "1999-09-19"
   }
@@ -27,11 +27,11 @@
 {
   "operation": "create_client",
   "payload": {
-    "username": "billybob",
+    "username": "test_admin",
     "token": "3cd13254c34553c2a078ed30da5073c16355a15790dac2a0f34ce75c4e686482",
     "client_info": {
-        "first_name": "Noah",
-        "last_name": "Perez",
+        "first_name": "Test",
+        "last_name": "Client",
         "dob": "2000-02-06"
     }
   }
@@ -40,16 +40,16 @@
 {
   "operation": "get_user_client_list",
   "payload": {
-    "username": "billybob",
-    "token": "3cd13254c34553c2a078ed30da5073c16355a15790dac2a0f34ce75c4e686482"
+    "username": "test_admin",
+    "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241"
   }
 }
 
 {
   "operation": "get_user",
   "payload": {
-    "username": "billybob",
-    "token": "3cd13254c34553c2a078ed30da5073c16355a15790dac2a0f34ce75c4e686482",
+    "username": "test_admin",
+    "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241",
     "user_to_find": "lpalfaro",
     "include_list": [], "#comment": "list of strings, optional"
   }
@@ -58,12 +58,114 @@
 {
   "operation": "create_document",
   "payload": {
-    "username": "billybob",
-    "token": "3cd13254c34553c2a078ed30da5073c16355a15790dac2a0f34ce75c4e686482",
+    "username": "test_admin",
+    "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241",
     "document_info": {
         "client_id": "000000",
         "date": "2023-09-19",
         "document_type": "blood_pressure_screening"
     }
+  }
+}
+
+{
+  "operation": "create_network"
+  "payload": {
+    "username": "test_admin",
+    "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241",
+    "network_info": {
+      "network_id": ""
+    }
+  }
+}
+
+{
+  "operation": "create_report",
+  "payload": {
+    "username": "test_admin",
+    "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241",
+    "date": "yyy-mm-dd"
+    }
+}
+
+{
+  "operation": "update_user",
+  "payload": {
+    "username": "test_admin",
+    "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241",
+    "user_info": {
+      
+    }
+  }
+}
+
+{
+  "operation": "update_client",
+  "payload": {
+    "username": "test_admin",
+    "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241",
+    "client_info": {
+      "last_name": "",
+      "dob": ""
+    },
+    "client_update": {
+
+    }
+  }
+}
+
+{
+  "operation": "update_username" or "update_password",
+  "payload": {
+    "username": "test_admin",
+    "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241",
+    "new_password": "" XOR "new_username": ""
+  }
+}
+
+{
+  "operation": "delete_user",
+  "payload": {
+    "username": "test_admin",
+    "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241"
+  }
+}
+
+{
+  "operation": "delete_client",
+  "payload": {
+    "username": "test_admin",
+    "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241",
+    "client_info": {
+      "last_name": "",
+      "dob": ""
+    }
+  }
+}
+
+{
+  "operation": "get_user_list",
+  "payload": {
+    "username": "test_admin",
+    "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241"
+  }
+}
+
+{
+  "operation": "get_role",
+  "payload": {
+    "username": "test_admin",
+    "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241"
+  }
+}
+
+{
+  "operation": "get_client_document_list",
+  "payload": {
+    "username": "test_admin",
+    "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241",
+    "month": "",
+    "year": "", 
+    "client_id:": ""
   }
 }
