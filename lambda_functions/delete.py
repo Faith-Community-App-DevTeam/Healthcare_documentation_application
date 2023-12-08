@@ -144,7 +144,7 @@ def delete_client(payload:dict) -> dict:
             }
         }
         
-    sub_client_list = client_list[network_id][church_id]
+    sub_client_list = whole_client_list[network_id][church_id]
     for i, client in enumerate(sub_client_list):
         if client["last_name"] == payload["client_info"]["last_name"] and client["dob"] == payload["client_info"]["dob"]:
             sub_client_list.pop(i)
