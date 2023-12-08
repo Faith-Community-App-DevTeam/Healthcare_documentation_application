@@ -204,6 +204,12 @@ def create_client(payload: dict) -> dict:
     
         network_id = user["network_id"]
         church_id = user["church_id"]
+        
+        if network_id not in client_list.keys():
+            client_list[network_id] = {
+                church_id: []
+            }
+        
         payload = validate_new_client(payload, client_list, network_id, church_id)
         client_info, new_client_id_counter = create_client_id(payload, client_id_counter)
         client_info = FORMAT_MAPPING[operation](payload)
