@@ -61,6 +61,11 @@ def get_user_list(payload: dict) -> dict:
 def get_user(payload: dict) -> dict:
     '''
     Returns users based on a given list of wanted info
+    payload: 
+        username
+        token
+        "user_to_find": "",
+        "include_list": [], "#comment": "list of strings, optional"
     '''
     user_list = get_all_users_as_list()
     include_list = []
@@ -99,7 +104,10 @@ def get_user(payload: dict) -> dict:
 def get_client(payload: dict) -> dict:
     """
     function to return a single client
-    payload must have last name, dob, network_id
+    payload
+        last name
+        dob
+        network_id
     """
     s3 = boto3.resource("s3", region_name=REGION_NAME)
     response = s3.Object(CLIENT_BUCKET, "client_list.json").get()
@@ -134,6 +142,13 @@ def get_client(payload: dict) -> dict:
     }
     
 def get_user_client_list(payload: dict) -> dict:
+    """
+        returns the client list from a user's network and church
+        payload
+            username
+            token
+    """
+
     include_list = [ 
         "first_name",
         "last_name",
@@ -219,7 +234,9 @@ def get_client_document_list(payload: dict) -> dict:
 def get_role(payload: dict) -> dict:
     """
         I made it take in a paylaod instead of just a username in case the front end wants to use it
-        payload: username
+        payload: 
+            username
+            token
     """
     username = payload["username"]
     payload = {"user_to_find": username}

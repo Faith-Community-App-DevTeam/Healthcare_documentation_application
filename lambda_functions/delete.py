@@ -23,6 +23,9 @@ BUCKET_MAPPING = {
 def delete_user(payload: dict) -> dict:
     '''
     used to delete a user
+    payload
+        username
+        token
     '''
     user_list = get_all_users_as_list()
     user_del = user_list.pop(payload["username"])

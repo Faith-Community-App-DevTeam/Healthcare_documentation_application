@@ -84,6 +84,10 @@ def update_client_data(payload: dict) -> dict:
 def update_user_data(payload: dict) -> dict:
     '''
     This updates a user data on the database if they made changes
+    payload:
+        username
+        token
+        user_info: {}
     '''
     user_list = get_all_users_as_list()
     update_info = payload["user_info"]
@@ -126,6 +130,10 @@ def update_user_data(payload: dict) -> dict:
 def update_user_cred(payload:dict) -> dict:
     '''
     updates a user's credentials
+    payload
+        username
+        token
+        new_username XOR new_password
     '''
     user_list = get_all_users_as_list()
     og_user = user_list.pop(payload["username"])
