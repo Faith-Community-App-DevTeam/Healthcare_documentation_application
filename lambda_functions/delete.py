@@ -16,7 +16,7 @@ FILE_MAPPING = {
 BUCKET_MAPPING = {
     "user": USER_BUCKET,
     'client': CLIENT_BUCKET,
-    "document": CLIENT_BUCKET.
+    "document": CLIENT_BUCKET,
     "network": USER_BUCKET
 }
 

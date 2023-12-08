@@ -30,7 +30,7 @@ def update_client_data(payload: dict) -> dict:
     
     s3 = boto3.resource("s3", region_name = REGION_NAME)
     whole_client_list = {}
-    user_list = get_all_users_as_list(payload)
+    user_list = get_all_users_as_list()
     try:
         response = s3.Object(BUCKET_MAPPING["client"], FILE_MAPPING["client"]).get()
         whole_client_list = json.loads(response["Body"].read())
@@ -48,28 +48,32 @@ def update_client_data(payload: dict) -> dict:
     
     sub_client_list = whole_client_list[network_id][church_id]
     update_info = {k: v for k, v in payload["client_update"].items() if v}
+    print((sub_client_list))
     for i, client in enumerate(sub_client_list):
+        print(i)
+        print(client)
         if client["last_name"] == payload["client_info"]["last_name"] and client["dob"] == payload["client_info"]["dob"]:
-            sub_client_list[i] = client.update(update_info)
-        try:
-            #upload new client info
-            whole_client_list[network_id][church_id] = sub_client_list
-            s3 = boto3.resource("s3", region_name = REGION_NAME)
-            s3.Bucket(BUCKET_MAPPING["client"]).put_object(Body = json.dumps(whole_client_list, indent=2), Key = FILE_MAPPING["client"], ContentType = 'json')  
-            return {
-                "success":True,
-                "return_payload": {
-                    "message": "Operation Success",
-                }
+            client.update(update_info)
+            sub_client_list[i] = client
+    try:
+        #upload new client info
+        whole_client_list[network_id][church_id] = sub_client_list
+        s3 = boto3.resource("s3", region_name = REGION_NAME)
+        s3.Bucket(BUCKET_MAPPING["client"]).put_object(Body = json.dumps(whole_client_list, indent=2), Key = FILE_MAPPING["client"], ContentType = 'json')  
+        return {
+            "success":True,
+            "return_payload": {
+                "message": "Operation Success",
             }
-            
-        except botocore.exceptions.ClientError as error:
-            return {
-                "success":False,
-                "return_payload": {
-                "message": f"Operation update_client_info encountered an error: {error}"
-                }
-            }   
+        }
+        
+    except botocore.exceptions.ClientError as error:
+        return {
+            "success":False,
+            "return_payload": {
+            "message": f"Operation update_client_info encountered an error: {error}"
+            }
+        }   
     return {
             "success":False,
             "return_payload": {
