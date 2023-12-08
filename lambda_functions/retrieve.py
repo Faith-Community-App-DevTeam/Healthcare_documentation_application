@@ -3,6 +3,19 @@ import boto3
 import botocore
 from aws_configs import USER_BUCKET, REGION_NAME, CLIENT_BUCKET
 
+FILE_MAPPING = {
+    "user": 'user_list.json',
+    'client': 'client_list.json',
+    "network": "network_list.json"
+}
+
+BUCKET_MAPPING = {
+    "user": USER_BUCKET,
+    'client': CLIENT_BUCKET,
+    "document": CLIENT_BUCKET,
+    "network": USER_BUCKET
+}
+
 def get_all_users_as_list() -> list:
     """
     connect to s3 and get the big list of json that contains all the user objects
@@ -220,3 +233,71 @@ def get_role(payload: dict) -> dict:
             }
 
 
+def get_network_as_list() -> dict:
+    '''
+    returns all networks as a list
+    '''
+    s3 = boto3.resource("s3", region_name = REGION_NAME)
+    operation = "network"
+    network_list = {}
+    
+    try:
+        print("Getting bucket")
+        response = s3.Object(BUCKET_MAPPING[operation], FILE_MAPPING[operation]).get()
+        #print("response:", response)
+        network_list = json.loads(response['Body'].read())
+        #print("list", obj_list)
+      
+    except botocore.exceptions.ClientError as error:
+        if error.response['Error']['Code'] != '404':
+            #if something else happened for now
+            print(error)
+            raise Exception(str(error))
+        else:
+            raise Exception(str(error))
+    
+    return network_list
+
+def get_a_network(payload: dict) -> dict:
+    '''
+    returns info of a network if user is an admin
+    '''
+    role = get_role(payload)
+    if get_role(payload)["return_payload"]["role"] != "admin":
+        return {
+                "success":False,
+                "return_payload": {
+                    "message": "Must be an admin"
+                }
+            }
+    
+    network_list = get_network_as_list()
+    find_user = get_user({
+        "user_to_find": payload["username"],
+        "include_list": ["network_id"]
+    })
+    
+    
+    if(not find_user["success"]):
+        return {
+                "success": False,
+                "return_payload": {
+                    "message": "get_a_network error: user does not exist"
+                }
+            }
+        
+    #might have a "none" network based on the network_list.json, might cause issues?
+    network_id = find_user["return_payload"]["network_id"]
+    
+    if(network_id not in network_list.keys()):
+        return {
+                "success": False,
+                "return_payload": {
+                    "message": "get_a_network error: network does not exist"
+                }
+            }
+    
+    return {
+                "success": True,
+                "return_payload": network_list[network_id]
+            }

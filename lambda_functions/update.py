@@ -2,18 +2,20 @@ import json
 import boto3
 import botocore
 from aws_configs import CLIENT_BUCKET, USER_BUCKET, REGION_NAME
-from retrieve import get_user_client_list, get_all_users_as_list
+from retrieve import get_user_client_list, get_all_users_as_list, get_network_as_list, get_role, get_user
 from create import encrypt_password, create_token
 
 FILE_MAPPING = {
     "user": 'user_list.json',
-    'client': 'client_list.json'
+    'client': 'client_list.json',
+    "network": "network_list.json"
 }
 
 BUCKET_MAPPING = {
     "user": USER_BUCKET,
     'client': CLIENT_BUCKET,
-    "document": CLIENT_BUCKET
+    "document": CLIENT_BUCKET,
+    "network": USER_BUCKET
 }
 
 def update_client_data(payload: dict) -> dict:
@@ -154,3 +156,76 @@ def update_user_cred(payload:dict) -> dict:
             }
         }
     
+    
+def update_network(payload:dict) -> dict:
+    '''
+    updates a network's information
+    payload:{
+        username,
+        token,
+        network_info: all info one wants to update, structured based on network_data on aws_config.py
+        }
+    '''
+    role = get_role(payload)
+    if get_role(payload)["return_payload"]["role"] != "admin":
+        return {
+                "success":False,
+                "return_payload": {
+                    "message": "Must be an admin"
+                }
+            }
+    
+    network_list = get_network_as_list()
+    find_user = get_user({
+        "user_to_find": payload["username"],
+        "include_list": ["network_id"]
+    })
+    
+    
+    if(not find_user["success"]):
+        return {
+                "success": False,
+                "return_payload": {
+                    "message": "update_network error: user does not exist"
+                }
+            }
+        
+    #might have a "none" network based on the network_list.json, might cause issues?
+    network_id = find_user["return_payload"]["network_id"]
+    
+    if(network_id not in network_list.keys()):
+        return {
+                "success": False,
+                "return_payload": {
+                    "message": "update_network error: network does not exist"
+                }
+            }
+    
+    
+    update_info = payload["network_info"]
+    include_in = update_info.pop("include_in")
+    automate = update_info.pop("automate")
+    
+    network_list[network_id]["include_in"].update(include_in)
+    network_list[network_id]["automate"].update(automate)
+    network_list[network_id].update(update_info)
+    
+    try:
+        #upload updated network info
+        s3 = boto3.resource("s3", region_name = REGION_NAME)
+        operation = "network"
+        s3.Bucket(BUCKET_MAPPING[operation]).put_object(Body = json.dumps(network_list, indent=2), Key = FILE_MAPPING[operation], ContentType = 'json')  
+        return {
+            "success":True,
+            "return_payload": {
+                "message": "Operation Success",
+            }
+        }
+            
+    except botocore.exceptions.ClientError as error:
+        return {
+            "success":False,
+            "return_payload": {
+            "message": "Operation update_network encountered an error while uploading"
+            }
+        }
