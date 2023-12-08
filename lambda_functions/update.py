@@ -85,20 +85,24 @@ def update_user_data(payload: dict) -> dict:
     '''
     This updates a user data on the database if they made changes
     '''
-    user_list = get_user_client_list()
+    user_list = get_all_users_as_list()
     update_info = payload["user_info"]
     
     #clear empty values
     #if v is empty false, else true
     update_info = {k: v for k, v in update_info.items() if v}
     
+    
+    #we dont have functionality for this so im commenting it out for now
+    """
     #might cause timeout if timeout error still occurs
     update_info["include_in"] = {k: v for k, v in update_info["include_in"].items() if v}
     update_info["automate"] = {k: v for k, v in update_info["automate"].items() if v}
     update_info["health_minister"] = {k: v for k, v in update_info["health_minister"].items() if v}
     update_info["permissions"] = {k: v for k, v in update_info["permissions"].items() if v}
+    """
     
-    user_list["username"].update(update_info)
+    user_list[payload["username"]].update(update_info)
     
     try:
         #upload new user info
