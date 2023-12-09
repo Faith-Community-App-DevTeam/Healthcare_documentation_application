@@ -200,7 +200,6 @@ def get_client_document_list(payload: dict) -> dict:
             client_id: str (XXXXXX)
     """
     year = payload["year"]
-    month = payload["month"]
     client_id = payload["client_id"]
     json_name = year + ".json"
     try:
@@ -214,22 +213,31 @@ def get_client_document_list(payload: dict) -> dict:
             'message': "failed to load document list"
         }
     }
-
-    if document_list[client_id][month] != None:
-        return {
-                "success": True,
-                "return_payload": {
-                    "message": "successfully retrieved client's documents",
-                    "document_list": document_list[client_id][month]
+    if "month" in payload.keys():
+        month = payload["month"]
+        if document_list[client_id][month] != None:
+            return {
+                    "success": True,
+                    "return_payload": {
+                        "message": "successfully retrieved client's documents",
+                        "document_list": document_list[client_id][month]
+                    }
                 }
-            }
-    else: 
-        return {
-                "success": False,
-                "return_payload": {
-                    "message": "No documents exist for client in selected month/year"
+    else:
+        if document_list[client_id] != None:
+            return {
+                    "success": True,
+                    "return_payload": {
+                        "message": "successfully retrieved client's documents",
+                        "document_list": document_list[client_id]
+                    }
                 }
-            }
+    return {
+                    "success": False,
+                    "return_payload": {
+                        "message": "No documents exist for client in selected month/year"
+                    }
+                }
     
 def get_role(payload: dict) -> dict:
     """
