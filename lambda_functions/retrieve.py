@@ -196,10 +196,10 @@ def get_client_document_list(payload: dict) -> dict:
             token: str
             month: str (must be mm format)
             year: str (YYYY)
-            client_id: str (XXXXXX)
+            client_id: str (XXXXXX) or "group_documents" for group docs
     """
     year = payload["year"]
-    client_id = payload["client_id"]
+    key = payload["client_id"]
     json_name = year + ".json"
     try:
         s3 = boto3.resource("s3", region_name=REGION_NAME)
@@ -214,21 +214,21 @@ def get_client_document_list(payload: dict) -> dict:
     }
     if "month" in payload.keys():
         month = payload["month"]
-        if document_list[client_id][month] != None:
+        if document_list[key][month] != None:
             return {
                     "success": True,
                     "return_payload": {
                         "message": "successfully retrieved client's documents",
-                        "document_list": document_list[client_id][month]
+                        "document_list": document_list[key][month]
                     }
                 }
     else:
-        if document_list[client_id] != None:
+        if document_list[key] != None:
             return {
                     "success": True,
                     "return_payload": {
                         "message": "successfully retrieved client's documents",
-                        "document_list": document_list[client_id]
+                        "document_list": document_list[key]
                     }
                 }
     return {

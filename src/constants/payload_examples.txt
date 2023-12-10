@@ -61,7 +61,7 @@
     "username": "test_admin",
     "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241",
     "document_info": {
-        "client_id": "000000",
+        "client_id": "000000", XOR "number_of_clients: "12", #client_id for 1:1 or number_of_clients for group
         "date": "2023-09-19",
         "document_type": "blood_pressure_screening"
     }
@@ -187,6 +187,6 @@
     "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241",
     "month": "",
     "year": "", 
-    "client_id:": ""
+    "client_id:": "XXXXXX" or "group_documents" if you want group docs
   }
 }

@@ -238,13 +238,14 @@ def create_client(payload: dict) -> dict:
 def create_document(payload: dict) -> dict:
     """
         A function that creates a json (if not already created) by year.
-        appends documents to corresponding list by client_id > month > list_of_documents
+        appends documents to corresponding list by client_id/group > month > list_of_documents
+        payload must contain either client_id for 1:1 interaction or "number_of_clients" for group interation
 
         payload:
             username: str
             token: str
             document_info: {
-                client_id:
+                client_id: XOR number_of_clients:
                 date:
                 document_type:
                 ...
@@ -262,7 +263,13 @@ def create_document(payload: dict) -> dict:
     #print(payload["document_info"]["date"])
     json_name = year + ".json"
     #print("json_name", json_name)
-    client_id = payload["document_info"]["client_id"]
+    
+    if "client_id" in payload["document_info"].keys():
+        key = payload["document_info"]["client_id"]
+    if "number_of_clients" in payload["document_info"].keys():
+        key = "group_documents"
+    
+    
     document_info = payload.get("document_info")
     document_info["made_by"] = payload["username"]
 
@@ -277,13 +284,13 @@ def create_document(payload: dict) -> dict:
         document_list = json.loads(response['Body'].read())
         print("Retrieved document list: ", document_list)
         
-        if client_id in document_list: #if client id and month exist, append
-            if month in document_list[client_id]: 
-                document_list[client_id][month].append(document_info)
+        if key in document_list: #if client id and month exist, append
+            if month in document_list[key]: 
+                document_list[key][month].append(document_info)
             else: 
-                document_list[client_id][month] = [document_info]
+                document_list[key][month] = [document_info]
         else: #if client_id key dne add it
-            document_list[client_id] = {
+            document_list[key] = {
                 month: [document_info]
             }
         
@@ -302,7 +309,7 @@ def create_document(payload: dict) -> dict:
         if error.response['Error']['Code'] == '403':
             print("document does not exist. creating document.")
             document_info = {
-                client_id: {
+                key: {
                     month: [
                         document_info
                         ]
@@ -465,8 +472,12 @@ def create_report(payload: dict) -> dict:
             #print(i)
             entry_data = ENTRY_DATA.copy()
             entry_data["entry_number"] = i
-            entry_data["service_type"] = "1:1"
-            entry_data["number_of_people"] = 1
+            if "number_of_clients" in document.keys():
+                entry_data["service_type"] = "group encounter"
+                entry_data["number_of_people"] = document["number_of_clients"]
+            else:
+                entry_data["service_type"] = "1:1"
+                entry_data["number_of_people"] = 1
             if "direct_time" in document.keys():
                 entry_data["service_time"] = document["direct_time"]
                 #print("yuh")
