@@ -173,13 +173,12 @@ def get_user_client_list(payload: dict) -> dict:
     user = json.loads(response['Body'].read())[payload["username"]]
     
     network_id = user["network_id"]
-    church_id = user["church_id"]
         
     return {
             "success": True,
             "return_payload": {
                 "message": "successfully retrieved client",
-                "client_list": client_list[network_id][church_id]
+                "client_list": client_list[network_id]
             }
         }
 
