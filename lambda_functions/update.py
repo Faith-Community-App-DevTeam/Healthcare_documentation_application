@@ -173,6 +173,50 @@ def update_user_cred(payload:dict) -> dict:
         }
     
     
+def update_user_by_admin(payload:dict) ->dict:
+    '''
+    Allows an admin to update user info 
+    '''
+    role = get_role(payload)
+    if get_role(payload)["return_payload"]["role"] != "admin":
+        return {
+                "success":False,
+                "return_payload": {
+                    "message": "Must be an admin"
+                }
+            } 
+    user_list = get_all_users_as_list()
+    
+    if payload["user_to_update"] not in user_list.keys():
+         return {
+                "success":False,
+                "return_payload": {
+                    "message": "update_user_by_admin error: username does not exist"
+                }
+            }
+    update_info = payload["user_info"]
+    user_list[payload["user_to_update"]].update(update_info)
+    
+    try:
+        #upload new user info
+        s3 = boto3.resource("s3", region_name = REGION_NAME)
+        s3.Bucket(BUCKET_MAPPING["user"]).put_object(Body = json.dumps(user_list, indent=2), Key = FILE_MAPPING["user"], ContentType = 'json')  
+        return {
+            "success":True,
+            "return_payload": {
+                "message": "Operation Success",
+            }
+        }
+            
+    except botocore.exceptions.ClientError as error:
+        return {
+            "success":False,
+            "return_payload": {
+            "message": "Operation update_user_by_admin encountered an error"
+            }
+        }
+
+    
 def update_network(payload:dict) -> dict:
     '''
     updates a network's information

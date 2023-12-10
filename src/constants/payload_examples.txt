@@ -100,6 +100,18 @@
 }
 
 {
+  "operation": "update_user_by_admin",
+  "payload": {
+    "username": "test_admin",
+    "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241",
+    "user_to_update": "the username"
+    "user_info": {
+      
+    }
+  }
+}
+
+{
   "operation": "update_client",
   "payload": {
     "username": "test_admin",
@@ -128,6 +140,15 @@
   "payload": {
     "username": "test_admin",
     "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241"
+  }
+}
+
+{
+  "operation": "delete_user_by_admin",
+  "payload": {
+    "username": "test_admin",
+    "token": "a78f725d5ae2876b519acd6d861952fd489a8eb22c403b3bf0b74e46aba75241"
+    "user_to_del": "the username"
   }
 }
 
