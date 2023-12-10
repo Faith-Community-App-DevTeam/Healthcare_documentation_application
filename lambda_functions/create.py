@@ -44,7 +44,7 @@ def validate_new_user(payload: dict) -> dict:
         raise Exception("User already exists")
     return encrypt_password(payload)
     
-def validate_new_client(payload: dict, client_list: dict, network_id, church_id) -> dict:
+def validate_new_client(payload: dict, client_list: dict, network_id) -> dict:
     '''
         Checks if the client does not exist in the client list 
     '''
@@ -52,7 +52,7 @@ def validate_new_client(payload: dict, client_list: dict, network_id, church_id)
     client_lastname = payload["client_info"]['last_name']
     client_dob = payload["client_info"]['dob']
     
-    client_list = client_list[network_id][church_id]
+    client_list = client_list[network_id]
     for client in client_list:
         if client_lastname == client['last_name'] and client_dob == client['dob']:
             raise Exception("Client already exists")
@@ -203,19 +203,16 @@ def create_client(payload: dict) -> dict:
         user = json.loads(response['Body'].read())[payload["username"]]
     
         network_id = user["network_id"]
-        church_id = user["church_id"]
         
         if network_id not in client_list.keys():
-            client_list[network_id] = {
-                church_id: []
-            }
+            client_list[network_id] = []
         
-        payload = validate_new_client(payload, client_list, network_id, church_id)
+        payload = validate_new_client(payload, client_list, network_id)
         client_info, new_client_id_counter = create_client_id(payload, client_id_counter)
         client_info = FORMAT_MAPPING[operation](payload)
         
         client_list["id_counter"] = new_client_id_counter
-        client_list[network_id][church_id].append(client_info)
+        client_list[network_id].append(client_info)
         
         #Attempting to upload newly created client 
         try:

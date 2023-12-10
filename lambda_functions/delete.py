@@ -171,7 +171,6 @@ def delete_client(payload:dict) -> dict:
     
     user = user_list[payload["username"]]
     network_id = user["network_id"]
-    church_id = user["church_id"]
     s3 = boto3.resource("s3", region_name = REGION_NAME)
     
     try:
@@ -186,11 +185,11 @@ def delete_client(payload:dict) -> dict:
             }
         }
         
-    sub_client_list = whole_client_list[network_id][church_id]
+    sub_client_list = whole_client_list[network_id]
     for i, client in enumerate(sub_client_list):
         if client["last_name"] == payload["client_info"]["last_name"] and client["dob"] == payload["client_info"]["dob"]:
             sub_client_list.pop(i)
-            whole_client_list[network_id][church_id] = sub_client_list
+            whole_client_list[network_id] = sub_client_list
     
     try:
         #upload client info
