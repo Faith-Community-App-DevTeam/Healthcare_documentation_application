@@ -13,3 +13,5 @@ the client list is layered by network_id > a list of clients. Originally we want
 church_id > list of clients as per our clients request. We decided to leave church layer out since we were running out
 of time. 
 
+## Back-end Architecture
+![image](https://github.com/Faith-Community-App-DevTeam/Healthcare_documentation_application/assets/113818711/42e372c6-bc9d-4106-9c5c-808381258f1d)
