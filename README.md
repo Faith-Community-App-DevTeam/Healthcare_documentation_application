@@ -15,7 +15,8 @@ the client list is layered by network_id > a list of clients. Originally we want
 church_id > list of clients as per our clients request. We decided to leave church layer out since we were running out
 of time. 
 
-Communication between users also has not been implemented. 
+Communication between users also has not been implemented. This web app is also hosted on github. Will eventually need to be hosted
+on a proper domain.
 
 ## Workflow
 ![image](https://github.com/Faith-Community-App-DevTeam/Healthcare_documentation_application/assets/113818711/6c444600-71ad-4585-b646-ce229d4a163b)
