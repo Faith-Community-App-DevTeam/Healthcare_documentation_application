@@ -1,8 +1,28 @@
 .dash-body {
-    background-color: var(--soft-color) !important;
-    height: var(--body-height);
+    background-color: #fffafa !important;
+    height: 100vh;
 }
 
 .dash-content-container {
     margin-top: 20px;
+}
+
+.home-card {
+    height: 50vh;
+}
+
+.home-card>.card {
+    /* background-color: #ebebeb; */
+    background-color: white;
+}
+
+.vars {
+    /* floral white */
+    background-color: #faf9f0;
+
+}
+
+.dashClientHeader {
+    background-color: var(--color3);
+    height: 100px;
 }

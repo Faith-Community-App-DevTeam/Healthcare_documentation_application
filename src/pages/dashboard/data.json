@@ -5,7 +5,7 @@
         "last_name": "Johnson",
         "age": 35,
         "gender": "Female",
-        "date_of_birth": "1987-05-15",
+        "dob": "1987-05-15",
         "occupation": "Registered Nurse",
         "medications": []
     },
@@ -15,7 +15,7 @@
         "last_name": "Smith",
         "age": 42,
         "gender": "Male",
-        "date_of_birth": "1980-09-20",
+        "dob": "1980-09-20",
         "occupation": "IT Consultant",
         "medications": []
     },
@@ -25,7 +25,7 @@
         "last_name": "Rodriguez",
         "age": 28,
         "gender": "Female",
-        "date_of_birth": "1995-03-10",
+        "dob": "1995-03-10",
         "occupation": "Teacher",
         "medications": []
     },
@@ -35,7 +35,7 @@
         "last_name": "Lee",
         "age": 50,
         "gender": "Male",
-        "date_of_birth": "1973-11-28",
+        "dob": "1973-11-28",
         "occupation": "Physician",
         "medications": []
     },
@@ -45,7 +45,7 @@
         "last_name": "Nguyen",
         "age": 31,
         "gender": "Female",
-        "date_of_birth": "1991-07-03",
+        "dob": "1991-07-03",
         "occupation": "Dental Hygienist",
         "medications": []
     },
@@ -55,7 +55,7 @@
         "last_name": "Brown",
         "age": 45,
         "gender": "Male",
-        "date_of_birth": "1978-12-12",
+        "dob": "1978-12-12",
         "occupation": "Engineer",
         "medications": []
     },
@@ -65,7 +65,7 @@
         "last_name": "Johnson",
         "age": 28,
         "gender": "Female",
-        "date_of_birth": "1995-08-10",
+        "dob": "1995-08-10",
         "occupation": "Nurse",
         "medications": [
             "Aspirin",
@@ -78,7 +78,7 @@
         "last_name": "Smith",
         "age": 45,
         "gender": "Male",
-        "date_of_birth": "1978-03-22",
+        "dob": "1978-03-22",
         "occupation": "Teacher",
         "medications": [
             "Metformin",
@@ -91,7 +91,7 @@
         "last_name": "Williams",
         "age": 35,
         "gender": "Female",
-        "date_of_birth": "1987-12-05",
+        "dob": "1987-12-05",
         "occupation": "Engineer",
         "medications": [
             "Amoxicillin",
@@ -104,7 +104,7 @@
         "last_name": "Brown",
         "age": 50,
         "gender": "Male",
-        "date_of_birth": "1973-05-18",
+        "dob": "1973-05-18",
         "occupation": "Accountant",
         "medications": [
             "Losartan",
@@ -117,7 +117,7 @@
         "last_name": "Davis",
         "age": 32,
         "gender": "Female",
-        "date_of_birth": "1991-09-30",
+        "dob": "1991-09-30",
         "occupation": "Dentist",
         "medications": [
             "Metoprolol",
@@ -130,7 +130,7 @@
         "last_name": "Garcia",
         "age": 40,
         "gender": "Male",
-        "date_of_birth": "1983-11-14",
+        "dob": "1983-11-14",
         "occupation": "Software Developer",
         "medications": [
             "Hydrochlorothiazide",
@@ -143,7 +143,7 @@
         "last_name": "Martinez",
         "age": 26,
         "gender": "Female",
-        "date_of_birth": "1997-04-25",
+        "dob": "1997-04-25",
         "occupation": "Graphic Designer",
         "medications": [
             "Ibuprofen",
@@ -156,7 +156,7 @@
         "last_name": "Rodriguez",
         "age": 38,
         "gender": "Male",
-        "date_of_birth": "1985-08-08",
+        "dob": "1985-08-08",
         "occupation": "Marketing Manager",
         "medications": [
             "Acetaminophen",
@@ -169,7 +169,7 @@
         "last_name": "Lopez",
         "age": 31,
         "gender": "Female",
-        "date_of_birth": "1992-11-07",
+        "dob": "1992-11-07",
         "occupation": "Physical Therapist",
         "medications": [
             "Citalopram",
@@ -183,7 +183,7 @@
         "last_name": "Perez",
         "age": 48,
         "gender": "Male",
-        "date_of_birth": "1975-02-19",
+        "dob": "1975-02-19",
         "occupation": "Architect",
         "medications": [
             "Escitalopram",

@@ -6,11 +6,10 @@ import Login from './pages/login/Login';
 import "./index.css"
 import { Routes, Route, Link } from 'react-router-dom';
 import UserContext from './components/userContext/userContext';
-import { createContext, useState } from 'react';
-import PatientCard from './components/patientCard/PatientCard';
-import NewClientForm from './components/forms/NewClientForm';
+import { useState } from 'react';
 import Client from './pages/client/Client';
-import NewEncouter from './pages/new-encounter/NewEncounter';
+import NewEncounter from './pages/new-encounter/NewEncounter';
+
 
 
 function App() {
@@ -27,9 +26,16 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login hasAccount={true} />} />
           <Route path="/register" element={<Login hasAccount={false} />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/home" element={<Dashboard page="home" />} />
+          <Route path="/dashboard/clients" element={<Dashboard page='client' />} />
+          <Route path="/dashboard/forms" element={<Dashboard page='forms' />} />
+          <Route path="/dashboard/admin" element={<Dashboard page='admin' />} />
+          <Route path="/dashboard/reports" element={<Dashboard page='reports' />} />
           <Route path="/client" element={<Client />} />
-          <Route path="/new-encounter" element={<NewEncouter />} />
+          <Route path="/new-encounter/one-to-one" element={<NewEncounter form="ind" />} />
+          <Route path="/new-encounter/bp-screen" element={<NewEncounter form="bp" />} />
+          <Route path="/new-encounter/foot-screen" element={<NewEncounter form="foot" />} />
+
         </Routes>
       </div>
     </UserContext.Provider>

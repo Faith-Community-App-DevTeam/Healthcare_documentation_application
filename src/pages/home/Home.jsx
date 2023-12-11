@@ -13,9 +13,10 @@ const Home = () => {
             <div className="home">
                 <header className="home-top">
                     <div className=" text-center">
-                        <div className="row align-items-center">
-                            <div className="col-xl-8"><img src={photo2} alt='blood pressure check' className="img-fluid border border-primary rounded-end-pill" /></div>
-                            <div className="col col-xl-4"><h1 class="header-text-dark display-2">Empowering Care through Seamless Documentation</h1>
+                        <div className="row align-items-center gx-0">
+                            <div className="col-lg-8"><img src={photo2} alt='blood pressure check' className="img-fluid border border-primary rounded-end-pill" /></div>
+                            <div className="col col-lg-4">
+                                <h1 class="header-text-dark display-2">Empowering Care through Seamless Documentation</h1>
                                 <NavLink to="register" className="btn btn-primary btn-lg m-4">Request Access!</NavLink>
                             </div>
                         </div>

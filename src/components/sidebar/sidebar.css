@@ -1,7 +1,10 @@
 .sidebar {
     /* height: var(--body-height); */
-    width: 200px;
-    height: var(--body-height);
-    background-color: var(--secondary-color);
+    width: 280px;
+    height: 100vh;
+    background-color: var(--color2);
+    -moz-box-shadow: 3px 0 5px 0 #5555556b;
+    -webkit-box-shadow: 3px 0 5px 0 #5555556b;
+    box-shadow: 3px 0 5px 0 #5555556b;
 
 }

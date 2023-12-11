@@ -1,5 +1,6 @@
 .topbar {
-    max-width: 100vw;
+    /* max-width: calc(100vw - 280px);
+    margin-left: 280px; */
 }
 
 .topbar span {
@@ -24,8 +25,7 @@
 
 }
 
-#topbar-dashboard,
-#topbar-client {
+#topbar-dashboard {
     /* width: 85vw; */
     background-color: var(--secondary-color);
 }
@@ -33,4 +33,8 @@
 #topbar-dashboard,
 #topbar-client span {
     color: var(--color2);
+}
+
+#topbar-client {
+    background-color: var(--color5);
 }

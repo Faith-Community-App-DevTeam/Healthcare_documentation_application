@@ -1,8 +1,3 @@
 #formTitle {
-    font-family: var(--mono-text);
-}
-
-.encForm label {
-    font-family: var(--mono-text);
-    font-weight: 200;
+    font-family: var(--display-font);
 }

@@ -6,100 +6,52 @@ import fetchData from "../../components/functions/apiRequest";
 import OneToOneIntForm from "./OneToOneIntForm";
 import { useNavigate } from "react-router-dom";
 import "./newEncounter.css"
+import BloodPressureForm from "./BloodPressureForm";
+import IndFootScreening from "./IndFootScreening";
 
-export default function NewEncouter() {
+export default function NewEncounter(props) {
     const { state } = useLocation();
     const { client } = state;
     const user = useContext(UserContext).user
     const nav = useNavigate()
+    const [message, setMessage] = useState("")
+    const form = props.form
 
-    const initform = {
-        client_id: client.client.client_id,
-        document_type: "client_care_notes"
-    }
 
-    let userInfo = {
-
-    }
+    const [userInfo, setUserInfo] = useState({})
 
     useEffect(() => {
-        async function getData() {
-            let data = {
-                operation: 'get_user',
-                payload: {
-                    username: user.username,
-                    token: user.token,
-                    user_to_find: user.username,
-                    include_list: [
-                        "first_name",
-                        "last_name",
-                        "network_id",
-                        "church_id"
-                    ]
-                }
-            }
-            const res = await fetchData('POST', data)
-            console.log(res)
-
-            if (!ignore && res['body']['success']) {
-                userInfo = res['body']['return_payload']
-                console.log(userInfo)
-            }
+        if (message === "Success") {
+            nav("/client", { state: { client: client } })
         }
 
-        let ignore = false;
-        getData()
-        return () => {
-            ignore = true;
-        }
-    }, []);
+    })
 
     return (
         <>
-            <div className="containter bg-light">
+            <div className="containter-fluid bg-light">
                 <Topbar page="client" />
                 <div className="d-flex">
-                    <div className="container-fluid mt-4 px-4">
-                        <div className="container-fluid mb-4 text-center d-flex justify-content-between">
-                            <button className="btn btn-outline-primary" onClick={() => { nav("/client", { state: { client: client } }) }}>Back to Client Profile</button>
-                            <h1 className="display-6 text-primary" id="pageTitle">New Encounter</h1>
-                            <button className="btn" onClick={() => alert("secret")}>secret</button>
-                        </div>
-                        <div className="row"><fieldset className="col-2">
-                            <legend>User Information</legend>
-                            <div className="row">
-                                <label htmlFor="staticUserFirstName" className="col-sm-4 col-form-label">Your First name:</label>
-                                <div className="col-sm-8">
-                                    <input type="text" readOnly className="form-control-plaintext" id="staticUserFirstName" value={userInfo.first_name} />
-                                </div>
+                    <div className="container-fluid mt-3 px-4">
+                        <div className="row">
+                            <div className="col-md-auto col-sm">
+                                <button className="btn btn-outline-primary" onClick={() => { nav("/client", { state: { client: client } }) }}>Back to Client Profile</button>
                             </div>
-                            <div className="row">
-                                <label htmlFor="staticUserLastName" className="col-sm-4 col-form-label">Last name:</label>
-                                <div className="col-sm-8">
-                                    <input type="text" readOnly className="form-control-plaintext" id="staticLastName" value={userInfo.last_name} />
-                                </div>
+                            <div className="col">
+                                {form === "ind" ? <OneToOneIntForm client={client} setMessage={setMessage} />
+                                    : form === "bp" ? <BloodPressureForm client={client} setMessage={setMessage} />
+                                        : form === "foot" ? <IndFootScreening client={client} setMessage={setMessage} />
+                                            : ""}
                             </div>
-                            <div className="row">
-                                <label htmlFor="staticUserChurchID" className="col-sm-4 col-form-label">Church Id:</label>
-                                <div className="col-sm-8">
-                                    <input type="text" readOnly className="form-control-plaintext" id="staticUserChurchID" value={userInfo.church_id} />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <label htmlFor="staticUserNetworkID" className="col-sm-4 col-form-label">Network Id:</label>
-                                <div className="col-sm-8">
-                                    <input type="text" readOnly className="form-control-plaintext" id="staticUserNetworkID" value={userInfo.network_id} />
-                                </div>
-                            </div>
-                        </fieldset>
-                            <div className="col-10"><OneToOneIntForm initform={initform} />
+                            <div className="col-md-auto col-sm">
+                                <button className="btn btn-outline-primary invisible" onClick={() => { nav("/client", { state: { client: client } }) }}>Back to Client Profile</button>
                             </div>
                         </div>
 
 
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }

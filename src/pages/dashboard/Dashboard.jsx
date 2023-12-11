@@ -6,16 +6,23 @@ import PatientCard from "../../components/patientCard/PatientCard";
 import NewClientForm from "../../components/forms/NewClientForm";
 import fetchData from "../../components/functions/apiRequest";
 import "./dashboard.css"
+import DashboardClient from "./DashboardClients";
+import DashbaoardHome from "./DashboardHome";
+import DashboardAdmin from "./DashboardAdmin";
+import DashboardForms from "./DashboardForms";
+import DashboardReports from "./DashboardReports";
 
 
-const Dashboard = () => {
+const Dashboard = (page) => {
     const user = useContext(UserContext).user
     const [clients, setClient] = useState()
+    const [users, setUsers] = useState()
     const arr = []
-
+    let clientList
+    let userList
 
     useEffect(() => {
-        async function getData() {
+        async function getClients() {
             let data = {
                 operation: 'get_user_client_list',
                 payload: {
@@ -24,15 +31,36 @@ const Dashboard = () => {
                 }
             }
             const res = await fetchData('POST', data)
-            console.log(res)
 
             if (!ignore && res['body']['success']) {
                 setClient(res['body']["return_payload"]['client_list'])
+                clientList = res['body']["return_payload"]['client_list']
+            }
+        }
+
+        async function getUsers() {
+            if (user.role === "admin") {
+                let data = {
+                    operation: 'get_user_list',
+                    payload: {
+                        username: user.username,
+                        token: user.token,
+                    }
+                }
+
+                const res = await fetchData('POST', data)
+
+
+                if (!ignore && res['body']['success']) {
+                    setUsers(res['body']["return_payload"])
+                }
+
             }
         }
 
         let ignore = false;
-        getData()
+        getClients()
+        getUsers()
         return () => {
             ignore = true;
         }
@@ -46,56 +74,41 @@ const Dashboard = () => {
     // })
 
 
-    //request basic client info from backend
-    function getClients() {
-        for (let i = 0; i < Object.keys(clients).length; i++) {
-            arr.push(<PatientCard client={clients[i]} />)
+    function choosePage() {
+        if (clients) {
+            switch (page.page) {
+                case 'home':
+                    return (<DashbaoardHome />)
+                    break;
+                case 'client':
+                    return (<DashboardClient allClients={clients} />)
+                    break;
+                case 'forms':
+                    return (<DashboardForms />)
+                    break;
+                case 'admin':
+                    return (<DashboardAdmin users={users} />)
+                    break;
+                case 'reports':
+                    return (<DashboardReports />)
+            }
+
         }
-        return (arr)
     }
 
 
     return (
         <>
-            <div className="">
-                <Topbar page="dashboard" />
-                <div className="d-flex dash-body">
-                    <Sidebar />
-                    <div className="container px-4 dash-content-container">
-                        <div className="container-fluid">
-                            <div className="row align-items-center">
-                                <h1 className="col text-primary" style={{ fontFamily: 'var(--display-font)' }}> All Clients</h1>
-
-                                <form action="POST" className="col d-flex">
-                                    <input className="form-control form-control-lg me-4 " type="search" placeholder="Search Clients" aria-label="Search" />
-
-                                </form>
-
-                                <div className="col text-end">
-                                    <NewClientForm />
-                                </div>
-                            </div>
-                            <hr></hr>
-                        </div>
-                        <p className="fst-italic">Comprehensive list of all clients within the network. </p>
-                        <div className="container list-group mb-1 card-body">
-                            <div className="list-group-item d-flex  mb-1 shadow-sm">
-                                <div className="p-2 col-1 text-center">ID</div>
-                                <div className="p-2 col-4"> Name</div>
-                                <div className="p-2 col-1 text-end"> Age</div>
-                                <div className="p-2 col text-start">Gender</div>
-                                <div className="p-2 col">DOB</div>
-                            </div>
-                        </div>
-                        {!!clients && (<div className="card-body overflow-scroll" style={{ maxHeight: "60vh" }}>
-                            {getClients()}
-                        </div>)}
-
-
-                    </div>
+            <div className="d-flex dash-body">
+                <Sidebar />
+                <div className="container-fluid px-0 mx-0">
+                    <Topbar page="dashboard" />
+                    {choosePage()}
+                    {/*  */}
                 </div>
-
             </div>
+
+
         </>
     )
 }

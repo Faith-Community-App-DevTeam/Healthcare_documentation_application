@@ -1,13 +1,7 @@
-.demoCard,
-.histCard,
-.encCard {
-    height: 100%;
-    background-color: var(--color2);
-}
-
 .clientContainer {
-    background-color: var(--color2);
-    height: var(--body-height);
+    background-color: #fffafa;
+    /* background-color: var(--soft-color); */
+    height: 100vh
 }
 
 #pageTitle {
@@ -17,4 +11,16 @@
 #cardInfoTitle {
     font-weight: 600;
     font-size: x-large;
+}
+
+.clientTop {
+    height: 100px;
+    background-color: var(--color5);
+    color: #fffafa
+}
+
+.clientNavbar {
+    height: 50px;
+    background-color: #e6e6e6;
+
 }
