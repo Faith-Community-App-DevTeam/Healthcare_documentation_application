@@ -8,6 +8,13 @@ would look like.
 To enter the testing environment in the app, valid usernames include test_admin, test_user1, test_user2, and test_user3
 all with "password" as a password.
 
+## README
+Newly created users are automatically assigned to a "none" network. It is up to an admin to assign new users to
+a network. It must be noted that if a client is created by someone within the "none" network, other newly created users
+will be able to see that client. This could allow random people to create an account and view clients. It is important
+that users be assigned a network before creating clients so that the clients are also associated with the assigned network. 
+This situation will most likely need to be changed in the future for the sake of security. 
+
 ## What works and what needs work
 In terms of CRUD (creation, reading, updating, and deleting), users, clients, documents, and networks have full
 functionality. Monthly reports had creation complete as we felt that RUD wasn't necessary for the amound of time
