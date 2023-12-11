@@ -18,7 +18,8 @@ This situation will most likely need to be changed in the future for the sake of
 ## What works and what needs work
 In terms of CRUD (creation, reading, updating, and deleting), users, clients, documents, and networks have full
 functionality. Monthly reports had creation complete as we felt that RUD wasn't necessary for the amound of time
-we had. 
+we had. Network CRUD does have full functionality but we forgot to include it in the operation router, so the front-end
+will not be able to use it until it gets added.
 
 Church CRUD has not been implemented. In the client_list.json that can be found in src > constants > clients,
 the client list is layered by network_id > a list of clients. Originally we wanted it to be layered by network_id >
