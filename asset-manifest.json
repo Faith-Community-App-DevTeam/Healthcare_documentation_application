@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Healthcare_documentation_application/static/css/main.81f52cda.css",
-    "main.js": "/Healthcare_documentation_application/static/js/main.4714e5b2.js",
+    "main.css": "/Healthcare_documentation_application/static/css/main.ff7c166d.css",
+    "main.js": "/Healthcare_documentation_application/static/js/main.bcafb05d.js",
     "static/media/homepage-photo.jpg": "/Healthcare_documentation_application/static/media/homepage-photo.8198ae88e731473c1bca.jpg",
     "static/media/photo2.jpg": "/Healthcare_documentation_application/static/media/photo2.1ecc8784a52477640525.jpg",
     "static/media/LogoRed(1).png": "/Healthcare_documentation_application/static/media/LogoRed(1).41058077b561b53d689c.png",
     "index.html": "/Healthcare_documentation_application/index.html",
-    "main.81f52cda.css.map": "/Healthcare_documentation_application/static/css/main.81f52cda.css.map",
-    "main.4714e5b2.js.map": "/Healthcare_documentation_application/static/js/main.4714e5b2.js.map"
+    "main.ff7c166d.css.map": "/Healthcare_documentation_application/static/css/main.ff7c166d.css.map",
+    "main.bcafb05d.js.map": "/Healthcare_documentation_application/static/js/main.bcafb05d.js.map"
   },
   "entrypoints": [
-    "static/css/main.81f52cda.css",
-    "static/js/main.4714e5b2.js"
+    "static/css/main.ff7c166d.css",
+    "static/js/main.bcafb05d.js"
   ]
 }
