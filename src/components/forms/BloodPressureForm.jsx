@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
-import NICTable from "../../components/Tables/NICTable";
-import UserContext from "../../components/userContext/userContext";
-import fetchData from "../../components/functions/apiRequest";
+import NICTable from "../Tables/NICTable";
+import UserContext from "../userContext/userContext";
+import fetchData from "../functions/apiRequest";
 export default function BloodPressureForm(props) {
-    const client = props.client
+    const patient = props.patient
     const [education, setEducation] = useState("")
     const user = useContext(UserContext).user
     let [selectedInterventions, setSelectedInterventions] = useState([])
@@ -70,16 +70,16 @@ export default function BloodPressureForm(props) {
                     <div className="p-4 py-0">
                         <form action="POST" onSubmit={handleSubmit}>
                             <input type="text" hidden name="document_type" value="blood_pressure_screening" />
-                            <input type="text" hidden name="client_id" value={client.client.client_id} />
+                            <input type="text" hidden name="client_id" value={patient.patient.client_id} />
                             <div className="row mb-3">
                                 <div className="col">
-                                    <label htmlFor="fName" className="form-label">Client First Name</label>
-                                    <input type="text" disabled className="form-control" value={client.client.first_name} />
+                                    <label htmlFor="fName" className="form-label">Patient First Name</label>
+                                    <input type="text" disabled className="form-control" value={patient.patient.first_name} />
                                 </div>
                                 <div className="vr p-0 mx-4 d-none d-md-block"></div>
                                 <div className="col">
-                                    <label htmlFor="lName" className="form-label">Client Last Name</label>
-                                    <input type="text" disabled className="form-control" value={client.client.last_name} />
+                                    <label htmlFor="lName" className="form-label">Patient Last Name</label>
+                                    <input type="text" disabled className="form-control" value={patient.patient.last_name} />
                                 </div>
                             </div>
                             <hr />
@@ -229,7 +229,7 @@ export default function BloodPressureForm(props) {
                                 <div className="col-3">
                                     <p>Current Medications:</p>
                                     <ul className="list-group-flush list-group">
-                                        {client.client.medications ? client.client.medications.map(([m, d, f]) => <li className="fw-light list-group-item"><strong>{m}</strong>, <em>{d}</em>, {f} </li>)
+                                        {patient.patient.medications ? patient.patient.medications.map(([m, d, f]) => <li className="fw-light list-group-item"><strong>{m}</strong>, <em>{d}</em>, {f} </li>)
                                             : <li className="list-group-item fw-light">No Current Medications</li>}
                                     </ul>
                                 </div>

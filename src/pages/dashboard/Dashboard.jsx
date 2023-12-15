@@ -2,11 +2,9 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Topbar from "../../components/topbar/Topbar";
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../../components/userContext/userContext";
-import PatientCard from "../../components/patientCard/PatientCard";
-import NewClientForm from "../../components/forms/NewClientForm";
 import fetchData from "../../components/functions/apiRequest";
 import "./dashboard.css"
-import DashboardClient from "./DashboardClients";
+import DashboardPatients from "./DashboardPatients";
 import DashbaoardHome from "./DashboardHome";
 import DashboardAdmin from "./DashboardAdmin";
 import DashboardForms from "./DashboardForms";
@@ -15,10 +13,10 @@ import DashboardReports from "./DashboardReports";
 
 const Dashboard = (page) => {
     const user = useContext(UserContext).user
-    const [clients, setClient] = useState()
+    const [patients, setPatients] = useState()
     const [users, setUsers] = useState()
     const arr = []
-    let clientList
+    let patientList
     let userList
 
     useEffect(() => {
@@ -33,8 +31,8 @@ const Dashboard = (page) => {
             const res = await fetchData('POST', data)
 
             if (!ignore && res['body']['success']) {
-                setClient(res['body']["return_payload"]['client_list'])
-                clientList = res['body']["return_payload"]['client_list']
+                setPatients(res['body']["return_payload"]['client_list'])
+                patientList = res['body']["return_payload"]['client_list']
             }
         }
 
@@ -75,13 +73,13 @@ const Dashboard = (page) => {
 
 
     function choosePage() {
-        if (clients) {
+        if (patients) {
             switch (page.page) {
                 case 'home':
                     return (<DashbaoardHome />)
                     break;
-                case 'client':
-                    return (<DashboardClient allClients={clients} />)
+                case 'patient':
+                    return (<DashboardPatients allPatients={patients} />)
                     break;
                 case 'forms':
                     return (<DashboardForms />)
@@ -99,7 +97,7 @@ const Dashboard = (page) => {
 
     return (
         <>
-            <div className="d-flex dash-body">
+            <div className="d-flex dash-body overflow-scroll">
                 <Sidebar />
                 <div className="container-fluid px-0 mx-0">
                     <Topbar page="dashboard" />

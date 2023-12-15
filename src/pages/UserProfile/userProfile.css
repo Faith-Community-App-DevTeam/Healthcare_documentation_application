@@ -1,0 +1,9 @@
+.profileContainer {
+    height: 100vh;
+    background-color: #fffafa;
+
+}
+
+.profileContainer input:disabled {
+    background: white;
+}

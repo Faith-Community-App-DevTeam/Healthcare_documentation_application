@@ -1,7 +1,7 @@
 import "./clientProfileCards.css"
 
 export default function DemegraphicsCard(props) {
-    const client = props.client.client
+    const patient = props.patient.patient
 
     function handleSubmit() {
         //     e.preventDefault();
@@ -78,7 +78,7 @@ export default function DemegraphicsCard(props) {
         updateButton.classList.remove("d-none")
         cancelButton.classList.add('d-none')
         saveButton.classList.add('d-none')
-        console.log(client.ethnicity)
+        console.log(patient.ethnicity)
 
     }
 
@@ -92,7 +92,7 @@ export default function DemegraphicsCard(props) {
                     <h5 className="lead fs-3">Demographics</h5>
                     <div className="">
                         <button className="btn btn-sm btn-outline-secondary d-none" onClick={handleCancel} id="clearDemoButton">Cancel</button>
-                        <button className="btn btn-sm btn-primary d-none" onClick={handleUpdate} id="saveDemoButton">Save</button>
+                        <button className="btn btn-sm btn-primary d-none" type="submit" form="demoForm" id="saveDemoButton">Save</button>
                     </div>
                     <button className="btn btn-sm btn-outline-secondary" onClick={handleUpdate} id="updateDemoButton">Edit</button>
                 </div>
@@ -104,43 +104,43 @@ export default function DemegraphicsCard(props) {
                         <div className="row mb-1">
                             <label htmlFor="staticAddress" className="col-form-label col-sm-6 col-md-4 ">Address:</label>
                             <div className="col-md-8 col-sm-6">
-                                <input type="text" readOnly={true} className="form-control-plaintext form-control" id="staticAddress" defaultValue={client.address} />
+                                <input type="text" readOnly={true} className="form-control-plaintext form-control" id="staticAddress" defaultValue={patient.address} />
                             </div>
                         </div>
                         <div className="row mb-1">
                             <label htmlFor="staticPhone" className="col-form-label col-md-4 col-sm-6">Phone:</label>
                             <div className="col-sm-8">
-                                <input type="text" readOnly className="form-control-plaintext form-control" id="staticPhone" defaultValue={client.phone_number} />
+                                <input type="text" readOnly className="form-control-plaintext form-control" id="staticPhone" defaultValue={patient.phone_number} />
                             </div>
                         </div>
                         <div className="row mb-1">
                             <label htmlFor="staticEmail" className="col-form-label col-sm-4">Email:</label>
                             <div className="col-sm-8">
-                                <input type="text" readOnly className="form-control-plaintext form-control" id="staticEmail" defaultValue={client.email} />
+                                <input type="text" readOnly className="form-control-plaintext form-control" id="staticEmail" defaultValue={patient.email} />
                             </div>
                         </div>
                         <div className="row mb-1">
                             <label htmlFor="staticEMContact" className="col-form-label col-sm-4">Emergency Contact:</label>
                             <div className="col-sm-8">
-                                <input type="text" readOnly className="form-control-plaintext form-control" id="staticEMContact" defaultValue={client.emergency_contact} />
+                                <input type="text" readOnly className="form-control-plaintext form-control" id="staticEMContact" defaultValue={patient.emergency_contact} />
                             </div>
                         </div>
                         <div className="row mb-1">
                             <label htmlFor="staticECPhone" className="col-form-label col-sm-4">Emegency Contact Phone:</label>
                             <div className="col-sm-8">
-                                <input type="text" readOnly className="form-control-plaintext form-control" id="staticECPhone" defaultValue={client.emergency_phone_number} />
+                                <input type="text" readOnly className="form-control-plaintext form-control" id="staticECPhone" defaultValue={patient.emergency_phone_number} />
                             </div>
                         </div>
                         <div className="row mb-1">
                             <label htmlFor="staticOccupation" className="col-form-label col-sm-4">Occupation:</label>
                             <div className="col-sm-8">
-                                <input type="text" readOnly className="form-control-plaintext form-control" id="staticOccupation" defaultValue={client.occupation} />
+                                <input type="text" readOnly className="form-control-plaintext form-control" id="staticOccupation" defaultValue={patient.occupation} />
                             </div>
                         </div>
                         <div className="row mb-1">
                             <label htmlFor="staticInsurance" className="col-form-label col-sm-4">Insurance:</label>
                             <div className="col-sm-8">
-                                <input type="text" readOnly className="form-control-plaintext form-control" id="staticInsurance" defaultValue={client.insurance} />
+                                <input type="text" readOnly className="form-control-plaintext form-control" id="staticInsurance" defaultValue={patient.insurance} />
                             </div>
                         </div>
 
@@ -150,10 +150,10 @@ export default function DemegraphicsCard(props) {
                                 <label htmlFor="ethnicity" className="form-label-sm col-sm-4">Ethnicity: </label>
                             </div>
                             <div className="col-sm-8">
-                                <p>{client.ethnicity}</p>
+                                <p>{patient.ethnicity}</p>
                             </div>
                         </div>
-                        <select name="ethnicity" id="ethnicity" className="form-select d-none" defaultValue={client.ethnicity} disabled>
+                        <select name="ethnicity" id="ethnicity" className="form-select d-none" defaultValue={patient.ethnicity} disabled>
                             <option>Hispanic or Latino</option>
                             <option>Not Hispanic or Latino</option>
                         </select>
@@ -164,7 +164,7 @@ export default function DemegraphicsCard(props) {
                                 <p>Race: </p>
                             </div>
                             <div className="col-sm-8">
-                                <p>{client.race}</p>
+                                <p>{patient.race}</p>
                             </div>
 
                             <div className="d-none" id="raceForm">

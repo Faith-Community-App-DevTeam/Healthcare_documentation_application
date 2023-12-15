@@ -18,7 +18,7 @@ export default function LogoutButton() {
         navigate("/");
     }
     return (
-        <button className="btn btn-outline-secondary" onClick={handleLogout}>Logout</button>
+        <button className="btn" onClick={handleLogout}>Logout</button>
 
     )
 }

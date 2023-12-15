@@ -4,6 +4,7 @@ import { useContext } from "react"
 import UserContext from "../userContext/userContext"
 import LogoutButton from '../logout/LogoutButton'
 import logo from "../../assets/LogoRed(1).png"
+import "bootstrap/js/dist/dropdown"
 
 const Topbar = (page) => {
     const user = useContext(UserContext).user;
@@ -13,9 +14,20 @@ const Topbar = (page) => {
             : 'btn text-light  navbar-text mx-3'
     )}> Login </NavLink>
 
-    const viewUserName = <div className=''>
-        <span className=" d-inline-block align-text-top text-white me-2">{user.username}</span>
-        <LogoutButton />
+    const viewUserName = <div className='nav-item dropdown'>
+        <button className="btn dropdown-toggle" data-bs-toggle="dropdown" >
+            <span className=" d-inline-block align-text-top text-white me-2">{user.username}</span>
+        </button>
+        <ul className="dropdown-menu">
+            <li>
+                <NavLink to='/profile' className="dropdown-item mb-1">View Profile</NavLink>
+            </li>
+            <li>
+                <LogoutButton />
+            </li>
+
+        </ul>
+
     </div>
 
 
@@ -25,7 +37,7 @@ const Topbar = (page) => {
 
         <nav className="navbar sticky-top topbar" id={"topbar-" + page.page}>
             <div className="container-fluid ">
-                {page.page != "home" ?
+                {page.page != "home" && page.page != "login" ?
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSidebar"><span className="navbar-toggler-icon"></span></button>
                     : <button className='btn invisible'>invisible button</button>
                     // : <NavLink to="/dashboard/clients" className={'btn nav-link text-white text-center text-wrap'} style={{ width: "6.5rem" }}><i class="bi bi-chevron-left"></i> Back to All Clients</NavLink>

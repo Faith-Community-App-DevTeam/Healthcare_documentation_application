@@ -1,7 +1,6 @@
 import Topbar from '../../components/topbar/Topbar';
 import Footer from '../../components/footer/Footer';
 import './home.css';
-import photo from "../../assets/homepage-photo.jpg";
 import photo2 from "../../assets/photo2.jpg"
 import { NavLink } from 'react-router-dom';
 
@@ -16,7 +15,7 @@ const Home = () => {
                         <div className="row align-items-center gx-0">
                             <div className="col-lg-8"><img src={photo2} alt='blood pressure check' className="img-fluid border border-primary rounded-end-pill" /></div>
                             <div className="col col-lg-4">
-                                <h1 class="header-text-dark display-2">Empowering Care through Seamless Documentation</h1>
+                                <h1 className="header-text-dark display-2">Empowering Care through Seamless Documentation</h1>
                                 <NavLink to="register" className="btn btn-primary btn-lg m-4">Request Access!</NavLink>
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-.clientContainer {
+.patientContainer {
     background-color: #fffafa;
     /* background-color: var(--soft-color); */
     height: 100vh
@@ -13,13 +13,13 @@
     font-size: x-large;
 }
 
-.clientTop {
+.patientTop {
     height: 100px;
     background-color: var(--color5);
     color: #fffafa
 }
 
-.clientNavbar {
+.patienttNavbar {
     height: 50px;
     background-color: #e6e6e6;
 

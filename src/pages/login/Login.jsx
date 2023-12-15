@@ -14,6 +14,8 @@ export default function Login({ hasAccount }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errMsg, setErrMsg] = useState("")
+    const [validPwMsg, setValidPwMsg] = useState("Your password must be 8-20 characters long, and contain only letters, at least one number, and at least one special character.")
+    const [pwMsg, setPwMsg] = useState("")
 
     const SignIn = () => {
         return (
@@ -26,13 +28,13 @@ export default function Login({ hasAccount }) {
                         <label htmlFor="floatingInput">Username</label>
                     </div>
                     <div className="form-floating mb-4">
-                        <input type="password" className="form-control form-control-lg h-25" value={password} onChange={(e) => setPassword(e.target.value)} id="password" name="password" placeholder='Password' />
+                        <input type="password" className="form-control form-control-lg h-25" id="password" name="password" placeholder='Password' />
                         <label htmlFor="floatingInput">Password</label>
                     </div>
                     <button type="submit" className="btn btn-primary btn-lg w-50" >Sign in</button>
                 </form>
                 <div className='mt-3'>
-                    <NavLink to="/register">Don't have an account? Register for acess</NavLink>
+                    <NavLink to="/register">Don't have an account? Register for access</NavLink>
                 </div>
             </>
         )
@@ -48,33 +50,47 @@ export default function Login({ hasAccount }) {
                         <div className="col-md-6">
                             <div className="form-floating mb-4">
                                 <input type="text" className="form-control form-control-lg" id="firstName" name="first_name" placeholder='First Name' required />
-                                <label htmlFor="floatingInput">First Name</label>
+                                <label htmlFor="floatingInput">First Name <span className='text-primary'>*</span></label>
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="form-floating mb-4">
                                 <input type="text" className="form-control form-control-lg" id="lastName" name="last_name" placeholder='Last Name' required />
-                                <label htmlFor="floatingInput">Last Name</label>
+                                <label htmlFor="floatingInput">Last Name <span className='text-primary'>*</span></label>
                             </div>
                         </div>
                     </div>
                     <div className="form-floating mb-4">
-                        <input type="text" className="form-control form-control-lg" id="email" name="email" placeholder='Email' required />
-                        <label htmlFor="floatingInput">Email Address</label>
+                        <input type="email" name="email" id="email" placeholder='Email' className='form-control form-control-lg' required />
+                        <label htmlFor="floatingInput">Email Address <span className='text-primary'>*</span></label>
                     </div>
                     <div className="form-floating mb-4">
                         <input type="text" className="form-control form-control-lg" value={username} onChange={(e) => setUsername(e.target.value)} id="username" name="username" placeholder='Username' required />
-                        <label htmlFor="floatingInput">Username</label>
+                        <label htmlFor="floatingInput">Username <span className='text-primary'>*</span></label>
                     </div>
-                    <div className="form-floating mb-4">
-                        <input type="password" className="form-control form-control-lg" value={password} onChange={(e) => setPassword(e.target.value)} id="password" name="password" placeholder='Password' required />
-                        <label htmlFor="floatingInput">Password</label>
+                    <div className="row">
+                        <div className="col">
+                            <div className="form-floating mb-4">
+
+                                <input type="password" className="form-control form-control-lg" onChange={(e) => validatePassword(e.target.value)} id="password" name="password" placeholder='Password' autoComplete='off' required />
+                                <label htmlFor="floatingInput">Password <span className='text-primary'>*</span></label>
+                                <div id="passwordHelpBlock" className="form-text">
+                                    {validPwMsg}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col">
+                            <div className="form-floating mb-4">
+                                <input type="password" className="form-control form-control-lg" onChange={(e) => handlePasswords(e)} id="passwordConfirm" name="passwordConfirm" placeholder='Confirm Password' required />
+                                <label htmlFor="floatingInput">Confirm Password <span className='text-primary'>*</span></label>
+                                <div id="passwordHelpBlock" className="form-text">
+                                    {pwMsg}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="form-floating mb-4">
-                        <input type="password" className="form-control form-control-lg" onChange={(e) => handlePasswords(e)} id="passwordConfirm" name="passwordConfirm" placeholder='Confirm Password' required />
-                        <label htmlFor="floatingInput">Confirm Password</label>
-                    </div>
-                    {<div className='form-text' id="passwordConfirmText">{errMsg}</div>}
+
+
                     <button type="submit" className="btn btn-primary btn-lg w-50" >Register</button>
                 </form>
                 <div className='mt-3'>
@@ -84,12 +100,47 @@ export default function Login({ hasAccount }) {
         )
     }
 
+    function validatePassword(value) {
+
+
+        const validPassword = (
+            /[A-Za-z]/.test(value))
+        const tooShort = (value.length < 8)
+        const tooLong = (value.length > 20)
+        const hasDigit = (/[0-9]/.test(value))
+        const hasSpcChar = (/[^A-Za-z0-9]/.test(value))
+
+        if (tooShort) {
+            setValidPwMsg("Invalid Password: Password Too Short. Must have 8-20 characters")
+        } else if (tooLong) {
+            setValidPwMsg("Invalid Password: Password Too Long. Must have 8-20 characters")
+        } else if (!hasDigit) {
+            setValidPwMsg("Invalid Password: Missing at least one digit")
+        } else if (!hasSpcChar) {
+            setValidPwMsg("Invalid Password: Missing at least one Special Character")
+        } else if (!validPassword) {
+            setValidPwMsg("Invalid Password: Password doesn't contain any letters")
+        }
+        else {
+            setValidPwMsg("")
+            setPassword(value)
+            console.log('pw true')
+            return true
+        }
+
+        console.log(password)
+        return false
+
+    }
+
     function handlePasswords(e) {
         //check if passwords match
         if (e.target.value != password) {
-            setErrMsg("Passwords Don't Match")
+            setPwMsg("Passwords Don't Match")
+            return false
         } else {
-            setErrMsg("")
+            setPwMsg("")
+            return true
         }
     }
 
@@ -105,14 +156,22 @@ export default function Login({ hasAccount }) {
         formData.forEach((value, key) => f[key] = value)
 
 
-        const operation = hasAccount ? "user_login" : "create_user"
+
+        if (password !== "") {
+            if (!validatePassword(password)) {
+                setErrMsg("Invalid Password. Try Again")
+                return
+            }
+        }
+        const operation = (hasAccount ? "user_login" : "create_user")
         const data = {
             operation: operation,
             payload: {
                 ...f
             }
         }
-        console.log(data.payload)
+        console.log(password)
+
 
         //send data to backend
         const res = await fetchData("POST", data)
@@ -131,7 +190,7 @@ export default function Login({ hasAccount }) {
             }
             sessionStorage.setItem("auth", JSON.stringify(u))
             // redirect to new page
-            navigate("/dashboard/home");
+            navigate("/dashboard/patients");
         } else if (res["statusCode"] === 404) {
             setErrMsg("Incorrect username or password")
         } else {
@@ -145,7 +204,7 @@ export default function Login({ hasAccount }) {
             <Topbar page="login" />
             <div className="body-background">
                 <section className="container text-center align-content-center">
-                    <div className='bg-primary' style={{ height: 150 }}></div>
+                    <div className='bg-primary' style={{ height: 100 }}></div>
 
                     <div className="card shadow-5-strong login-box "  >
                         <div className="card-body py-5 px-md-5">

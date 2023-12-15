@@ -9,6 +9,7 @@ export default function DashboardAdmin(users) {
     let arr = []
     const [selectedUsers, setSelectedUsers] = useState([])
     const [crudBox, setCrudBox] = useState("")
+    const [networkBox, setNetworkBox] = useState("")
     const user = useContext(UserContext).user
     const [nurses, setNurses] = useState()
     const [searchedNurses, setSearchedNurse] = useState("")
@@ -25,6 +26,7 @@ export default function DashboardAdmin(users) {
             const res = await fetchData('POST', data)
             if (!ignore && res['body']['success']) {
                 setNurses(res['body']["return_payload"])
+                console.log(res['body']["return_payload"])
             }
         }
 
@@ -48,27 +50,52 @@ export default function DashboardAdmin(users) {
         let f = {}
         formData.forEach((value, key) => f[key] = value)
 
-        for (let i = 0; i < selectedUsers.length; i++) {
-            let data = {
-                operation: "update_user_by_admin",
-                payload: {
-                    username: user.username,
-                    token: user.token,
-                    user_to_update: selectedUsers[i],
-                    user_info: {
-                        role: "admin"
+        if (form.id == 'adminForm') {
+            for (let i = 0; i < selectedUsers.length; i++) {
+                let data = {
+                    operation: "update_user_by_admin",
+                    payload: {
+                        username: user.username,
+                        token: user.token,
+                        user_to_update: selectedUsers[i],
+                        user_info: {
+                            role: "admin"
+                        }
+
                     }
-
                 }
-            }
 
-            const res = await fetchData("POST", data)
-            console.log(res)
-            if (res['body']['success']) {
-                console.log("success")
-            }
+                const res = await fetchData("POST", data)
+                console.log(res)
+                if (res['body']['success']) {
+                    console.log("success")
+                }
 
+            }
+        } else {
+            for (let i = 0; i < selectedUsers.length; i++) {
+                let data = {
+                    operation: "update_user_by_admin",
+                    payload: {
+                        username: user.username,
+                        token: user.token,
+                        user_to_update: selectedUsers[i],
+                        user_info: f
+
+
+
+                    }
+                }
+
+                const res = await fetchData("POST", data)
+                console.log(res)
+                if (res['body']['success']) {
+                    console.log("success")
+                }
+
+            }
         }
+
     }
     const updateBox = (
         <div className="card my-2 p-4 bg-light">
@@ -88,14 +115,12 @@ export default function DashboardAdmin(users) {
         </div>
     )
 
-    const networkBox = (
+    const netBox = (
         <div className="card my-2 p-4 bg-light">
-            <form method="POST" id="adminForm" onSubmit={handleUpdate}>
-                <label htmlFor="role" className="form-label">Make User(s) an Admin?</label>
-                <select className="form-select mb-2" id="role" name="makeAdmin">
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
+            <form method="POST" id="networkForm" onSubmit={handleUpdate}>
+                <label htmlFor="role" className="form-label">Change User(s) Network.</label>
+                <input className="form-control mb-2" id="role" name="network_id" />
+
                 <div className="d-flex">
                     <button type="submit" className="btn btn-outline-primary">Submit</button>
                     <button className="btn btn-outline-secondary" onClick={() => setCrudBox("")}>Cancel</button>
@@ -105,6 +130,8 @@ export default function DashboardAdmin(users) {
 
         </div>
     )
+
+
 
 
 
@@ -122,19 +149,29 @@ export default function DashboardAdmin(users) {
             </div>
             <hr className="mt-0" />
             <div className="container">
+                <div className="row justify-content-center">
+                    <div className="col-10">
+                        <div className="row mb-3">
+                            {nurses && (<SearchBar users={nurses} type="users" setSeach={setSearchedNurse} />)}
+                        </div>
+                        <hr />
+                        <div className="row">
+                            <AdminUsersTable users={nurses} setUsers={setSelectedUsers} />
+                        </div>
 
-                <div className="row">
-                    <div className="col">
-                        {nurses && (<SearchBar users={nurses} type="users" setSeach={setSearchedNurse} />)}
-                        <AdminUsersTable users={nurses} setUsers={setSelectedUsers} />
                     </div>
 
+
+                </div>
+                <div className="row justify-content-center">
                     <div className="col-auto">
 
                         <button className="btn btn-outline-secondary me-4" onClick={() => setCrudBox('update')}>Update User Role</button>
                         <button className="btn btn-outline-secondary me-4" onClick={() => setCrudBox('network')}>Update User Network</button>
                         <button className="btn btn-outline-secondary">Delete User</button>
-                        {crudBox === 'update' ? updateBox : ""}
+                        {crudBox === 'update' ? updateBox
+                            : crudBox === 'network' ? netBox :
+                                ""}
                     </div>
                 </div>
 

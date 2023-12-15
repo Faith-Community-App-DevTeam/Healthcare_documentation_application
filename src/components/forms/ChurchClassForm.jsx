@@ -11,7 +11,7 @@ export default function ChurchClassForm() {
         </div>)
 
 
-
+    //only service provided and number of people served are required fields.
     return (
 
         <>
@@ -19,8 +19,8 @@ export default function ChurchClassForm() {
                 <hr />
                 <div className="row">
                     <div className="col">
-                        <label htmlFor="serviceProvided" className="form-label">Service Provided:</label>
-                        <select name="service_provided" id="serviceProvided" className="form-select mb-3" onChange={(e) => setServiceName(e.target.value)}>
+                        <label htmlFor="serviceProvided" className="form-label">Service Provided: <span className="text-primary">*</span></label>
+                        <select name="service_provided" id="serviceProvided" className="form-select mb-3" onChange={(e) => setServiceName(e.target.value)} required>
                             <option value="" disabled selected>Please Choose the Service Provided</option>
                             <option value="program">Programs (Journey to Bethlehem, We Can, etc...)</option>
                             <option value="faith_comm_education">Faith community education event</option>
@@ -42,9 +42,9 @@ export default function ChurchClassForm() {
 
                 <div className="row">
                     <div className="col-4">
-                        <label htmlFor="people_served" className="form-label">Number of People Served</label>
+                        <label htmlFor="people_served" className="form-label">Number of People Served: <span className="text-primary">*</span></label>
 
-                        <input type="number" className="form-control mb-3" min={0} />
+                        <input type="number" className="form-control mb-3" min={0} name="number_of_clients" required />
                     </div>
                     <div className="vr p-0 mx-4 d-none d-md-block"></div>
                     <div className="col-6">
@@ -139,10 +139,10 @@ export default function ChurchClassForm() {
                         </select>
                     </div>
                 </div>
-                <hr />
-                <div className="row text-center  px-5">
+                <div className="row text-center px-5">
                     <button className="btn btn-primary" type="submit" form="service">Save and Submit</button>
                 </div>
+
 
 
 

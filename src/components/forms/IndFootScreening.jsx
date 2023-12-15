@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
-import UserContext from "../../components/userContext/userContext";
-import fetchData from "../../components/functions/apiRequest";
-import NICTable from "../../components/Tables/NICTable";
+import UserContext from "../userContext/userContext";
+import fetchData from "../functions/apiRequest";
+import NICTable from "../Tables/NICTable";
 
-export default function OneToOneIntForm(props) {
+export default function IndFootScreening(props) {
     const user = useContext(UserContext).user
-    const client = props.client
+    const patient = props.patient.patient
+
     const [location, setLocation] = useState("")
     let [selectedInterventions, setSelectedInterventions] = useState([])
     const [date, setDate] = useState(() => {
@@ -56,24 +57,22 @@ export default function OneToOneIntForm(props) {
 
         <div className="container ">
             <div className="card bg-white mb-5">
-                <h4 class="text-center mt-3" id="formTitle">One-to-One Interaction</h4>
+                <h4 class="text-center mt-3" id="formTitle">Foot Care Screening</h4>
                 <hr  ></hr>
                 <div className="card-body">
                     <div className="p-4 py-0">
                         <form action="POST" onSubmit={handleSubmit} className="encForm">
-                            <input type="text" hidden name="document_type" value="client_care_notes" />
-                            <input type="text" hidden name="client_id" value={client.client.client_id} />
-
-
+                            <input type="text" hidden name="document_type" value="foot_care_screening" />
+                            <input type="text" hidden name="client_id" value={patient.client_id} />
                             <div className="row mb-3">
                                 <div className="col">
                                     <label htmlFor="fName" className="form-label">Client First Name</label>
-                                    <input type="text" disabled className="form-control" value={client.client.first_name} />
+                                    <input type="text" disabled className="form-control" value={patient.first_name} />
                                 </div>
                                 <div className="vr p-0 mx-4 d-none d-md-block"></div>
                                 <div className="col">
                                     <label htmlFor="lName" className="form-label">Client Last Name</label>
-                                    <input type="text" disabled className="form-control" value={client.client.last_name} />
+                                    <input type="text" disabled className="form-control" value={patient.last_name} />
                                 </div>
                             </div>
                             <hr />
@@ -86,56 +85,37 @@ export default function OneToOneIntForm(props) {
                             <hr />
                             <div className="row mb-3">
                                 <div className="col-auto">
-                                    <p>Visit Type</p>
+                                    <p>History of Diabetes or Peripheral Disease</p>
                                     <div className="form-check mb-3">
-                                        <input type="radio" className="form-check-input" id="visitType" name="visit_type" value={"Initial"} />
-                                        <label htmlFor="visitType" className="form-check-label">Initial Visit</label>
+                                        <input type="radio" className="form-check-input" id="visitType" name="visit_type" value={"yes"} />
+                                        <label htmlFor="visitType" className="form-check-label">Yes</label>
                                     </div>
                                     <div className="form-check mb-3">
-                                        <input type="radio" className="form-check-input" id="visitType" name="visit_type" value={"Follow Up"} />
-                                        <label htmlFor="visitType" className="form-check-label">Follow Up Visit</label>
+                                        <input type="radio" className="form-check-input" id="visitType" name="visit_type" value={"no"} />
+                                        <label htmlFor="visitType" className="form-check-label">No</label>
                                     </div>
                                 </div>
                                 <div className="vr p-0 mx-4 d-none d-md-block"></div>
                                 <div className="col-auto">
-                                    <p>Location of Visit</p>
+                                    <p>Current Leg or Feet Pain</p>
                                     <div className="mb-3">
                                         <div className="form-check form-check-inline">
-                                            <input type="radio" className="form-check-input" id="visitLocation" name="visit_location" value={"Church"} onChange={(e) => setLocation(e.target.value)} />
-                                            <label htmlFor="visitLocation" className="form-check-label">Church</label>
+                                            <input type="radio" className="form-check-input" id="visitLocation" name="Current_Pain" value={"Yes"} />
+                                            <label htmlFor="visitLocation" className="form-check-label">Yes</label>
                                         </div>
                                         <div className="form-check form-check-inline">
-                                            <input type="radio" className="form-check-input" id="visitLocation" name="visit_location" value={"Home"} onChange={(e) => setLocation(e.target.value)} />
-                                            <label htmlFor="visitLocation" className="form-check-label">Home</label>
-                                        </div>
-                                        <div className="form-check form-check-inline">
-                                            <input type="radio" className="form-check-input" id="visitLocation" name="visit_location" value={"Hospital"} onChange={(e) => setLocation(e.target.value)} />
-                                            <label htmlFor="visitLocation" className="form-check-label">Hospital</label>
-                                        </div>
-                                    </div>
-                                    <div className="mb-3">
-                                        <div className="form-check form-check-inline">
-                                            <input type="radio" className="form-check-input" id="visitLocation" name="visit_location" value={"Office"} onChange={(e) => setLocation(e.target.value)} />
-                                            <label htmlFor="visitLocation" className="form-check-label">Office</label>
-                                        </div>
-                                        <div className="form-check form-check-inline">
-                                            <input type="radio" className="form-check-input" id="visitLocation" name="visit_location" value={"Phone"} onChange={(e) => setLocation(e.target.value)} />
-                                            <label htmlFor="visitLocation" className="form-check-label">Phone</label>
-                                        </div>
-                                        <div className="form-check form-check-inline">
-                                            <input type="radio" className="form-check-input" id="visitLocation" name="visit_location" value={"other"} onChange={(e) => setLocation(e.target.value)} />
-                                            <label htmlFor="visitLocation" className="form-check-label">Other</label>
+                                            <input type="radio" className="form-check-input" id="visitLocation" name="Current_Pain" value={"No"} />
+                                            <label htmlFor="visitLocation" className="form-check-label">No</label>
                                         </div>
 
                                     </div>
-                                    {location === "other" ? otherLocation : ""}
                                 </div>
 
                                 <div className="vr p-0 mx-4 d-none d-md-block"></div>
                                 <div className="col mb-3">
 
-                                    <label htmlFor="concerns" className="form-label">Client Health/Wellness Concerns</label>
-                                    <textarea className="form-control" name="concerns" style={{ height: 100 }} ></textarea>
+                                    <label htmlFor="feet_concerns" className="form-label">Feet or Leg Concerns</label>
+                                    <textarea className="form-control" name="feet_concerns" style={{ height: 100 }} ></textarea>
 
                                 </div>
                             </div>
@@ -143,13 +123,13 @@ export default function OneToOneIntForm(props) {
                             <hr />
                             <div className="row">
                                 <div className="col-md-3 col-sm">
-                                    <p>Advance Directives Completed</p>
+                                    <p>Taking Blood Thinning Medications</p>
                                     <div className="form-check mb-3">
-                                        <input type="radio" className="form-check-input" id="advDir" name="Advanced_Directives" value={"Yes"} />
+                                        <input type="radio" className="form-check-input" id="advDir" name="Taking_Blood_Thinners" value={"Yes"} />
                                         <label htmlFor="advDir" className="form-check-label">Yes</label>
                                     </div>
                                     <div className="form-check mb-3">
-                                        <input type="radio" className="form-check-input" id="advDir" name="Advanced_Directives" value={"No"} />
+                                        <input type="radio" className="form-check-input" id="advDir" name="Taking_Blood_Thinners" value={"No"} />
                                         <label htmlFor="visitType" className="form-check-label">No</label>
                                     </div>
                                 </div>
@@ -162,7 +142,7 @@ export default function OneToOneIntForm(props) {
                                     </div>
 
                                     <ul className="list-group-flush list-group">
-                                        {client.client.allergies ? client.client.allergies.map(([n, r]) => <li className="fw-light list-group-item"><strong>{n}</strong><small>{r}</small></li>)
+                                        {patient.allergies ? patient.allergies.map(([n, r]) => <li className="fw-light list-group-item"><strong>{n}</strong><small>{r}</small></li>)
                                             : <li className="list-group-item fw-light">No Current Allergies</li>}
                                     </ul>
                                 </div>
@@ -174,7 +154,7 @@ export default function OneToOneIntForm(props) {
                                     </div>
 
                                     <ul className="list-group-flush list-group">
-                                        {client.client.medications ? client.client.medications.map(([m, d, f]) => <li className="fw-light list-group-item"><strong>{m}</strong>, <em>{d}</em>, {f} </li>)
+                                        {patient.medications ? patient.medications.map(([m, d, f]) => <li className="fw-light list-group-item"><strong>{m}</strong>, <em>{d}</em>, {f} </li>)
                                             : <li className="list-group-item fw-light">No Current Medications</li>}
                                     </ul>
                                 </div>
@@ -195,6 +175,105 @@ export default function OneToOneIntForm(props) {
                                     </ul>
                                 </div>
                             </div>
+                            <hr />
+                            <div className="row mb-3">
+                                <div className="col-auto px-5">
+                                    <p>Smoker?</p>
+                                    <div className="form-check mb-3">
+                                        <input type="radio" className="form-check-input" id="visitType" name="smoker" value={"yes"} />
+                                        <label htmlFor="visitType" className="form-check-label">Yes</label>
+                                    </div>
+                                    <div className="form-check mb-3">
+                                        <input type="radio" className="form-check-input" id="visitType" name="smoker" value={"no"} />
+                                        <label htmlFor="visitType" className="form-check-label">No</label>
+                                    </div>
+                                </div>
+                                <div className="vr p-0 mx-4 d-none d-md-block"></div>
+                                <div className="col-auto px-5">
+                                    <p>Shoes Fitting Appropriately</p>
+                                    <div className="form-check mb-3">
+                                        <input type="radio" className="form-check-input" id="visitType" name="Shoes_Fit" value={"yes"} />
+                                        <label htmlFor="visitType" className="form-check-label">Yes</label>
+                                    </div>
+                                    <div className="form-check mb-3">
+                                        <input type="radio" className="form-check-input" id="visitType" name="Shoes_Fit" value={"no"} />
+                                        <label htmlFor="visitType" className="form-check-label">No</label>
+                                    </div>
+                                </div>
+
+                                <div className="vr p-0 mx-4 d-none d-md-block"></div>
+                                <div className="col mb-3">
+                                    <p>Pulses:</p>
+                                    <div className="col">
+                                        <div className="row">
+                                            <label htmlFor="LDP" className="col-form-label col-sm-2">LDP:</label>
+                                            <div className="col-sm-3">
+                                                <input type="text" className="form-control" id="LDP" name="LPD" />
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <label htmlFor="LDP" className="col-form-label col-sm-2">LPT:</label>
+                                            <div className="col-sm-3">
+                                                <input type="text" className="form-control" id="LPT" name="LPT" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="row">
+                                            <label htmlFor="LDP" className="col-form-label col-sm-2">RDP:</label>
+                                            <div className="col-sm-3">
+                                                <input type="text" className="form-control" id="RDP" name="RDP" />
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <label htmlFor="LDP" className="col-form-label col-sm-2">RPT:</label>
+                                            <div className="col-sm-3">
+                                                <input type="text" className="form-control" id="RPT" name="RPT" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <hr />
+                            <div className="row mb-3">
+                                <label htmlFor="notes" className="form-label">Foot Malformations and Skin Conditions:</label>
+                                <textarea className="form-control" name="notes" ></textarea>
+                            </div>
+                            <hr />
+                            <div className="row mb-3">
+                                <div className="col">
+                                    <p>Self-Management Education</p>
+                                    <div className="form-check form-check-inline">
+                                        <input type="checkbox" className="form-check-input" id="outcome1" value={"Preventative Foot Care"} name="Education" />
+                                        <label htmlFor="outcome1" className="form-check-label">Preventative Foot Care</label>
+                                    </div>
+                                    <div className="form-check form-check-inline">
+                                        <input type="checkbox" className="form-check-input" id="outcome2" value={"Tobacco Cessation"} name="Education" />
+                                        <label htmlFor="outcome2" className="form-check-label">Tobacco Cessation</label>
+                                    </div>
+                                    <div className="form-check form-check-inline">
+                                        <input type="checkbox" className="form-check-input" id="outcome3" value={"Diabetes Care"} name="Outcome" />
+                                        <label htmlFor="outcome3" className="form-check-label">Diabetes Care</label>
+                                    </div>
+
+                                </div>
+                                <div className="vr p-0 mx-4 d-none d-md-block"></div>
+                                <div className="col-auto px-5">
+                                    <p>Given New Socks:</p>
+                                    <div className="form-check mb-3">
+                                        <input type="radio" className="form-check-input" id="visitType" name="Socks_Given" value={"yes"} />
+                                        <label htmlFor="visitType" className="form-check-label">Yes</label>
+                                    </div>
+                                    <div className="form-check mb-3">
+                                        <input type="radio" className="form-check-input" id="visitType" name="Socks_Given" value={"no"} />
+                                        <label htmlFor="visitType" className="form-check-label">No</label>
+                                    </div>
+                                </div>
+                            </div>
+
                             <hr />
                             <div className="row mb-3">
                                 <div className="col">
@@ -220,37 +299,8 @@ export default function OneToOneIntForm(props) {
                             <hr />
 
 
-                            <div className="row mb-3">
-                                <label htmlFor="notes" className="form-label">Notes</label>
-                                <textarea className="form-control" name="notes" ></textarea>
-                            </div>
-                            <hr />
-                            <div className="row mb-3">
-                                <div className="col">
-                                    <p>Outcomes:</p>
-                                    <div className="form-check form-check-inline">
-                                        <input type="checkbox" className="form-check-input" id="outcome1" value={"Improved Health Status"} name="Outcome" />
-                                        <label htmlFor="outcome1" className="form-check-label">Improved Health Status</label>
-                                    </div>
-                                    <div className="form-check form-check-inline">
-                                        <input type="checkbox" className="form-check-input" id="outcome2" value={"Access to Care/Resources"} name="Outcome" />
-                                        <label htmlFor="outcome2" className="form-check-label">Access to Care/Resources</label>
-                                    </div>
-                                    <div className="form-check form-check-inline">
-                                        <input type="checkbox" className="form-check-input" id="outcome3" value={"Enhanced Independent Living"} name="Outcome" />
-                                        <label htmlFor="outcome3" className="form-check-label">Enhanced Independent Living</label>
-                                    </div>
-                                    <div className="form-check form-check-inline">
-                                        <input type="checkbox" className="form-check-input" id="outcome4" value={"Injury Prevention"} name="Outcome" />
-                                        <label htmlFor="outcome4" className="form-check-label">Injury Prevention</label>
-                                    </div>
-                                    <div className="form-check form-check-inline">
-                                        <input type="checkbox" className="form-check-input" id="outcome5" value={"Knowledge Increase"} name="Outcome" />
-                                        <label htmlFor="outcome5" className="form-check-label">Knowledge Increase</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr />
+
+
 
                             <div className="row mb-3">
                                 <div className="col">

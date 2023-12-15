@@ -5,11 +5,12 @@ import { useContext } from "react";
 import fetchData from "../functions/apiRequest";
 import { useNavigate } from "react-router-dom";
 
-export default function NewClientForm() {
+export default function NewPatientForm() {
 
-    const [client, setClient] = useState({});
+    const [patient, setPatient] = useState({});
     const [age, setAge] = useState('');
     const [selectedImage, setSelectedImage] = useState(null)
+
     const nav = useNavigate();
     let races = [];
     const user = useContext(UserContext).user
@@ -35,24 +36,22 @@ export default function NewClientForm() {
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-        // setClient({ ...client, [name]: value })
-        //setClient(values => ({ ...values, [name]: value }));
-        console.log(name, value)
-
     };
+
+
     async function handleSubmit(e) {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form)
         const r = formData.getAll('race')
-        console.log(r)
         formData.delete('race')
         formData.append("race", r)
         formData.append('age', age)
+        console.log(formData)
 
         let f = {}
         formData.forEach((value, key) => f[key] = value)
-        const fJson = JSON.stringify(f)
+        console.log(f)
 
         const data = {
             operation: "create_client",
@@ -65,11 +64,24 @@ export default function NewClientForm() {
 
         console.log(data.payload.client_info)
 
-        const res = await fetchData("POST", data)
+        const urlEndPoint = "https://fvdwdl1hmg.execute-api.us-east-1.amazonaws.com/beta/FCNA_Handler"
+
+
+
+        const response = await fetch(
+            urlEndPoint, {
+            method: "POST",
+            mode: 'cors',
+            body: data
+        }
+        )
+
+        const res = await response.json()
+
         console.log(res)
         if (res['body']['success']) {
-            console.log("success")
-            nav("/client", { state: { client: { client } } })
+            setPatient(f)
+            // nav("/client", { state: { client: { client } } })
         }
 
     };
@@ -77,15 +89,15 @@ export default function NewClientForm() {
     return (
         <div>
             <button type="button" className="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#form">
-                <i class="bi bi-person-plus-fill d-none d-lg-inline"></i>
-                <p className="d-none d-lg-inline">New Client</p>
+                <i class="bi bi-person-plus-fill d-none d-lg-inline me-3"></i>
+                <p className="d-none d-lg-inline">New Patient</p>
                 <i class="bi bi-person-plus-fill d-lg-none" style={{ fontSize: "2rem" }}></i>
             </button>
             <div className="modal fade" id="form" tabIndex="-1">
                 <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h4 className="modal-title" id="staticBackdropLabel">New Client Form</h4>
+                            <h4 className="modal-title" id="staticBackdropLabel">New Patient Form</h4>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
@@ -93,7 +105,7 @@ export default function NewClientForm() {
                                 <div className="">
                                     <h6 className="fst-italic mb-2 fw-light">Please complete form with as much information as possible.</h6>
                                 </div>
-                                <form action="POST" onSubmit={handleSubmit} id="newClientForm" autoComplete="off">
+                                <form action="POST" onSubmit={handleSubmit} id="newClientForm" autoComplete="off" encType="multipart/form-data">
                                     <div className="row">
                                         <div className="col-auto mb-3">
                                             <div className="d-flex justify-content-center mb-2">
@@ -108,12 +120,9 @@ export default function NewClientForm() {
                                                         className=" form-control d-none"
                                                         id="clientPhoto"
                                                         type="file"
-                                                        name="myImage"
+                                                        name="photo"
                                                         onChange={(event) => {
-                                                            console.log(event.target.files[0]);
-                                                            setSelectedImage(event.target.files[0]);
-                                                            console.log(URL.createObjectURL(selectedImage))
-                                                            console.log(selectedImage)
+                                                            setSelectedImage(URL.createObjectURL(event.target.files[0]));
                                                         }} />
                                                 </div>
                                             </div>
@@ -141,9 +150,9 @@ export default function NewClientForm() {
                                                 <div className="col">
                                                     <label htmlFor="gender" className="form-label">Gender:</label>
                                                     <select name="gender" id="gender" className="form-select">
-                                                        <option value="undisclosed">Prefer not to disclose</option>
-                                                        <option value="female">Female</option>
-                                                        <option value="male">Male</option>
+                                                        <option value="Adult">Prefer not to disclose</option>
+                                                        <option value="Female">Female</option>
+                                                        <option value="Male">Male</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -263,7 +272,7 @@ export default function NewClientForm() {
                         </div>
                         <div className="modal-footer">
                             <button type="button" data-bs-dismiss="modal" className="btn btn-secondary">Close without Saving</button>
-                            <button type="submit" form="newClientForm" className="btn btn-primary">Save and Submit</button>
+                            <button type="submit" form="newClientForm" data-bs-dismiss="modal" className="btn btn-primary">Save and Submit</button>
                         </div>
                     </div>
                 </div >

@@ -26,3 +26,15 @@
     background-color: var(--color3);
     height: 100px;
 }
+
+#clientTable {
+    border-collapse: separate;
+    border-spacing: 0 5px;
+}
+
+#clientTable th,
+#adminTable th {
+    background-color: white;
+    font-weight: 700;
+    padding: 12px 12px;
+}

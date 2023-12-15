@@ -1,5 +1,5 @@
 export default function MedicalCard(props) {
-    const client = props.client.client
+    const patient = props.patient.patient
 
     function handleSubmit() {
         //     e.preventDefault();
@@ -77,7 +77,7 @@ export default function MedicalCard(props) {
         updateButton.classList.remove("d-none")
         cancelButton.classList.add('d-none')
         saveButton.classList.add('d-none')
-        console.log(client.ethnicity)
+        console.log(patient.ethnicity)
 
     }
 
@@ -102,44 +102,44 @@ export default function MedicalCard(props) {
                                 <div className="row">
                                     <label htmlFor="staticPhysName" className="col-form-label col-sm-4">Primary Physician:</label>
                                     <div className="col-sm-8">
-                                        <input type="text" readOnly className="form-control-plaintext form-control" id="staticPhysName" defaultValue={client.primary_physician_name} />
+                                        <input type="text" readOnly className="form-control-plaintext form-control" id="staticPhysName" defaultValue={patient.primary_physician_name} />
                                     </div>
                                 </div>
                                 <div className="row">
                                     <label htmlFor="staticPhysNumber" className="col-form-label col-sm-4">Primary Physician Number:</label>
                                     <div className="col-sm-8">
-                                        <input type="text" readOnly className="form-control-plaintext form-control" id="staticPhysNumber" defaultValue={client.primary_physician_number} />
+                                        <input type="text" readOnly className="form-control-plaintext form-control" id="staticPhysNumber" defaultValue={patient.primary_physician_number} />
                                     </div>
                                 </div>
                                 <div className="row">
                                     <label htmlFor="staticMedication" className="col-form-label col-sm-4 ">Medications:</label>
                                     <div className="col-sm-8">
-                                        <input type="text" readOnly className="form-control-plaintext form-control" id="staticMedication" defaultValue={client.medications} />
+                                        <input type="text" readOnly className="form-control-plaintext form-control" id="staticMedication" defaultValue={patient.medications} />
                                     </div>
                                 </div>
 
                                 <div className="row">
                                     <label htmlFor="staticHeight" className="col-form-label col-sm-4">Height:</label>
                                     <div className="col-sm-8">
-                                        <input type="text" readOnly className="form-control-plaintext form-control" id="staticEmail" defaultValue={client.height} />
+                                        <input type="text" readOnly className="form-control-plaintext form-control" id="staticEmail" defaultValue={patient.height} />
                                     </div>
                                 </div>
                                 <div className="row">
                                     <label htmlFor="staticWeight" className="col-form-label col-sm-4">Weight:</label>
                                     <div className="col-sm-8">
-                                        <input type="text" readOnly className="form-control-plaintext form-control" id="staticEMContact" defaultValue={client.weight} />
+                                        <input type="text" readOnly className="form-control-plaintext form-control" id="staticEMContact" defaultValue={patient.weight} />
                                     </div>
                                 </div>
                                 <div className="row">
                                     <label htmlFor="staticBMI" className="col-form-label col-sm-4">BMI:</label>
                                     <div className="col-sm-8">
-                                        <input type="text" readOnly className="form-control-plaintext form-control" id="staticEMContact" defaultValue={client.BMI} />
+                                        <input type="text" readOnly className="form-control-plaintext form-control" id="staticEMContact" defaultValue={patient.BMI} />
                                     </div>
                                 </div>
                                 <div className="row">
                                     <label htmlFor="staticA1C" className="col-form-label col-sm-4">A1C:</label>
                                     <div className="col-sm-8">
-                                        <input type="text" readOnly className="form-control-plaintext form-control" id="staticEMContact" defaultValue={client.A1C} />
+                                        <input type="text" readOnly className="form-control-plaintext form-control" id="staticEMContact" defaultValue={patient.A1C} />
                                     </div>
                                 </div>
 

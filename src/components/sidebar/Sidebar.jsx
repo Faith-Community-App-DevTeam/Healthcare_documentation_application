@@ -12,11 +12,11 @@ export default function Sidebar() {
     return (
 
         <>
-            <div className="navbar navbar-expand-lg">
+            <div className="navbar sticky-top navbar-expand-lg ">
                 <div className="collapse collapse-horizontal show" id="collapseSidebar">
                     <div className="d-flex flex-column p-1 sidebar pt-3" >
-                        <a href="" className="d-flex justify-content-center">
-                            <img src={photo} width={"80"} height={"80"}></img>
+                        <a href="/" className="d-flex justify-content-center">
+                            <img src={photo} width={"80"} height={"80"} alt="logo"></img>
                         </a>
                         <hr />
                         <div className="">
@@ -25,7 +25,7 @@ export default function Sidebar() {
                                     <NavLink to='/dashboard/home' className="nav-link fs-5">Home</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink to='/dashboard/clients' className="nav-link fs-5">Clients</NavLink>
+                                    <NavLink to='/dashboard/patients' className="nav-link fs-5">Patients</NavLink>
                                 </li>
                                 <li className="nav-item">
                                     <NavLink to='/dashboard/forms' className="nav-link fs-5">Forms</NavLink>
@@ -34,7 +34,8 @@ export default function Sidebar() {
                                     <NavLink to='/dashboard/reports' className="nav-link fs-5">Reports</NavLink>
                                 </li>
 
-                                {user.role == "admin" && user.isLoggedIn ? <li className="nav-item">
+
+                                {user.role === "admin" && user.isLoggedIn ? <li className="nav-item">
                                     <NavLink to='/dashboard/admin' className="nav-link fs-5">Admin Panel</NavLink>
                                 </li> : ""}
                             </ul>
