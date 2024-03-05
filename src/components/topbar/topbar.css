@@ -4,7 +4,7 @@
 }
 
 #topbar-home {
-    background-color: var(--color5);
+    background-color: var(--tertiary-color);
 }
 
 #topbar-home span {
@@ -12,11 +12,11 @@
 }
 
 #topbar-login {
-    background-color: var(--primary-color);
+    background-color: var(--tertiary-color);
 }
 
 #topbar-login span {
-    color: var(--color2);
+    color: var(--color-2);
 
 }
 
@@ -31,5 +31,5 @@
 }
 
 #topbar-patient {
-    background-color: var(--color5);
+    background-color: var(--secondary-color);
 }

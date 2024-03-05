@@ -38,51 +38,24 @@ export default function ProfessionalDevelopmentForm() {
                         {serviceName === "continuing education" ? notice : ""}
                     </div>
                     <div className="vr p-0 mx-3 d-none d-md-block"></div>
-                    <div className="col">
-                        <label htmlFor="people_served" className="form-label">Number of People Served: <span className="text-primary">*</span></label>
-                        <input type="number" className="form-control mb-3" min={0} name="number_of_clients" required />
-                    </div>
+
                 </div>
 
                 <hr />
                 <div className="row mb-3">
+                    <p>Enter Times in quarter hour increments. (0.25 = 15 min) </p>
                     <div className="col">
                         <div className="row mb-3">
                             <label htmlFor="direct_time" className="form-label">Direct Time:</label>
-                            <select className="form-select" id="direct_time" name="direct_time" >
-                                <option selected disabled>Please Select</option>
-                                <option value={0.25} >15 min</option>
-                                <option value={0.5}>30 min</option>
-                                <option value={0.45}>45 min</option>
-                                <option value={1}>1 hour</option>
-                                <option value={1.5}>1 hour 30 min</option>
-                                <option value={2}>2 hours</option>
-                                <option value={2.5}>2 hours 30 min</option>
-                                <option value={3}>3 hours</option>
-                                <option value={3.5}>3 hours 30 min</option>
-                                <option value={4}>4 hours</option>
-                            </select>
+                            <input type="number" className="form-control mb-3" min={0.25} step={0.25} id="direct_time" name="direct_time" />
                         </div>
                     </div>
                     <div className="vr p-0 mx-4 d-none d-md-block"></div>
                     <div className="col">
                         <div className="row mb-3">
-                            <label htmlFor="indirect_time" className="form-label">Indirect Time:</label>
-                            <select className="form-select" id="indirect_time" name="indirect_time" >
-                                <option selected disabled>Please Select</option>
-                                <option value={0.25} >15 min</option>
-                                <option value={0.5}>30 min</option>
-                                <option value={0.45}>45 min</option>
-                                <option value={1}>1 hour</option>
-                                <option value={1.5}>1 hour 30 min</option>
-                                <option value={2}>2 hours</option>
-                                <option value={2.5}>2 hours 30 min</option>
-                                <option value={3}>3 hours</option>
-                                <option value={3.5}>3 hours 30 min</option>
-                                <option value={4}>4 hours</option>
-                            </select>
+                            <label htmlFor="direct_time" className="form-label">Indirect Time:</label>
+                            <input type="number" className="form-control mb-3" min={0.25} step={0.25} id="indirect_time" name="indirect_time" />
                         </div>
-
                     </div>
 
                 </div>

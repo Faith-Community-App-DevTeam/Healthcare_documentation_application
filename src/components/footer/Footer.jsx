@@ -4,12 +4,12 @@ export default function Footer() {
     const today = new Date();
     return (
         <>
-            <footer className=''>
-                <div className="d-flex  align-items-center py-2">
+            <footer className='navbar py-0'>
+                <div className="container-fluid justify-content-start ">
                     <img src={logo} alt="" width="80" height="80" className="" />
-                    <div className="">
+                    <div className="px-5">
                         <h5>Faith Community Nurse Electronic Health Record, Inc.</h5>
-                        <p>Copyright &copy; {today.getFullYear()}</p>
+                        <span>Copyright &copy; {today.getFullYear()}</span>
                     </div>
                 </div>
             </footer>

@@ -8,6 +8,7 @@ import fetchData from "../../components/functions/apiRequest";
 import { useEffect, useContext, useState } from "react";
 import DemegraphicsCard from "../../components/clientProfileCards/DemographicsCard";
 import MedicalCard from "../../components/clientProfileCards/MedicalCard";
+import PastInteractionsCard from "../../components/clientProfileCards/PastInteractionsCard";
 
 export default function Client(c) {
     const nav = useNavigate()
@@ -35,6 +36,7 @@ export default function Client(c) {
 
                 if (!ignore && res['body']['success']) {
                     documents = res['body']["return_payload"]['document_list']
+                    console.log(documents)
                 }
 
 
@@ -93,7 +95,8 @@ export default function Client(c) {
                         <div className="patientTop p-4 pt-1 d-flex justify-content-between">
                             <div className="row align-items-center">
                                 <div className="col-auto">
-                                    {patient.patient.picture ? <img className="border border-2 border-white rounded-circle object-fit-cover me-2" alt="not found" width={"80px"} height={"80px"} src={patient.patient.picture} />
+                                    {patient.patient.picture ?
+                                        <img className="border border-2 border-white rounded-circle object-fit-cover me-2" alt="not found" width={"80px"} height={"80px"} src={patient.patient.picture} />
                                         : <span><i className="bi bi-person-circle lh-1 text-tertiary opacity-50 me-2" style={{ fontSize: "80px", fontWeight: "100" }}></i></span>
                                     }
                                 </div>
@@ -139,9 +142,7 @@ export default function Client(c) {
                                     <MedicalCard patient={patient} />
                                 </div>
                                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" tabIndex="0">
-
-                                    <h5 className="display-6 text-center">Past Interactions</h5>
-
+                                    <PastInteractionsCard patient={patient} />
                                 </div>
                             </div>
 

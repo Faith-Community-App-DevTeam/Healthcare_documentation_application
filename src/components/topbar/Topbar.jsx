@@ -35,7 +35,7 @@ const Topbar = (page) => {
 
     return (
 
-        <nav className="navbar sticky-top topbar" id={"topbar-" + page.page}>
+        <nav className="navbar sticky-top topbar py-0" id={"topbar-" + page.page}>
             <div className="container-fluid ">
                 {page.page != "home" && page.page != "login" ?
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSidebar"><span className="navbar-toggler-icon"></span></button>

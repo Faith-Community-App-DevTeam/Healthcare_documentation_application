@@ -19,7 +19,7 @@
 .vars {
     /* floral white */
     background-color: #faf9f0;
-
+    background-color: #fffafa !important;
 }
 
 .dashClientHeader {

@@ -4,8 +4,8 @@
 }
 
 .body-background {
-    background: rgb(192, 0, 0);
-    background: linear-gradient(180deg, rgba(192, 0, 0, 1) 0%, rgba(154, 0, 0, 1) 30%, rgba(96, 0, 0, 1) 100%);
+    background: rgb(132, 134, 124);
+    background: linear-gradient(180deg, rgb(132, 134, 124) 0%, #9b9a9a 30%, #353535 100%);
     height: var(--body-height);
 }
 

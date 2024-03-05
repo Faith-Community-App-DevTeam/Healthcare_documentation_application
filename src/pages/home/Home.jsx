@@ -15,14 +15,13 @@ const Home = () => {
                         <div className="row align-items-center gx-0">
                             <div className="col-lg-8"><img src={photo2} alt='blood pressure check' className="img-fluid border border-primary rounded-end-pill" /></div>
                             <div className="col col-lg-4">
-                                <h1 className="header-text-dark display-2">Empowering Care through Seamless Documentation</h1>
+                                <h1 className="text-primary display-2" style={{ fontFamily: "var(--display-font)" }}>Empowering Care through Seamless Documentation</h1>
                                 <NavLink to="register" className="btn btn-primary btn-lg m-4">Request Access!</NavLink>
                             </div>
                         </div>
                     </div>
                 </header>
-                <div className=" home-container-middle">
-                </div>
+
                 {/* About Row 1 */}
                 <section className="info-reg-top">
                     <div className="container p-4">
@@ -50,7 +49,7 @@ const Home = () => {
                     <div className="container p-4">
                         <div className="row gx-4 justify-content-center">
                             <div className="col-lg-9">
-                                <h2 className="header-text-light display-6">HIPAA Complient Security</h2>
+                                <h2 className="header-text-light display-6">HIPAA Compliant Security</h2>
                                 <p className="lead fw-light lh-lg">Protecting sensitive patient data is non-negotiable. Rest assured, our platform adheres to the highest standards of data security and privacy, ensuring the confidentiality and integrity of patient information.</p>
                             </div>
                         </div>

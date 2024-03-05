@@ -194,7 +194,6 @@ export default function Login({ hasAccount }) {
         } else if (res["statusCode"] === 404) {
             setErrMsg("Incorrect username or password")
         } else {
-
             setErrMsg("Server error. Please try again.")
         }
 
@@ -204,7 +203,7 @@ export default function Login({ hasAccount }) {
             <Topbar page="login" />
             <div className="body-background">
                 <section className="container text-center align-content-center">
-                    <div className='bg-primary' style={{ height: 100 }}></div>
+                    <div className='' style={{ height: 100 }}></div>
 
                     <div className="card shadow-5-strong login-box "  >
                         <div className="card-body py-5 px-md-5">

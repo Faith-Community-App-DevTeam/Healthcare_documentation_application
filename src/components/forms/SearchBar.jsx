@@ -21,13 +21,13 @@ export default function SearchBar(props) {
         }
 
     }
-
+    console.log(props.type)
     function handleSubmit(e) {
         e.preventDefault();
         const form = e.target
         const formData = new FormData(form)
         const searchTerm = formData.get("search")
-        if (props.type === 'patients') {
+        if (props.type === 'patient') {
             props.setSearch(list.filter((patient) => `${patient.first_name} ${patient.last_name}` === `${searchTerm}`))
         } else {
             for (let i = 0; i < Object.keys(list).length; i++) {
@@ -45,24 +45,13 @@ export default function SearchBar(props) {
 
 
     return (
-
-
         <form action="" onSubmit={handleSubmit}>
-            <div className="row align-items-center justify-content-center">
-                <div className="col-8">
-                    <input class="form-control form-control-lg" list="clientOptions" type="search" placeholder="Search..." name="search" />
-                    <datalist id="clientOptions">
-                        {generateList()}
-                    </datalist>
-                </div>
-                <div className="col-auto">
-                    <div className="row justify-content-center">
-                        <div className="col-auto"><button type="submit" class="btn btn-secondary btn-sm">Submit</button></div>
-                        <div className="vr p-0 mx-1"></div>
-                        <div className="col-auto"><button type="button" class="btn btn-outline-danger btn-sm" onClick={() => { props.setSearch("") }}>Reset</button></div>
-                    </div>
-                </div>
-            </div>
+
+            <input class="form-control form-control" list="clientOptions" type="search" placeholder="Search..." name="search" />
+            <datalist id="clientOptions">
+                {generateList()}
+            </datalist>
+
         </form>
 
 

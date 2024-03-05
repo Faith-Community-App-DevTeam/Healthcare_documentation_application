@@ -77,9 +77,9 @@
     max-width: 100vw;
 }
 
-.home-top {
-    background-color: var(--color5);
-}
+/* .home-top {
+    background-color: var(--);
+} */
 
 .home-container-middle {
     background-color: var(--primary-color);
